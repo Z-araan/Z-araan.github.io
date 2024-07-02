@@ -1,6 +1,5 @@
-p {
-  color: black;
-}
-.simple-linear {
-  background: linear-gradient(blue, pink);
+.diagonal-gradient {
+
+  background: linear-gradient(to 
+    bottom right,blue, pink);
 }
