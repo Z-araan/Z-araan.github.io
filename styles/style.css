@@ -13,7 +13,7 @@ margin-left: 50px;
 #nav li {
 display: inline;
 }
-#nav a {
+#nav li {
 line-height: 40px；
 color: #fff;
 text-decoration: none;
