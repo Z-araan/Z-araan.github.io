@@ -1,23 +1,29 @@
-<ul>{list-style-type: none;
-     }
-<style type="text/css">
-#nav {
-margin: 50px auto;
-height：40px;
-background-color：#690;
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;8
+    background-color: #333;
 }
-#nav ul (
-list-style: none;
-margin-left: 50px;
+ 
+li {
+    float: left;
 }
-#nav li {
-display: inline;
+ 
+li a {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
 }
-#nav li {
-line-height: 40px；
-color: #fff;
-text-decoration: none;
-padding: 20px 20px；
-#nav a:hover {
-background-color:#060;
-</style>
+ 
+/*鼠标移动到选项上修改背景颜色 */
+li a:hover {
+    background-color: #111;
+}
+ul {
+    position: fixed;
+    top: 0;
+    width: 100%;
+}
