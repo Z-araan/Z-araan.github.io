@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Z-araan的博客</title>
+    <meta name="author" content="z-huha">
+    <meta name="description" content="Z-araan的博客，分享技术与生活">
+    <link rel="stylesheet" type="text/css" href="styles/style.css">
+    <link rel="stylesheet" type="text/css" href="styles/search for.css">
+    <script src="scripts/time.js"></script>
+</head>
+<body>
+    <div id="header">
+        <h1>Z-araan的博客</h1>
+        <nav id="nav">
+            <ul>
+                <li><a href="z-araan.githut.io/index.html">主页</a></li>
+                <li><a href="https://github.com/z-araan" target="_blank">我的GitHub地址</a>
+                <li><a href="about.html">关于我</a></li>
+                <li><a href="mailto:zhang0407peng@vip.qq.com">联系我</a>
+                <li><a href="#"> 更多</a></li>
+            </ul>
+        </nav>
+    </div>
+    <!-- 搜索表单 -->
+<form action="/search" method="get">
+    <input type="text" id="search" name="q" placeholder="搜索...">
+    <button type="submit">搜索</button>
+</form>
+
+    <div id="menu-toggle">
+        <button id="toggle-menu"> ☰</button>
+    </div>
+
+    <div id="menu">
+        <p>敬请期待</p>
+        
+    </div>
+    <div id="content">
+        <h2>欢迎来到我的博客</h2>
+        <p>这里是我分享技术见解和生活点滴的地方。</p>
+        <div id="post-preview">
+            <h3>最新文章简介</h3>
+            <p>探索最新的技术趋势和个人成长的故事。</p>
+        </div>
+    </div>
+
+    
+    <div id="footer"><div id="realtime-clock">
+    </div>
+        版权 © Z-araan
+    </div>
+    
+
+    <script src="scripts/script.js"></script>
+</body>
+</html>
