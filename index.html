@@ -17,19 +17,19 @@
         <nav id="nav">
             <ul>
                 <li><a href="/index.html">主页</a></li>
-                <li><a href="https://github.com/z-araan" target="_blank">我的GitHub地址</a>
+                <li><a href="https://github.com/z-araan" target="_blank">我的GitHub地址</a></li>
                 <li>
 <button id="downloadButton">下载akp</button>
 </li>
-                <li><a href="mailto:zhang0407peng@vip.qq.com">联系我</a>
-                <li><a href="#"> 更多</a></li>
+                <li><a href="mailto:zhang0407peng@vip.qq.com">联系我</a></li>
+                <li><a href="#"> 更多</a></li></li>
             </ul> 
         </nav>
     </div>
     <!-- 搜索表单 -->
 <form target="_blank" method="get" action="https://www.baidu.com/s" onsubmit="return search()">
     <input type="text" placeholder="搜搜搜" name="word" class="text" id="search"/>
-    <button type="submit">点点</button> <!-- 添加的按钮 -->
+    <button id="loke＂type="submit">点点</button> <!-- 添加的按钮 -->
 </form>
 
 
@@ -55,28 +55,7 @@
     </div>
         版权 © Z-araan
     </div>
-<script>
-        // 获取按钮元素
-        document.getElementById('downloadButton').addEventListener('click', function() {
-            // 创建一个临时的<a>标签
-            var link = document.createElement('a');
 
-            // 设置链接的href属性为安装包的路径
-            link.href = 'https://z-araan.github.io/Down/z-araan.apk'; // 替换为实际的安装包路径
-
-            // 设置download属性，指定下载文件的名称
-            link.download = 'z-araan.apk'; // 下载后保存的文件名
-
-            // 将临时链接添加到页面中
-            document.body.appendChild(link);
-
-            // 触发点击事件，开始下载
-            link.click();
-
-            // 下载完成后移除临时链接
-            document.body.removeChild(link);
-        });
-    </script>
     
 
     <script src="scripts/script.js"></script>
