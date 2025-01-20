@@ -43,3 +43,8 @@ setTimeout(() => {
     document.body.removeChild(link);
     URL.revokeObjectURL(url);
 }, 100); // 延迟100毫秒移除
+document.getElementById("downloadButton").addEventListener("click", function(event) {
+            console.log("点击触发下载");
+            event.preventDefault(); // 阻止默认行为
+            window.location.href = this.href; // 触发下载
+        });
