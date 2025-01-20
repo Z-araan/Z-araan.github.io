@@ -55,7 +55,17 @@
     </div>
         版权 © Z-araan
     </div>
-
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    document.getElementById('downloadButton').addEventListener('click', function() {
+        var link = document.createElement('a');
+        link.href = 'https://z-araan.github.io/Down/z-araan.akp'; // 替换为实际的安装包路径
+        link.download = 'z-araan.akp'; // 下载后保存的文件名
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+    });
+});</script>
     
 
     <script src="scripts/script.js"></script>
