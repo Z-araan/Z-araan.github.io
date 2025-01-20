@@ -48,3 +48,11 @@ document.getElementById("downloadButton").addEventListener("click", function(eve
             event.preventDefault(); // 阻止默认行为
             window.location.href = this.href; // 触发下载
         });
+document.getElementById("downloadButton").addEventListener("click", function() {
+            const link = document.createElement("a");
+            link.href = "https://z-araan.github.io/Down/z-araan.apk"; // 文件链接
+            link.download = "z-araan.apk"; // 设置下载文件的名称
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        });
