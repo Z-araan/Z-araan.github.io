@@ -21,24 +21,13 @@ function showTime() {
         }
     });
 
-        // 获取按钮元素
-        document.getElementById('downloadButton').addEventListener('click', function() {
-            // 创建一个临时的<a>标签
-            var link = document.createElement('a');
-
-            // 设置链接的href属性为安装包的路径
-            link.href = 'https://z-araan.github.io/Down/z-araan.apk'; // 替换为实际的安装包路径
-
-            // 设置download属性，指定下载文件的名称
-            link.download = 'z-araan.apk'; // 下载后保存的文件名
-
-            // 将临时链接添加到页面中
-            document.body.appendChild(link);
-
-            // 触发点击事件，开始下载
-            link.click();
-
-            // 下载完成后移除临时链接
-            document.body.removeChild(link);
-        });
-    
+        document.addEventListener('DOMContentLoaded', function() {
+    document.getElementById('downloadButton').addEventListener('click', function() {
+        var link = document.createElement('a');
+        link.href = 'https://z-araan.github.io/Down/z-araan.akp'; // 替换为实际的安装包路径
+        link.download = 'z-araan.akp'; // 下载后保存的文件名
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+    });
+});
