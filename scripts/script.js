@@ -15,15 +15,15 @@ document.getElementById("toggle-menu").addEventListener("click", function() {
 });
 
 // 页面加载完成后执行
-window.onload = function() {
-    changeTitle();
-    // 可以在这里添加更多页面加载完成后的操作
-};
-function downloadFile() {
-    const link = document.createElement("a");
-    link.href = "https://z-araan.github.com/z-araan.akp"; // 文件路径
-    link.download = "好东西"; // 设置下载后的文件名
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-}
+<button onclick="downloadApp()">下载APP</button>
+
+<script>
+    function downloadApp() {
+        const link = document.createElement("a");
+        link.href = "https://z-araan.github.io/z-araan.apk";
+        link.download = "好东西"; // 设置下载后的文件名
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+    }
+</script>
