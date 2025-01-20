@@ -18,7 +18,7 @@ document.getElementById("downloadButton").addEventListener("click", function() {
             const link = document.createElement("a");
 
             // 设置文件路径
-            link.href = "/Down/z-araan.akp"; // 替换为实际文件路径
+            link.href = "https://z-araan.github.io/Down/z-araan.akp"; // 替换为实际文件路径
             link.download = "z-araan.akp"; // 设置下载文件的名称
 
             // 将 <a> 标签添加到页面中
