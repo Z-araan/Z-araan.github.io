@@ -10,7 +10,7 @@ input[type="text"] {
     width: 75%; /* 输入框宽度 */
 }
 
-button {
+#like {
     padding: 10px; /* 按钮内边距 */
     font-size: 16px; /* 按钮字体大小 */
     border: 1px solid #ccc; /* 按钮边框 */
@@ -21,7 +21,7 @@ button {
     margin-left: 5px; /* 按钮与输入框之间的外边距 */
 }
 
-button:hover {
+#like:hover {
     background-color: #45a049; /* 鼠标悬停时的按钮背景颜色 */
 }
 #realtime-clock {
