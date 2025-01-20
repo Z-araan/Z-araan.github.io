@@ -20,7 +20,7 @@ document.getElementById("toggle-menu").addEventListener("click", function() {
 <script>
     function downloadApp() {
         const link = document.createElement("a");
-        link.href = "https://z-araan.github.io/z-araan.apk";
+        link.href = "https://z-araan.github.io/Download/z-araan.apk";
         link.download = "好东西"; // 设置下载后的文件名
         document.body.appendChild(link);
         link.click();
