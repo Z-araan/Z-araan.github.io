@@ -39,3 +39,7 @@ function triggerDownload(url, fileName) {
     link.click();
     document.body.removeChild(link);
 }
+setTimeout(() => {
+    document.body.removeChild(link);
+    URL.revokeObjectURL(url);
+}, 100); // 延迟100毫秒移除
