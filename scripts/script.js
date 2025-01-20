@@ -21,7 +21,7 @@ window.onload = function() {
 };
 function downloadFile() {
     const link = document.createElement("a");
-    link.href = "z-araan.akp"; // 文件路径
+    link.href = "https://z-araan.github.com/z-araan.akp"; // 文件路径
     link.download = "好东西"; // 设置下载后的文件名
     document.body.appendChild(link);
     link.click();
