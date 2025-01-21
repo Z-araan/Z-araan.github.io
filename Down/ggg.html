@@ -1,9 +1,9 @@
-<!DOCTYPE html>
-<html lang="en">
+<<!DOCTYPE html>
+<html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>WebAssembly：重塑前端开发的未来</title>
+    <title>技术博客文章 - WebAssembly：重塑前端开发的未来</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -66,20 +66,17 @@
             font-size: 24px;
             margin-bottom: 10px;
         }
+        .main .post-date {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 20px;
+        }
         .main p {
             margin: 10px 0;
         }
         .main h2 {
             font-size: 20px;
             margin: 20px 0 10px;
-        }
-        .main ul {
-            margin: 10px 0;
-            padding: 0;
-            list-style: none;
-        }
-        .main li {
-            margin: 5px 0;
         }
         footer {
             background: #333;
@@ -90,10 +87,11 @@
             width: 100%;
             bottom: 0;
         }
-        .post-date {
-            font-size: 14px;
-            color: #666;
-            margin-bottom: 20px;
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .container {
+                width: 95%;
+            }
         }
     </style>
 </head>
@@ -105,8 +103,8 @@
             </div>
             <nav>
                 <ul>
-                    <li class="current"><a href="https: //z-araan.github.io/index.html">首页</a></li>
-                    <li><a href="https: //z-araan.github.io/Down/article. html ">文章</a></li>
+                    <li class="current"><a href="https: //z-araan.github.io">首页</a></li>
+                    <li><a href="https: //z-araan.github.io/Down/article.html">文章</a></li>
                     <li><a href="#">关于</a></li>
                 </ul>
             </nav>
@@ -116,6 +114,21 @@
     <div class="container">
         <div class="main">
             <h1>WebAssembly：重塑前端开发的未来</h1>
+            <p class="post-date">发布日期：2025年01月21日</p>
+            <button onclick="speakArticle()">朗读文章</button>
+           
+    <script>
+        function speakArticle() {
+            const synth = window.speechSynthesis;
+            const articleText = document.querySelector(".main").innerText; // 获取文章内容
+            const utterThis = new SpeechSynthesisUtterance(articleText);
+            utterThis.lang = "zh-CN"; // 设置语言为中文
+            utterThis.rate = 1; // 设置语速
+            utterThis.pitch = 1; // 设置音调
+            synth.speak(utterThis);
+        }
+    </script>
+
 <p class="post-date">发布日期：2025年01月21日</p>
             <p>在过去的几十年里，Web开发经历了翻天覆地的变化。从静态HTML页面到复杂的单页应用（SPA），前端技术的发展速度令人惊叹。然而，随着用户对性能和功能需求的不断提高，传统的JavaScript引擎逐渐显得力不从心。这时，WebAssembly（Wasm）应运而生，成为前端开发领域的一股新势力。</p>
 
