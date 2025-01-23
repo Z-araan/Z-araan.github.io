@@ -8,3 +8,14 @@
     color: white;
     height: 50px;
 }
+/* 实时时钟样式 */
+#realtime-clock {
+    font-size: 24px;
+    font-family: Arial, sans-serif;
+    text-align: left;
+    border-width: 2px;
+    border-style: solid;
+    border-color: black;
+    margin-right: 10%;
+    margin-left: 10px;
+}
