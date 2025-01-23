@@ -62,12 +62,13 @@ body {
 }
 
 /* 导航栏样式 */
+/* 导航栏样式 */
 header {
     background: #333;
     color: #fff;
     padding: 10px 0;
     width: 100%; /* 导航栏宽度占满屏幕 */
-    position: sticky;
+    position: fixed; /* 导航栏固定 */
     top: 0;
     z-index: 1000;
     display: flex;
@@ -75,40 +76,30 @@ header {
     align-items: center;
 }
 
-header a {
-    color: #fff;
-    text-decoration: none;
-    text-transform: uppercase;
-    font-size: 16px;
-    font-weight: 500;
-}
-
-header ul {
-    padding: 0;
-    list-style: none;
-    display: flex;
-    gap: 20px; /* 导航项之间的间距 */
-}
-
-header li {
-    display: inline;
-}
-
 header #branding {
     display: flex;
     align-items: center;
     justify-content: center;
-}
-
-header #branding h1 {
-    margin: 0;
-    font-size: 24px;
-    font-weight: 700;
+    width: 20%; /* 缩小品牌名称区域的宽度 */
+    margin-left: 20px; /* 添加左侧间距 */
 }
 
 header nav {
     display: flex;
     align-items: center;
+    width: 80%; /* 缩小导航菜单区域的宽度 */
+    margin-right: 20px; /* 添加右侧间距 */
+}
+
+header ul {
+    display: flex;
+    justify-content: flex-end; /* 导航菜单靠右对齐 */
+    gap: 20px; /* 导航项之间的间距 */
+    width: 100%; /* 导航菜单宽度占满剩余空间 */
+}
+
+header li {
+    display: inline-block; /* 保持导航项水平排列 */
 }
 
 header .current {
@@ -127,7 +118,7 @@ header a:hover {
 .main {
     padding: 20px;
     background: #fff;
-    margin-top: 20px;
+    margin-top: 60px; /* 为固定导航栏留出空间 */
     margin-bottom: 20px;
 }
 
