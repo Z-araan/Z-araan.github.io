@@ -46,7 +46,6 @@
 
 /* 菜单切换按钮样式 */
 #menu-toggle {
-    display: none;
     background-color: #111;
     padding: 10px;
     cursor: pointer;
