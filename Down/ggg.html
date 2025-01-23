@@ -6,14 +6,63 @@
     <title>技术博客文章 - WebAssembly：重塑前端开发的未来</title>
     <link rel="icon" href="/favicon.ico" >
     <style>
-       body {
-            font-family: Arial, sans-serif;
-            line-height: 1.6;
-            margin: 0;
-            padding: 0;
-            background-color: #f4f4f4;
-            color: #333;
-        }
+  
+body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #f0f0f0;
+    margin: 0;
+    line-height: 1.6;
+    padding: 0;
+    color: #333;
+}
+
+.popup {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.5s;
+}
+
+.popup-content {
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+}
+
+.popup-content h2 {
+    margin-bottom: 20px;
+}
+
+.popup-content button {
+    padding: 10px 20px;
+    margin: 0 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#yes-button {
+    background-color: #4aeb35;
+    color: white;
+}
+
+#no-button {
+    background-color: #ff5757;
+    color: white;
+}
         .container {
             width: 80%;
             margin: auto;
@@ -112,7 +161,39 @@
             </nav>
         </div>
     </header>
+     <div id="popup" class="popup">
+        <div class="popup-content">
+            <h2>要不要玩点游戏？</h2>
+            <button id="yes-button">是</button>
+            <button id="no-button">否</button>
+        </div>
+    </div>
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+    const popup = document.getElementById("popup");
+    const yesButton = document.getElementById("yes-button");
+    const noButton = document.getElementById("no-button");
 
+    // 设置弹窗显示的时间（30秒）
+    const timeout = 30000; // 30秒
+
+    setTimeout(() => {
+        popup.style.opacity = "1";
+        popup.style.pointerEvents = "auto";
+    }, timeout);
+
+    yesButton.addEventListener("click", () => {
+        // 点击“是”，跳转到游戏链接
+        window.location.href = "https://z-araan.github.io/Down/Guess the numbers.html"; // 替换为你的游戏链接
+    });
+
+    noButton.addEventListener("click", () => {
+        // 点击“否”，关闭弹窗
+        popup.style.opacity = "0";
+        popup.style.pointerEvents = "none";
+    });
+});
+</script>
     <div class="container">
         <div class="main">
             <h1>WebAssembly：重塑前端开发的未来</h1>
