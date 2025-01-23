@@ -12,14 +12,20 @@ body {
 }
 
 /* 头部样式 */
+:root {
+    --header-bg-color: #4aeb35; /* 主题颜色 */
+    --header-padding: 10px;     /* 通用间距 */
+    --header-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* 阴影样式 */
+}
+
 #header {
-    background-color: #4aeb35;
+    background-color: var(--header-bg-color); /* 使用变量 */
     position: sticky;
     top: 0;
     width: 100%;
     z-index: 1000;
-    padding: 10px 0;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    padding: var(--header-padding) 0; /* 使用变量 */
+    box-shadow: var(--header-shadow); /* 使用变量 */
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -28,7 +34,9 @@ body {
 #header h1 {
     margin: 0;
     padding: 0 20px;
-}
+    font-size: 1.2rem; /* 增大字体大小，提升可读性 */
+    font-weight: bold; /* 加粗字体 */
+    color: #fff;       /* 设置字体颜色为白色*/}
 
 #header nav ul {
     list-style-type: none;
@@ -129,7 +137,14 @@ body {
     #header nav li {
         margin: 5px 0;
     }
+   #header {
+        padding: var(--header-padding) 10px; /* 在小屏幕上减少左右间距 */
+    }
 
+    #header h1 {
+        font-size: 1rem; /* 在小屏幕上减小字体大小 */
+    }
+}
     #menu-toggle {
         display: block; /* 在小屏幕上显示切换按钮 */
     }
