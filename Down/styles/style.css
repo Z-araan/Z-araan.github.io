@@ -62,7 +62,6 @@ body {
 }
 
 /* 导航栏样式 */
-/* 导航栏样式 */
 header {
     background: #333;
     color: #fff;
@@ -89,17 +88,26 @@ header nav {
     align-items: center;
     width: 80%; /* 缩小导航菜单区域的宽度 */
     margin-right: 20px; /* 添加右侧间距 */
+    flex-direction: column; /* 导航菜单竖向排列 */
+    height: 100vh; /* 导航菜单高度占满屏幕 */
+    justify-content: flex-start; /* 从顶部开始排列 */
+    align-items: flex-end; /* 靠右侧对齐 */
+    padding-top: 50px; /* 为品牌名称留出空间 */
 }
 
 header ul {
     display: flex;
-    justify-content: flex-end; /* 导航菜单靠右对齐 */
+    flex-direction: column; /* 导航项竖向排列 */
     gap: 20px; /* 导航项之间的间距 */
     width: 100%; /* 导航菜单宽度占满剩余空间 */
 }
 
 header li {
-    display: inline-block; /* 保持导航项水平排列 */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    writing-mode: vertical-rl; /* 文字竖向排列 */
+    transform: rotate(180deg); /* 将文字反转，使其从上到下排列 */
 }
 
 header .current {
