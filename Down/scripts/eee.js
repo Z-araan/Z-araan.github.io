@@ -33,3 +33,16 @@ document.addEventListener("DOMContentLoaded", () => {
         resetButton.style.display = "none";
     });
 });
+// 清空输入框
+        guessInput.value = "";
+    });
+
+    resetButton.addEventListener("click", () => {
+        targetNumber = Math.floor(Math.random() * 100) + 1;
+        attempts = 0;
+        message.textContent = "";
+        guessInput.value = "";
+        submitButton.disabled = false;
+        resetButton.style.display = "none";
+    });
+});
