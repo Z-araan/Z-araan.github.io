@@ -1,0 +1,40 @@
+/* 菜单切换按钮样式 */
+.menu-toggle {
+    position: relative;
+    background-color: #111;
+    width: 30px;
+    height: 40px;
+    padding-right: 10px;
+}
+
+.menu-toggle button {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 24px;
+    cursor: pointer;
+    text-align: center;
+    padding: 4px;
+}
+
+/* 菜单样式 */
+.menu {
+    background-color: #ff0000;
+    width: 100%;
+    display: none;
+}
+
+.menu h3 {
+    margin-top: 0;
+}
+
+.menu a {
+    display: block;
+    color: black;
+    text-decoration: none;
+    padding: 5px 0;
+}
+
+.menu a:hover {
+    text-decoration: underline;
+}
