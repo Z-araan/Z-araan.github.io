@@ -19,12 +19,16 @@
     font-weight: bold;
 }
 
+#header nav {
+    display: flex;
+    align-items: center;
+}
+
 #header nav ul {
+    display: flex;
     list-style-type: none;
     margin: 0;
     padding: 0;
-    display: flex;
-    align-items: center;
 }
 
 #header nav li {
@@ -46,6 +50,7 @@
 
 /* 菜单切换按钮样式 */
 #menu-toggle {
+    display: none;
     background-color: #111;
     padding: 10px;
     cursor: pointer;
@@ -60,12 +65,25 @@
 
 /* 响应式设计 */
 @media (max-width: 768px) {
+    #header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    #header h1 {
+        width: 100%;
+        text-align: center;
+        font-size: 1rem;
+    }
+
+    #header nav {
+        width: 100%;
+        justify-content: center;
+    }
+
     #header nav ul {
         display: none;
         flex-direction: column;
-        position: absolute;
-        top: 60px;
-        left: 0;
         width: 100%;
         background-color: #fff;
         box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
@@ -74,22 +92,18 @@
 
     #header nav li {
         margin: 5px 0;
+        text-align: center;
     }
 
     #header nav li a {
         padding: 10px;
-    }
-
-    #header {
-        padding: 10px;
-    }
-
-    #header h1 {
-        font-size: 1rem;
+        color: black; /* 提高对比度 */
     }
 
     #menu-toggle {
         display: block;
+        width: 100%;
+        text-align: center;
     }
 }
 
