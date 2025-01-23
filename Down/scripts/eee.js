@@ -7,6 +7,7 @@ document.addEventListener("DOMContentLoaded", () => {
     let targetNumber = Math.floor(Math.random() * 100) + 1; // 生成1到100的随机数
     let attempts = 0;
 
+    // 提交按钮的点击事件
     submitButton.addEventListener("click", () => {
         const guess = parseInt(guessInput.value);
         attempts++;
@@ -22,8 +23,19 @@ document.addEventListener("DOMContentLoaded", () => {
         } else {
             message.textContent = "太高了！再试一次。";
         }
+
+        // 清空输入框
+        guessInput.value = "";
     });
 
+    // 监听输入框的键盘事件，实现回车键提交
+    guessInput.addEventListener("keydown", (event) => {
+        if (event.key === "Enter") {
+            submitButton.click(); // 模拟点击提交按钮
+        }
+    });
+
+    // 重置按钮的点击事件
     resetButton.addEventListener("click", () => {
         targetNumber = Math.floor(Math.random() * 100) + 1;
         attempts = 0;
@@ -33,16 +45,4 @@ document.addEventListener("DOMContentLoaded", () => {
         resetButton.style.display = "none";
     });
 });
-// 清空输入框
-        guessInput.value = "";
-    });
-
-    resetButton.addEventListener("click", () => {
-        targetNumber = Math.floor(Math.random() * 100) + 1;
-        attempts = 0;
-        message.textContent = "";
-        guessInput.value = "";
-        submitButton.disabled = false;
-        resetButton.style.display = "none";
-    });
-});
+    
