@@ -12,6 +12,9 @@ body {
 
 /* 内容样式 */
 #content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     margin-top: 30px;
     padding: 20px;
     flex-grow: 1;
@@ -19,9 +22,14 @@ body {
 
 /* 文章简介样式 */
 #post-preview {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
     margin-top: 20px;
     padding: 10px;
     background-color: rgba(255, 255, 255, 0.8);
+    width: 100%;
+    max-width: 800px;
 }
 
 /* 页脚样式 */
