@@ -11,55 +11,7 @@ body {
     min-height: 100vh;
 }
 
-/* 头部样式 */
-#header {
-    background-color: #4aeb35;
-    position: sticky;
-    top: 0;
-    width: 100%;
-    z-index: 1000;
-    padding: 10px 0;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
 
-#header h1 {
-    margin: 0;
-    padding: 0 20px;
-    line-height: 1.2;
-    color: white;
-    word-wrap: break-word;
-    font-size: 1.2rem;
-    font-weight: bold;
-}
-
-#header nav ul {
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    justify-content: center;
-    background-color: #333;
-}
-
-#header nav li {
-    margin: 0 10px;
-}
-
-#header nav li a {
-    display: block;
-    color: white;
-    text-align: center;
-    padding: 14px 16px;
-    text-decoration: none;
-    transition: background-color 0.3s;
-}
-
-#header nav li a:hover {
-    background-color: #111;
-}
 
 /* 菜单切换按钮样式 */
 #menu-toggle {
