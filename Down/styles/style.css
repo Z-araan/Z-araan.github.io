@@ -1,17 +1,14 @@
+/* 基础样式 */
 body {
     font-family: Arial, sans-serif;
-    display: flex;
-    flex-direction: column; /* 让页面内容竖向排列 */
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    background-color: #f4f4f4;
     margin: 0;
     padding: 0;
     line-height: 1.6;
+    background-color: #f4f4f4;
     color: #333;
 }
 
+/* 弹出层样式 */
 .popup {
     position: fixed;
     top: 0;
@@ -56,20 +53,23 @@ body {
     color: white;
 }
 
+/* 容器样式 */
 .container {
-    width: 80%;
+    width: 100%; /* 容器宽度占满屏幕 */
+    max-width: 1200px; /* 最大宽度限制 */
     margin: auto;
-    overflow: hidden;
-    display: flex;
-    flex-direction: column; /* 让容器内的内容竖向排列 */
+    padding: 0 20px; /* 两侧留出一些空间 */
 }
 
+/* 导航栏样式 */
 header {
     background: #333;
     color: #fff;
-    padding-top: 30px;
-    min-height: 70px;
-    border-bottom: #555 3px solid;
+    padding: 10px 0;
+    width: 100%; /* 导航栏宽度占满屏幕 */
+    position: sticky;
+    top: 0;
+    z-index: 1000;
 }
 
 header a {
@@ -82,24 +82,30 @@ header a {
 header ul {
     padding: 0;
     list-style: none;
+    display: flex;
+    justify-content: center;
+    gap: 20px; /* 导航项之间的间距 */
 }
 
 header li {
     display: inline;
-    padding: 0 20px 0 20px;
 }
 
 header #branding {
-    float: left;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 header #branding h1 {
     margin: 0;
+    font-size: 24px;
 }
 
 header nav {
-    float: right;
-    margin-top: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 header .highlight, header .current a {
@@ -112,13 +118,12 @@ header a:hover {
     font-weight: bold;
 }
 
+/* 主内容区域 */
 .main {
     padding: 20px;
     background: #fff;
     margin-top: 20px;
     margin-bottom: 20px;
-    display: flex;
-    flex-direction: column; /* 让文章内容竖向排列 */
 }
 
 .main h1 {
@@ -141,18 +146,29 @@ header a:hover {
     margin: 20px 0 10px;
 }
 
+/* 页脚样式 */
 footer {
     background: #333;
     color: #fff;
     text-align: center;
-    padding: 2px;
+    padding: 10px 0;
     width: 100%;
+    margin-top: 20px; /* 页脚与内容之间留出一些空间 */
 }
 
 /* 响应式设计 */
 @media (max-width: 768px) {
     .container {
-        width: 95%;
+        padding: 0 10px; /* 在小屏幕上减少两侧留白 */
+    }
+
+    header ul {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    header #branding h1 {
+        font-size: 20px;
     }
 
     .main h1 {
