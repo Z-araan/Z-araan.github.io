@@ -56,3 +56,18 @@ document.getElementById("downloadButton").addEventListener("click", function() {
             link.click();
             document.body.removeChild(link);
         });
+// 切换菜单的显示和隐藏
+function toggleMenu() {
+    var menu = document.getElementById('menu');
+    if (menu.style.display === 'block') {
+        menu.style.display = 'none';
+    } else {
+        menu.style.display = 'block';
+    }
+}
+
+// 初始化页面时隐藏菜单
+document.addEventListener('DOMContentLoaded', function() {
+    var menu = document.getElementById('menu');
+    menu.style.display = 'none';
+});
