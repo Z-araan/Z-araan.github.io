@@ -8,7 +8,7 @@ function showTime() {
 
             document.getElementById('realtime-clock').textContent = timeString; // 更新页面元素内容
         }
-//下面是搜索。
+
         setInterval(showTime, 1000); // 每隔1秒调用一次showTime函数
         showTime(); // 页面加载时立即显示时间
         
