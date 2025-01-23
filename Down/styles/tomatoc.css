@@ -1,5 +1,4 @@
-
-   body {
+body {
     font-family: Arial, sans-serif;
     display: flex;
     justify-content: center;
@@ -41,12 +40,11 @@ button:hover {
     margin-top: 20px;
 }
 
-.settings input {
+.settings input, .settings select {
     padding: 5px;
     margin: 0 10px;
     border: 1px solid #ccc;
     border-radius: 5px;
-    width: 50px;
 }
 
 #status {
