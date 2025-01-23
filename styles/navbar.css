@@ -1,0 +1,109 @@
+/* 导航栏基本样式 */
+#header {
+    background-color: #4aeb35;
+    position: sticky;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
+    padding: 10px 20px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#header h1 {
+    margin: 0;
+    color: white;
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+
+#header nav ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    align-items: center;
+}
+
+#header nav li {
+    margin: 0 10px;
+}
+
+#header nav li a {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 10px 16px;
+    text-decoration: none;
+    transition: background-color 0.3s;
+}
+
+#header nav li a:hover {
+    background-color: #111;
+}
+
+/* 菜单切换按钮样式 */
+#menu-toggle {
+    display: none;
+    background-color: #111;
+    padding: 10px;
+    cursor: pointer;
+}
+
+#menu-toggle button {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 24px;
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+    #header nav ul {
+        display: none;
+        flex-direction: column;
+        position: absolute;
+        top: 60px;
+        left: 0;
+        width: 100%;
+        background-color: #fff;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        z-index: 1000;
+    }
+
+    #header nav li {
+        margin: 5px 0;
+    }
+
+    #header nav li a {
+        padding: 10px;
+    }
+
+    #header {
+        padding: 10px;
+    }
+
+    #header h1 {
+        font-size: 1rem;
+    }
+
+    #menu-toggle {
+        display: block;
+    }
+}
+
+@media (max-width: 480px) {
+    #header {
+        padding: 5px;
+    }
+
+    #header h1 {
+        font-size: 0.9rem;
+    }
+
+    #header nav li a {
+        padding: 8px;
+    }
+}
