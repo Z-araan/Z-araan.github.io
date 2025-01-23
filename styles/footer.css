@@ -1,0 +1,10 @@
+/* 页脚样式 */
+.footer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: orange;
+    padding: 10px;
+    color: white;
+    height: 50px;
+}
