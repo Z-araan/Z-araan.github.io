@@ -12,20 +12,14 @@ body {
 }
 
 /* 头部样式 */
-:root {
-    --header-bg-color: #4aeb35; /* 主题颜色 */
-    --header-padding: 10px;     /* 通用间距 */
-    --header-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* 阴影样式 */
-}
-
 #header {
-    background-color: var(--header-bg-color); /* 使用变量 */
+    background-color: #4aeb35;
     position: sticky;
     top: 0;
     width: 100%;
     z-index: 1000;
-    padding: var(--header-padding) 0; /* 使用变量 */
-    box-shadow: var(--header-shadow); /* 使用变量 */
+    padding: 10px 0;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -34,9 +28,14 @@ body {
 #header h1 {
     margin: 0;
     padding: 0 20px;
+    
+    line-height: 1.2; /* 调整行高，确保字体不会超出三行 */
+    color: white; /* 字体颜色为白色，与绿色背景对比更明显 */
+    word-wrap: break-word; /* 长单词自动换行 */
+
     font-size: 1.2rem; /* 增大字体大小，提升可读性 */
     font-weight: bold; /* 加粗字体 */
-    color: #fff;       /* 设置字体颜色为白色*/}
+    }
 
 #header nav ul {
     list-style-type: none;
@@ -139,10 +138,11 @@ body {
     }
    #header {
         padding: var(--header-padding) 10px; /* 在小屏幕上减少左右间距 */
+padding: 8px 0; /* 在小屏幕上减少上下间距 */
     }
 
     #header h1 {
-        font-size: 1rem; /* 在小屏幕上减小字体大小 */
+        font-size: 1.2rem; /* 在小屏幕上减小字体大小 */
     }
 }
     #menu-toggle {
@@ -162,6 +162,9 @@ body {
 @media (max-width: 480px) {
     #header {
         padding: 5px 0;
+    }
+    #header h1 {
+        font-size: 1rem; /* 在极小屏幕上进一步减小字体大小 */
     }
 
     #header nav li a {
