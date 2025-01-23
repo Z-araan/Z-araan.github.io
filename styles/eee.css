@@ -1,54 +1,4 @@
-/* 基本重置 */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-body {
-    font-family: Arial, sans-serif;
-    line-height: 1.6;
-    background: #f4f4f4;
-    color: #333;
-}
-
-header {
-    background: #333;
-    color: #fff;
-    padding: 1rem 0;
-    text-align: center;
-}
-
-header h1 {
-    margin-bottom: 0.5rem;
-}
-
-header nav ul {
-    list-style: none;
-    display: flex;
-    justify-content: center;
-}
-
-header nav ul li {
-    margin: 0 1rem;
-}
-
-header nav ul li a {
-    color: #fff;
-    text-decoration: none;
-    font-weight: bold;
-}
-
-header nav ul li a:hover {
-    text-decoration: underline;
-}
-
-main {
-    display: flex;
-    flex-wrap: wrap;
-    padding: 1rem;
-}
-
+ /* 文章样式 */
 .posts {
     flex: 3;
     margin-right: 1rem;
@@ -64,10 +14,12 @@ main {
 
 .posts article h2 {
     margin-bottom: 0.5rem;
+    font-size: 1.5rem;
 }
 
 .posts article p {
     margin-bottom: 0.5rem;
+    line-height: 1.6;
 }
 
 .posts article a {
@@ -80,6 +32,7 @@ main {
     text-decoration: underline;
 }
 
+/* 侧边栏样式 */
 .sidebar {
     flex: 1;
     background: #fff;
@@ -108,12 +61,4 @@ main {
 
 .sidebar ul li a:hover {
     text-decoration: underline;
-}
-
-footer {
-    background: #333;
-    color: #fff;
-    text-align: center;
-    padding: 1rem 0;
-    margin-top: 1rem;
 }
