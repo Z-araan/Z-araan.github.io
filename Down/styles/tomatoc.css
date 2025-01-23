@@ -1,4 +1,5 @@
-body {
+
+   body {
     font-family: Arial, sans-serif;
     display: flex;
     justify-content: center;
@@ -36,7 +37,25 @@ button:hover {
     background-color: #39a324;
 }
 
+.settings {
+    margin-top: 20px;
+}
+
+.settings input {
+    padding: 5px;
+    margin: 0 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width: 50px;
+}
+
 #status {
     font-size: 1.2em;
     color: #666;
+}
+
+#current-time {
+    margin-top: 20px;
+    font-size: 1.2em;
+    color: #555;
 }
