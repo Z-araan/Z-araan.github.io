@@ -1,15 +1,23 @@
+/* 表单样式 */
 form {
-    margin-top:2px ; /* 表单的外边距 */
+    display: flex;
+    align-items: center;
+    margin-top: 20px; /* 调整外边距，使其在页面中更合适 */
+    justify-content: center; /* 居中对齐 */
 }
 
+/* 输入框样式 */
 input[type="text"] {
     padding: 10px; /* 输入框内边距 */
     font-size: 16px; /* 输入框字体大小 */
     border: 1px solid #ccc; /* 输入框边框 */
     border-radius: 4px; /* 输入框圆角 */
-    width: 75%; /* 输入框宽度 */
+    width: 100%; /* 输入框宽度，响应式设计 */
+    max-width: 400px; /* 最大宽度限制 */
+    margin-right: 10px; /* 与按钮的间距 */
 }
 
+/* 按钮样式 */
 #like {
     padding: 10px; /* 按钮内边距 */
     font-size: 16px; /* 按钮字体大小 */
@@ -18,19 +26,43 @@ input[type="text"] {
     background-color: #4CAF50; /* 按钮背景颜色 */
     color: white; /* 按钮文本颜色 */
     cursor: pointer; /* 鼠标悬停时的指针样式 */
-    margin-left: 5px; /* 按钮与输入框之间的外边距 */
+    transition: background-color 0.3s ease; /* 平滑过渡效果 */
 }
 
+/* 按钮悬停效果 */
 #like:hover {
     background-color: #45a049; /* 鼠标悬停时的按钮背景颜色 */
 }
-#realtime-clock {
-            font-size: 24px;
-            font-family: Arial, sans-serif;
-     text-align: left;
-        border-width: 2px;
-    border-style: solid; /* 边框样式，可以是 solid, dashed, dotted 等 */
-    border-color: black; /* 边框颜色 */
-    margin-right:10%;
-    margin-left:10px;
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+    form {
+        flex-direction: column; /* 在移动端将表单元素堆叠 */
+        align-items: flex-start; /* 对齐方式调整为左对齐 */
     }
+
+    input[type="text"] {
+        width: 100%; /* 输入框宽度占满整个容器 */
+        margin-right: 0; /* 移除与按钮的间距 */
+        margin-bottom: 10px; /* 添加底部间距 */
+    }
+
+    #like {
+        width: 100%; /* 按钮宽度占满整个容器 */
+    }
+}
+
+/* 实时时钟样式 */
+#realtime-clock {
+    font-size: 24px;
+    font-family: Arial, sans-serif;
+    text-align: left;
+    border-width: 2px;
+    border-style: solid; /* 边框样式 */
+    border-color: black; /* 边框颜色 */
+    margin-right: 10%;
+    margin-left: 10px;
+    padding: 10px; /* 添加内边距 */
+    border-radius: 4px; /* 添加圆角 */
+    background-color: #f8f9fa; /* 添加背景颜色 */
+}
