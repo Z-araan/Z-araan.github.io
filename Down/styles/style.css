@@ -1,4 +1,5 @@
-  /* 基础样式 */
+ 
+/* 基础样式 */
 body {
     font-family: Arial, sans-serif;
     margin: 0;
@@ -6,6 +7,7 @@ body {
     line-height: 1.6;
     background-color: #f4f4f4;
     color: #333;
+    -webkit-font-smoothing: antialiased; /* 优化字体渲染 */
 }
 
 /* 弹出层样式 */
@@ -29,6 +31,7 @@ body {
     padding: 20px;
     border-radius: 10px;
     text-align: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* 添加阴影 */
 }
 
 .popup-content h2 {
@@ -41,6 +44,7 @@ body {
     border: none;
     border-radius: 5px;
     cursor: pointer;
+    font-size: 16px;
 }
 
 #yes-button {
@@ -55,10 +59,11 @@ body {
 
 /* 容器样式 */
 .container {
-    width: 100%; /* 容器宽度占满屏幕 */
-    max-width: 1200px; /* 最大宽度限制 */
+    width: 100%;
+    max-width: 1200px;
     margin: auto;
-    padding: 0 20px; /* 两侧留出一些空间 */
+    padding: 0 20px;
+    box-sizing: border-box; /* 确保内边距不会影响宽度 */
 }
 
 /* 导航栏样式 */
@@ -66,48 +71,49 @@ header {
     background: #333;
     color: #fff;
     padding: 10px 0;
-    width: 100%; /* 导航栏宽度占满屏幕 */
-    position: fixed; /* 导航栏固定 */
+    width: 100%;
+    position: fixed;
     top: 0;
     z-index: 1000;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* 添加阴影 */
 }
 
 header #branding {
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 20%; /* 缩小品牌名称区域的宽度 */
-    margin-left: 20px; /* 添加左侧间距 */
+    width: 20%;
+    margin-left: 20px;
 }
 
 header nav {
     display: flex;
     align-items: center;
-    width: 80%; /* 缩小导航菜单区域的宽度 */
-    margin-right: 20px; /* 添加右侧间距 */
-    flex-direction: column; /* 导航菜单竖向排列 */
-    height: 100vh; /* 导航菜单高度占满屏幕 */
-    justify-content: flex-start; /* 从顶部开始排列 */
-    align-items: flex-end; /* 靠右侧对齐 */
-    padding-top: 50px; /* 为品牌名称留出空间 */
+    width: 80%;
+    margin-right: 20px;
+    flex-direction: column;
+    height: 100vh;
+    justify-content: flex-start;
+    align-items: flex-end;
+    padding-top: 50px;
 }
 
 header ul {
     display: flex;
-    flex-direction: column; /* 导航项竖向排列 */
-    gap: 20px; /* 导航项之间的间距 */
-    width: 100%; /* 导航菜单宽度占满剩余空间 */
+    flex-direction: column;
+    gap: 20px;
+    width: 100%;
 }
 
 header li {
     display: flex;
     align-items: center;
     justify-content: center;
-    writing-mode: vertical-rl; /* 文字竖向排列 */
-    transform: rotate(180deg); /* 将文字反转，使其从上到下排列 */
+    writing-mode: vertical-rl;
+    transform: rotate(180deg);
 }
 
 header .current {
@@ -126,8 +132,10 @@ header a:hover {
 .main {
     padding: 20px;
     background: #fff;
-    margin-top: 60px; /* 为固定导航栏留出空间 */
+    margin-top: 60px;
     margin-bottom: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* 添加阴影 */
 }
 
 .main h1 {
@@ -157,13 +165,13 @@ footer {
     text-align: center;
     padding: 10px 0;
     width: 100%;
-    margin-top: 20px; /* 页脚与内容之间留出一些空间 */
+    margin-top: 20px;
 }
 
 /* 响应式设计 */
 @media (max-width: 768px) {
     .container {
-        padding: 0 10px; /* 在小屏幕上减少两侧留白 */
+        padding: 0 10px;
     }
 
     header ul {
@@ -182,4 +190,4 @@ footer {
     .main h2 {
         font-size: 16px;
     }
-}  
+}
