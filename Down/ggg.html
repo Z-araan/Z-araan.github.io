@@ -37,15 +37,32 @@
             <button onclick="speakArticle()">朗读文章</button>
            
     <script>
-        function speakArticle() {
-            const synth = window.speechSynthesis;
-            const articleText = document.querySelector(".main").innerText; // 获取文章内容
-            const utterThis = new SpeechSynthesisUtterance(articleText);
-            utterThis.lang = "zh-CN"; // 设置语言为中文
-            utterThis.rate = 1; // 设置语速
-            utterThis.pitch = 1; // 设置音调
-            synth.speak(utterThis);
-        }
+        <audio id="fallback-audio" src="https://z-araan.github.io/.mp3" preload="auto"></audio> <!-- 替换为你的音频文件路径 -->
+
+            <script>
+                function speakArticle() {
+                    const synth = window.speechSynthesis;
+                    const articleText = document.querySelector(".main").innerText;
+                    const utterThis = new SpeechSynthesisUtterance(articleText);
+                    utterThis.lang = "zh-CN";
+                    utterThis.rate = 1;
+                    utterThis.pitch = 1;
+
+                    if (synth.speak) {
+                        synth.speak(utterThis);
+                    } else {
+                        console.warn("朗读功能不可用，自动播放音频");
+                        document.getElementById("fallback-audio").play();
+                    }
+                }
+
+                // 页面加载时检查是否支持朗读功能
+                window.onload = () => {
+                    if (!window.speechSynthesis || !window.speechSynthesis.speak) {
+                        console.warn("朗读功能不可用，自动播放音频");
+                        document.getElementById("fallback-audio").play();
+                    }
+                };
     </script>
 
 
