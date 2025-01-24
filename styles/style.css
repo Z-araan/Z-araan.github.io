@@ -118,18 +118,7 @@ body {
     background-color: rgba(255, 255, 255, 0.8);
 }
 
-/* 页脚样式 */
-#footer {
-            
-    display: flex;
-     justify-content: center; /* 水平居中 */
-     align-items: center; /* 垂直居中 */
-     background-color: orange;
-     padding: 10px;
-     color: white;
-     height: 50px; /* 设置固定高度 */
-           
-}
+
 
 /* 响应式设计 */
 @media (max-width: 768px) {
