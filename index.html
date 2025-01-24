@@ -3,82 +3,78 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>z-araan的博客</title>
+    <title>Z-araan的博客</title>
     <meta name="author" content="z-huha">
     <meta name="description" content="Z-araan的博客，分享技术与生活">
     <link rel="stylesheet" type="text/css" href="styles/style.css">
-    <link rel="stylesheet" type="text/css" href="styles/search for.css">
+    <link rel="stylesheet" type="text/css" href="styles/search.css">
     <link rel="stylesheet" type="text/css" href="styles/navbar.css">
     <link rel="stylesheet" type="text/css" href="styles/menu.css">
     <link rel="stylesheet" type="text/css" href="styles/footer.css">
-    <link  rel="icon" href="/images/favicon.ico" >
-    <script src="scripts/time.js"></script>
-<script src="scripts/menu.js"></script>
-<script src="scripts/search.js"></script>
-    <script type="text/javascript" src="//api.tongjiniao.com/c?_=739884310315175936" async></script>
+    <link rel="icon" href="/images/favicon.ico">
+    <script src="scripts/time.js" defer></script>
+    <script src="scripts/menu.js" defer></script>
+    <script src="scripts/search.js" defer></script>
 </head>
 <body>
-    <div id="header">
+    <header id="header">
         <h1>Z-araan博客</h1>
         <nav id="nav">
             <ul>
                 <li><a href="/index.html">主页</a></li>
                 <li><a href="https://github.com/z-araan" target="_blank">我的GitHub地址</a></li>
-                <li>
-    <a href="https://z-araan.github.io/Down/z-araan.akp" download id="downloadButton">下载akp</a>
-</li>
+                <li><a href="https://z-araan.github.io/Down/z-araan.apk" download id="downloadButton">下载APK</a></li>
                 <li><a href="mailto:zhang0407peng@vip.qq.com">联系我</a></li>
-                <li><a href="#"> 更多</a></li></li>
-            </ul> 
+                <li><a href="#">更多</a></li>
+            </ul>
         </nav>
-    </div><div id="right-menu">
-        <div class="menu-item">菜单项1
+    </header>
+
+    <!-- 右拉菜单 -->
+    <div id="right-menu">
+        <div class="menu-item">
             <div class="submenu">
-                <div class="submenu-item">子菜单1-1</div>
+                <div class="submenu-item">文章</div>
                 <div class="submenu-item">子菜单1-2</div>
                 <div class="submenu-item">子菜单1-3</div>
             </div>
         </div>
-        <div class="menu-item">菜单项2
+        <div class="menu-item">工具
             <div class="submenu">
-                <div class="submenu-item">子菜单2-1</div>
+                <div class="submenu-item">番茄计时器</div>
                 <div class="submenu-item">子菜单2-2</div>
                 <div class="submenu-item">子菜单2-3</div>
             </div>
         </div>
-        <div class="menu-item">菜单项3
+        <div class="menu-item">娱乐
             <div class="submenu">
-                <div class="submenu-item">子菜单3-1</div>
+                <div class="submenu-item">猜数字</div>
                 <div class="submenu-item">子菜单3-2</div>
                 <div class="submenu-item">子菜单3-3</div>
             </div>
         </div>
     </div>
+
     <!-- 搜索表单 -->
-<form target="_blank" method="get" action="https://www.baidu.com/s" onsubmit="return search()">
-    <input type="text" placeholder="搜搜搜" name="word" class="text" id="search"/>
-    <button id="like"type="submit">点点</button> <!-- 添加的按钮 -->
-</form>
+    <form target="_blank" method="get" action="https://www.baidu.com/s" onsubmit="return customSearch()">
+        <input type="text" placeholder="搜搜搜" name="word" class="text" id="search">
+        <button id="like" type="submit">点点</button>
+    </form>
 
-
-    
     <div id="content">
         <h2>欢迎来到我的博客</h2>
         <p>这里是我分享技术见解和生活点滴的地方。</p>
         <div id="post-preview">
             <h3>最新文章简介</h3>
-           <a href="/Down/ggg.html">WebAssembly：重塑前端开发的未来</a> 
+            <a href="/Down/ggg.html">WebAssembly：重塑前端开发的未来</a>
         </div>
     </div>
 
-    
-    <div id="footer"><div id="realtime-clock">
-    </div>
+    <footer id="footer">
+        <div id="realtime-clock"></div>
         版权 © Z-araan
-    </div>
+    </footer>
 
-    
-
-    <script src="scripts/script.js"></script>
+    <script src="scripts/script.js" defer></script>
 </body>
 </html>
