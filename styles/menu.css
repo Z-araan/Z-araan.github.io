@@ -1,50 +1,44 @@
  /* 右拉菜单样式 */
-        #right-menu {
-            position: fixed;
-            right: 0;
-            top: 0;
-            width: 200px; /* 设置宽度 */
-            background-color: #f9f9f9;
-            border: 1px solid #ccc;
-            box-shadow: -2px 0 5px rgba(0, 0, 0, 0.2);
-            z-index: 1000;
-            display: none; /* 初始隐藏 */
-        }
-
-        .menu-item {
-            padding: 10px;
-            border-bottom: 1px solid #ccc;
-            cursor: pointer;
-            position: relative; /* 确保子菜单相对于父菜单定位 */
-        }
-
-        .menu-item:hover {
-            background-color: #e9e9e9;
-        }
-
-        /* 子菜单样式 */
-        .submenu {
-            display: none; /* 默认隐藏子菜单 */
-            position: absolute;
-            right: 100%; /* 子菜单从父菜单左侧滑出 */
-            top: 0;
-            width: 150px; /* 设置子菜单宽度 */
-            background-color: #f1f1f1;
-            border: 1px solid #ccc;
-            box-shadow: -2px 0 5px rgba(0, 0, 0, 0.2);
-        }
-
-        .submenu-item {
-            padding: 10px;
-            cursor: pointer;
-        }
-
-        .submenu-item:hover {
-            background-color: #ddd;
-        }
 #right-menu, .submenu {
+    position: fixed;
+    right: 0;
+    top: 0;
+    width: 200px;
+    background-color: #f9f9f9;
+    border: 1px solid #ccc;
+    box-shadow: -2px 0 5px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+    display: none;
     transition: all 0.3s ease;
 }
+
+.menu-item {
+    padding: 10px;
+    border-bottom: 1px solid #ccc;
+    cursor: pointer;
+    position: relative;
+}
+
+.menu-item:hover {
+    background-color: #e9e9e9;
+}
+
+/* 子菜单样式 */
+.submenu {
+    right: 100%;
+    top: 0;
+    width: 150px;
+}
+
+.submenu-item {
+    padding: 10px;
+    cursor: pointer;
+}
+
+.submenu-item:hover {
+    background-color: #ddd;
+}
+
 @media (max-width: 600px) {
     #right-menu {
         right: auto;
