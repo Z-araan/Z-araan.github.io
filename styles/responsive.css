@@ -1,0 +1,43 @@
+/* 默认样式（大屏幕） */
+.header nav {
+    display: flex; /* 显示完整导航栏 */
+}
+
+.sidebar {
+    display: block; /* 显示侧边栏 */
+}
+
+#right-menu {
+    display: block; /* 显示右拉菜单 */
+}
+
+/* 小屏幕设备（手机） */
+@media (max-width: 768px) {
+    .header nav {
+        display: none; /* 隐藏完整导航栏 */
+    }
+
+    .header .menu-toggle {
+        display: block; /* 显示汉堡菜单 */
+    }
+
+    .sidebar {
+        display: none; /* 隐藏侧边栏 */
+    }
+
+    #right-menu {
+        display: none; /* 隐藏右拉菜单 */
+    }
+
+    .header {
+        padding: 8px 0;
+    }
+
+    .header h1 {
+        font-size: 1rem;
+    }
+
+    .header nav li a {
+        padding: 8px;
+    }
+}
