@@ -1,17 +1,40 @@
 /* 页脚样式 */
-.footer {
+#footer {
     display: flex;
-    justify-content: center;
-    align-items: center;
+    justify-content: center; /* 水平居中 */
+    align-items: center; /* 垂直居中 */
     background-color: orange;
-    padding: 10px;
     color: white;
-    height: 50px;
+    padding: 10px 0; /* 上下内边距 */
+    height: auto; /* 自动高度 */
+    width: 100%; /* 宽度占满整个屏幕 */
+    box-sizing: border-box; /* 包含内边距和边框 */
+    position: relative; /* 相对定位 */
+    bottom: 0; /* 置于页面底部 */
 }
 
-#realtime-clock {
-    font-size: 24px;
-    font-family: Arial, sans-serif;
-    text-align: center;
-    margin-right: 10px;
+#footer #realtime-clock {
+    margin: 0 10px; /* 与版权文字的间距 */
+    font-size: 16px; /* 字体大小 */
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+    #footer {
+        padding: 5px 0; /* 小屏幕下减少内边距 */
+    }
+
+    #footer #realtime-clock {
+        font-size: 14px; /* 小屏幕下减小字体大小 */
+    }
+}
+
+@media (max-width: 480px) {
+    #footer {
+        padding: 3px 0; /* 更小屏幕进一步减少内边距 */
+    }
+
+    #footer #realtime-clock {
+        font-size: 12px; /* 更小屏幕进一步减小字体大小 */
+    }
 }
