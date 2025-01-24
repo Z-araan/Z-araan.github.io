@@ -1,16 +1,87 @@
- 
-/* 基础样式 */
-body {
-    font-family: Arial, sans-serif;
+/* 基础样式重置 */
+* {
     margin: 0;
     padding: 0;
-    line-height: 1.6;
-    background-color: #f4f4f4;
-    color: #333;
-    -webkit-font-smoothing: antialiased; /* 优化字体渲染 */
+    box-sizing: border-box;
 }
 
-/* 弹出层样式 */
+body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    color: #333;
+    background-color: #f4f4f4;
+    padding-top: 0;
+}
+
+a {
+    text-decoration: none;
+    color: #333;
+}
+
+a:hover {
+    color: #007BFF;
+}
+
+.container {
+    width: 80%;
+    margin: auto;
+    overflow: hidden;
+}
+
+/* 头部样式 */
+header {
+    background: #333;
+    color: #fff;
+    padding-top: 30px;
+    min-height: 70px;
+    border-bottom: #007BFF 3px solid;
+}
+
+header a {
+    color: #fff;
+}
+
+header a:hover {
+    color: #007BFF;
+}
+
+header .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#branding h1 {
+    margin: 0;
+}
+
+header nav {
+    display: flex;
+    align-items: center;
+}
+
+header nav ul {
+    list-style: none;
+    display: flex;
+}
+
+header nav ul li {
+    margin-left: 20px;
+}
+
+header nav ul li a {
+    text-decoration: none;
+    color: #fff;
+    padding: 5px 10px;
+    display: block;
+}
+
+header nav ul li a:hover {
+    background-color: #007BFF;
+    border-radius: 5px;
+}
+
+/* 弹窗样式 */
 .popup {
     position: fixed;
     top: 0;
@@ -21,17 +92,22 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
+    z-index: 1000;
+    visibility: hidden;
     opacity: 0;
-    pointer-events: none;
-    transition: opacity 0.5s;
+    transition: visibility 0s, opacity 0.5s linear;
+}
+
+.popup.active {
+    visibility: visible;
+    opacity: 1;
 }
 
 .popup-content {
-    background-color: white;
+    background-color: #fff;
     padding: 20px;
-    border-radius: 10px;
+    border-radius: 8px;
     text-align: center;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* 添加阴影 */
 }
 
 .popup-content h2 {
@@ -39,123 +115,89 @@ body {
 }
 
 .popup-content button {
-    padding: 10px 20px;
-    margin: 0 10px;
+    margin: 5px;
+    padding: 10px 15px;
     border: none;
+    background-color: #007BFF;
+    color: #fff;
     border-radius: 5px;
     cursor: pointer;
-    font-size: 16px;
 }
 
-#yes-button {
-    background-color: #4aeb35;
-    color: white;
-}
-
-#no-button {
-    background-color: #ff5757;
-    color: white;
-}
-
-/* 容器样式 */
-.container {
-    width: 100%;
-    max-width: 1200px;
-    margin: auto;
-    padding: 0 20px;
-    box-sizing: border-box; /* 确保内边距不会影响宽度 */
-}
-
-/* 导航栏样式 */
-header {
-    background: #333;
-    color: #fff;
-    padding: 10px 0;
-    width: 100%;
-    position: fixed;
-    top: 0;
-    z-index: 1000;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* 添加阴影 */
-}
-
-header #branding {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 20%;
-    margin-left: 20px;
-}
-
-header nav {
-    display: flex;
-    align-items: center;
-    width: 80%;
-    margin-right: 20px;
-    flex-direction: column;
-    height: 100vh;
-    justify-content: flex-start;
-    align-items: flex-end;
-    padding-top: 50px;
-}
-
-header ul {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-    width: 100%;
-}
-
-header li {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    writing-mode: vertical-rl;
-    transform: rotate(180deg);
-}
-
-header .current {
-    background-color: #e8491d;
-    padding: 5px 10px;
-    border-radius: 5px;
-    font-weight: bold;
-}
-
-header a:hover {
-    color: #ffffff;
-    font-weight: bold;
+.popup-content button:hover {
+    background-color: #0056b3;
 }
 
 /* 主内容区域 */
 .main {
-    padding: 20px;
+    margin-top: 20px;
     background: #fff;
-    margin-top: 60px;
-    margin-bottom: 20px;
+    padding: 20px;
     border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* 添加阴影 */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
 .main h1 {
-    font-size: 24px;
     margin-bottom: 10px;
 }
 
-.main .post-date {
-    font-size: 14px;
+.main p.post-date {
+    font-size: 0.8em;
     color: #666;
     margin-bottom: 20px;
 }
 
-.main p {
-    margin: 10px 0;
+.main button {
+    background-color: #007BFF;
+    color: #fff;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-bottom: 20px;
 }
 
-.main h2 {
-    font-size: 20px;
-    margin: 20px 0 10px;
+.main button:hover {
+    background-color: #0056b3;
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+    .container {
+        width: 95%;
+    }
+
+    header {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    header nav ul {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    header nav ul li {
+        margin: 5px 0;
+    }
+}
+
+@media (max-width: 480px) {
+    .container {
+        width: 100%;
+    }
+
+    header {
+        padding: 10px;
+    }
+
+    .main h1 {
+        font-size: 1.5em;
+    }
+
+    .main p, .main button {
+        font-size: 0.9em;
+    }
 }
 
 /* 页脚样式 */
@@ -164,30 +206,12 @@ footer {
     color: #fff;
     text-align: center;
     padding: 10px 0;
+    position: relative;
+    bottom: 0;
     width: 100%;
-    margin-top: 20px;
 }
 
-/* 响应式设计 */
-@media (max-width: 768px) {
-    .container {
-        padding: 0 10px;
-    }
-
-    header ul {
-        flex-direction: column;
-        gap: 10px;
-    }
-
-    header #branding h1 {
-        font-size: 20px;
-    }
-
-    .main h1 {
-        font-size: 20px;
-    }
-
-    .main h2 {
-        font-size: 16px;
-    }
+footer p {
+    margin: 0;
+    font-size: 0.9em;
 }
