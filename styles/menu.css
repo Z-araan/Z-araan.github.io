@@ -42,3 +42,13 @@
         .submenu-item:hover {
             background-color: #ddd;
         }
+#right-menu, .submenu {
+    transition: all 0.3s ease;
+}
+@media (max-width: 600px) {
+    #right-menu {
+        right: auto;
+        bottom: 0;
+        width: 100%;
+    }
+}
