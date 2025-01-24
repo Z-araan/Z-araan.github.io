@@ -47,3 +47,40 @@
 .header nav li a:hover {
     background-color: #111;
 }
+/* 响应式设计 */
+@media (max-width: 768px) {
+    #header nav li {
+        margin: 5px 0;
+    }
+    #header {
+        padding: 8px 0;
+    }
+    #header h1 {
+        font-size: 1.2rem;
+    }
+    #menu-toggle {
+        display: block;
+    }
+    #menu {
+        width: 100%;
+        margin-top: 0;
+    }
+    #content {
+        margin-top: 10px;
+    }
+}
+
+@media (max-width: 480px) {
+    #header {
+        padding: 5px 0;
+    }
+    #header h1 {
+        font-size: 1rem;
+    }
+    #header nav li a {
+        padding: 8px;
+    }
+    #footer {
+        padding: 5px 0;
+    }
+}
