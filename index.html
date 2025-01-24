@@ -80,9 +80,21 @@ src="//api.tongjiniao.com/c?
     </footer>
 
     <script src="scripts/script.js" defer></script
-script>
+<script>
         // 菜单切换按钮功能
         function toggleSidebar() {
-            document.getElementById('sidebar>
+            document.getElementById('sidebar').classList.toggle('active');
+        }
+
+        // 子菜单切换功能
+        function toggleSubmenu(item) {
+            const submenu = item.querySelector('.submenu');
+            if (submenu.style.display === 'block') {
+                submenu.style.display = 'none';
+            } else {
+                submenu.style.display = 'block';
+            }
+        }
+    </script>
 </body>
 </html>
