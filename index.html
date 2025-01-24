@@ -35,26 +35,26 @@ src="//api.tongjiniao.com/c?
     </header>
 
     <!-- 右拉菜单 -->
-    <div id="right-menu">
-        <div class="menu-item">
+    <div id="sidebar">
+        <div class="menu-item" onclick="toggleSubmenu(this)">文章
             <div class="submenu">
-                <div class="submenu-item">文章</div>
-                <div class="submenu-item">子菜单1-2</div>
-                <div class="submenu-item">子菜单1-3</div>
+                <div class="submenu-item"><a href="#">下午</a></div>
+                <div class="submenu-item"><a href="#">子菜单1-2</a></div>
+                <div class="submenu-item"><a href="#">子菜单1-3</a></div>
             </div>
         </div>
-        <div class="menu-item">工具
+        <div class="menu-item" onclick="toggleSubmenu(this)">工具
             <div class="submenu">
-                <div class="submenu-item">番茄计时器</div>
-                <div class="submenu-item">子菜单2-2</div>
-                <div class="submenu-item">子菜单2-3</div>
+                <div class="submenu-item"><a href="#">子菜单2-1</a></div>
+                <div class="submenu-item"><a href="#">子菜单2-2</a></div>
+                <div class="submenu-item"><a href="#">子菜单2-3</a></div>
             </div>
         </div>
-        <div class="menu-item">娱乐
+        <div class="menu-item" onclick="toggleSubmenu(this)">娱乐
             <div class="submenu">
-                <div class="submenu-item">猜数字</div>
-                <div class="submenu-item">子菜单3-2</div>
-                <div class="submenu-item">子菜单3-3</div>
+                <div class="submenu-item"><a href="#">子菜单3-1</a></div>
+                <div class="submenu-item"><a href="#">子菜单3-2</a></div>
+                <div class="submenu-item"><a href="#">子菜单3-3</a></div>
             </div>
         </div>
     </div>
@@ -79,6 +79,10 @@ src="//api.tongjiniao.com/c?
         版权 © Z-araan
     </footer>
 
-    <script src="scripts/script.js" defer></script>
+    <script src="scripts/script.js" defer></script
+script>
+        // 菜单切换按钮功能
+        function toggleSidebar() {
+            document.getElementById('sidebar>
 </body>
 </html>
