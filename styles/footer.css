@@ -17,6 +17,16 @@
     margin: 0 10px; /* 与版权文字的间距 */
     font-size: 16px; /* 字体大小 */
 }
+#realtime-clock {
+            font-size: 24px;
+            font-family: Arial, sans-serif;
+     text-align: left;
+        border-width: 2px;
+    border-style: solid; /* 边框样式，可以是 solid, dashed, dotted 等 */
+    border-color: black; /* 边框颜色 */
+    margin-right:10%;
+    margin-left:10px;
+    }
 
 /* 响应式设计 */
 @media (max-width: 768px) {
