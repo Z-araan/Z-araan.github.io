@@ -92,10 +92,10 @@ header nav ul li a:hover {
     display: flex;
     justify-content: center;
     align-items: center;
-    z-index: 1000;
-    visibility: hidden;
     opacity: 0;
-    transition: visibility 0s, opacity 0.5s linear;
+    pointer-events: none;
+    transition: opacity 0.5s;
+
 }
 
 .popup.active {
@@ -104,9 +104,9 @@ header nav ul li a:hover {
 }
 
 .popup-content {
-    background-color: #fff;
+    background-color: white;
     padding: 20px;
-    border-radius: 8px;
+    border-radius: 10px;
     text-align: center;
 }
 
@@ -115,18 +115,23 @@ header nav ul li a:hover {
 }
 
 .popup-content button {
-    margin: 5px;
-    padding: 10px 15px;
+    padding: 10px 20px;
+    margin: 0 10px;
     border: none;
-    background-color: #007BFF;
-    color: #fff;
     border-radius: 5px;
     cursor: pointer;
 }
 
-.popup-content button:hover {
-    background-color: #0056b3;
+#yes-button {
+    background-color: #4aeb35;
+    color: white;
 }
+
+#no-button {
+    background-color: #ff5757;
+    color: white;
+}
+
 
 /* 主内容区域 */
 .main {
