@@ -1,28 +1,22 @@
-/* 头部样式 */
-.header {
+#header {
     background-color: #4aeb35;
     position: sticky;
     top: 0;
     width: 100%;
     z-index: 1000;
     padding: 10px 0;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
 
-.header h1 {
+#header h1 {
     margin: 0;
     padding: 0 20px;
-    line-height: 1.2;
-    color: white;
-    word-wrap: break-word;
-    font-size: 1.2rem;
-    font-weight: bold;
 }
 
-.header nav ul {
+#header nav ul {
     list-style-type: none;
     margin: 0;
     padding: 0;
@@ -31,11 +25,11 @@
     background-color: #333;
 }
 
-.header nav li {
+#header nav li {
     margin: 0 10px;
 }
 
-.header nav li a {
+#header nav li a {
     display: block;
     color: white;
     text-align: center;
@@ -44,7 +38,6 @@
     transition: background-color 0.3s;
 }
 
-.header nav li a:hover {
+#header nav li a:hover {
     background-color: #111;
 }
-
