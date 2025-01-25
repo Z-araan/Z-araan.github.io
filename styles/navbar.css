@@ -1,19 +1,21 @@
 #header {
-    background-color: #4aeb35;
+    background-color: #4CAF50; /* 统一背景颜色 */
     position: sticky;
     top: 0;
-    width: 100%;
+    width: 100%; /* 确保头部宽度占满整个屏幕 */
     z-index: 1000;
-    padding: 10px 0;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    padding: 10px 0; /* 垂直方向的内边距 */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* 添加阴影效果 */
     display: flex;
     justify-content: space-between;
     align-items: center;
+    color: white; /* 文字颜色 */
+    border: 1px solid #ccc; /* 边框颜色 */
 }
 
 #header h1 {
     margin: 0;
-    padding: 0 20px;
+    padding: 0 20px; /* 为标题添加左右内边距 */
 }
 
 #header nav ul {
@@ -22,11 +24,13 @@
     padding: 0;
     display: flex;
     justify-content: center;
-    background-color: #333;
+    background-color: #333; /* 导航栏背景颜色 */
+    overflow-x: auto; /* 启用水平滚动 */
+    white-space: nowrap; /* 防止换行 */
 }
 
 #header nav li {
-    margin: 0 10px;
+    margin: 0 10px; /* 为导航项添加左右外边距 */
 }
 
 #header nav li a {
@@ -35,9 +39,9 @@
     text-align: center;
     padding: 14px 16px;
     text-decoration: none;
-    transition: background-color 0.3s;
+    transition: background-color 0.3s; /* 添加背景颜色过渡效果 */
 }
 
 #header nav li a:hover {
-    background-color: #111;
+    background-color: #111; /* 鼠标悬停时的背景颜色 */
 }
