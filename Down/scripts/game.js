@@ -4,7 +4,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const noButton = document.getElementById("no-button");
 
     // 设置弹窗显示的时间（30秒）
-    const timeout = 30000; // 30秒
+    const timeout = 10000; // 30秒
 
     setTimeout(() => {
         popup.style.opacity = "1";
