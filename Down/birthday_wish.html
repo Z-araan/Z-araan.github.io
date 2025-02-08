@@ -1,0 +1,92 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>生日祝福</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f8ff;
+            color: #333;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            width: 80%;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+        h1 {
+            text-align: center;
+            color: #ff6347;
+        }
+        p {
+            font-size: 16px;
+        }
+        .signature {
+            text-align: right;
+            margin-top: 20px;
+        }
+        .hidden-message {
+            display: none;
+            text-align: center;
+            font-size: 20px;
+            color: #ff6347;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>生日快乐</h1>
+        <p>你好，萌蝶：</p>
+        <p>从我们2023年12月24日14:36认识开始，到现在已经过去了412天。这段时间里，我们虽然没有频繁的联系，但每一次的交流都让我感到珍贵和愉快。回想起我们相识的那一天，正好是平安夜，一个充满温馨和希望的日子。</p>
+        <p>在过去的一年多时间里，我们的生活可能都发生了很多变化。你可能经历了新的挑战，也可能收获了新的喜悦。虽然我没有亲眼见证这些时刻，但我真心为你感到高兴，并希望在未来的日子里，你能够继续收获更多的快乐和成功。</p>
+        <p>我想说的是，生活就像一场漫长的马拉松，有时候我们会觉得疲惫，有时候又会因为前方的风景而兴奋不已。在这场马拉松中，我们可能会遇到各种各样的困难，比如工作上的压力、学习上的挑战，甚至是生活中的不如意。但就像你一直以来努力的样子，我相信你一定能够克服这些困难。每一次的坚持，每一次的努力，都是在为自己的未来铺路。</p>
+        <p>我们都要相信自己，相信自己的能力，相信自己可以做到的事情。就像那些在黑暗中闪烁的星星，虽然光芒微弱，但只要坚持发光，就一定能照亮前行的道路。我们也要相信，无论遇到多大的困难，只要我们不放弃，就一定会有解决的办法。就像那些在风雨中依然挺立的树木，它们经历了无数次的风雨，却依然屹立不倒，因为它们的根扎得很深，它们的心很坚定。</p>
+        <p>在未来的日子里，我希望我们都能成为彼此的力量。当你感到疲惫的时候，我希望我的鼓励能让你重新振作；当我遇到困难的时候，我也希望你的支持能让我更有勇气。我们可以在彼此的生活中分享快乐，也可以在彼此的生活中分担痛苦。我们的友谊就像一座桥梁，连接着我们的心，让我们在人生的道路上不再孤单。</p>
+        <p>在你的生日之际，我想对你说，感谢你成为我的朋友。虽然我们不能面对面地庆祝，但我会在心中为你祝福，希望你在新的一年里，能够实现自己的梦想，过上更加幸福和充实的生活。</p>
+        <p>生活总是充满了未知和挑战，但我相信，只要我们保持积极的态度，勇敢面对，就一定能够克服困难，实现自己的目标。我希望在新的一年里，我们能有更多的交流和互动，让这份友谊更加深厚。</p>
+        <p>再次祝你生日快乐！所以，我的朋友，让我们一起努力，一起加油。无论生活给我们带来什么，我们都要勇敢地面对，坚持下去。我相信，只要我们努力，就一定能看到希望的曙光。我们的友谊也会因为我们的坚持和努力而变得更加深厚，更加珍贵。</p>
+        <p>愿你在新的一年里，健康快乐，心想事成，梦想成真。希望我们的友谊能够像这封信一样，永远保持真诚和温暖。</p>
+        <div class="signature">
+            <p>灰狼</p>
+            <p>2025年2月8号</p>
+        </div>
+        <div class="hidden-message">点击屏幕五次，看看我为你准备的惊喜！</div>
+    </div>
+    <audio id="birthday-music" autoplay>
+        <source src="pp.mp4" type="audio/mpeg">
+        Your browser does not support the audio element.
+    </audio>
+    <script>
+        let clickCount = 0;
+        const hiddenMessage = document.querySelector('.hidden-message');
+
+        // 自动滚动页面
+        window.onload = function() {
+            const scrollInterval = setInterval(() => {
+                window.scrollBy(0, 5); // 每次滚动5像素（速度更慢）
+                if (window.scrollY + window.innerHeight >= document.body.scrollHeight) {
+                    clearInterval(scrollInterval); // 到达底部时停止滚动
+                }
+            }, 200); // 每200毫秒滚动一次（速度更慢）
+        };
+
+        // 点击屏幕五次弹出文字
+        document.addEventListener('click', () => {
+            clickCount++;
+            if (clickCount === 5) {
+                hiddenMessage.style.display = 'block';
+                hiddenMessage.textContent = '萌蝶，你是我最好的朋友，生日快乐！';
+            }
+        });
+    </script>
+</body>
+</html>
