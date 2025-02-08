@@ -65,7 +65,29 @@
         <source src="pp.mp4" type="audio/mpeg">
         Your browser does not support the audio element.
     </audio>
+<button id="playButton">播放音频</button>
     <script>
+        // 获取音频元素
+        const audio = document.getElementById('birthday-music');
+        // 获取按钮元素
+        const playButton = document.getElementById('playButton');
+
+        // 页面加载完成后，尝试自动播放
+        document.addEventListener('DOMContentLoaded', () => {
+            audio.play().then(() => {
+                // 如果自动播放成功，取消静音
+                audio.muted = false;
+            }).catch((error) => {
+                // 如果自动播放失败，提示用户点击按钮播放
+                console.log('自动播放失败，请点击按钮播放音频');
+            });
+        });
+
+        // 点击按钮播放音频
+        playButton.addEventListener('click', () => {
+            audio.muted = false; // 取消静音
+            audio.play(); // 播放音频
+        });
         let clickCount = 0;
         const hiddenMessage = document.querySelector('.hidden-message');
 
