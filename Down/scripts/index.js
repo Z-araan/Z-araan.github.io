@@ -705,3 +705,20 @@ document.addEventListener('DOMContentLoaded', () => {
     alert('通知权限未开启，请点击“请求通知权限”按钮以启用通知功能。');
   }
 });
+function generateRoomId() {
+  return Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
+}
+function generateRoomPassword() {
+  const password = Math.random().toString(36).substring(2, 15);
+  return MD5(password);
+}
+function redirectToRoom(roomId, roomPassword) {
+  const url = `/room/${roomId}?password=${roomPassword}`;
+  window.location.href = url;
+}document.addEventListener('DOMContentLoaded', () => {
+  document.getElementById('createRoomBtn').addEventListener('click', () => {
+    const roomId = generateRoomId();
+    const roomPassword = generateRoomPassword();
+    redirectToRoom(roomId, roomPassword);
+  });
+});
