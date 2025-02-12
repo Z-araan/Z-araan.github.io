@@ -268,16 +268,17 @@ function addChatItem(uid, message) {
     console.log('通知权限未开启');
   }
 }
+
 function sendMessage(msg) {
-  const message = msg ?? messageInput.value;
-  addChatItem(me.id, message);
-  users.forEach(u => {
+  const message = msg ?? messageInput.value; // 确保messageInput已定义
+  addChatItem(me.id, message); // 确保me.id已定义
+  users.forEach(u => { // 确保users已定义
     if (u.isMe) {
       return;
     }
-    u.sendMessage(message);
+    u.sendMessage(message); // 确保sendMessage方法已定义
   });
-  messageInput.value ='';
+  messageInput.value = ''; // 确保messageInput已定义
 }
 
 async function sendFile(file) {
