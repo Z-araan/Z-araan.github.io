@@ -705,10 +705,4 @@ document.addEventListener('DOMContentLoaded', () => {
   if (Notification.permission === 'default') {
     alert('通知权限未开启，请点击“请求通知权限”按钮以启用通知功能。');
   }
-});// 添加清空输入框的函数
-function clearInput() {
-  const input = document.getElementById('messageInput'); // 确保ID正确
-  input.type = 'text'; // 临时改变类型
-  input.value = ''; // 清空值
-  input.type = 'password'; // 恢复类型
-}
+});
