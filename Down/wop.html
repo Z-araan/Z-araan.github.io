@@ -85,9 +85,10 @@
 
     <script>
         // 初始化 Pusher
-        const pusher = new Pusher('ac75639869986b7239bd', {
-            cluster: 'ap3',
-            forceTLS: true
+        const pusher = new Pusher('ac7563986998b7239bd', { // 替换为你的 Pusher Key
+            cluster: 'ap3', // 替换为你的 Pusher Cluster
+            forceTLS: true,
+            debug: true // 启用调试模式
         });
 
         // 订阅频道
@@ -102,6 +103,7 @@
         sendButton.addEventListener('click', () => {
             const message = messageInput.value.trim();
             if (message) {
+                console.log('Sending message:', message); // 调试日志
                 channel.trigger('client-message', { text: message });
                 messageInput.value = '';
             }
@@ -118,6 +120,7 @@
                 const reader = new FileReader();
                 reader.onload = () => {
                     const fileData = reader.result;
+                    console.log('Sending file:', fileData); // 调试日志
                     channel.trigger('client-file', { file: fileData });
                 };
                 reader.readAsDataURL(file);
@@ -126,6 +129,7 @@
 
         // 接收消息
         channel.bind('client-message', (data) => {
+            console.log('Received message:', data); // 调试日志
             const messageElement = document.createElement('div');
             messageElement.className = 'message';
             messageElement.textContent = data.text;
@@ -135,6 +139,7 @@
 
         // 接收文件
         channel.bind('client-file', (data) => {
+            console.log('Received file:', data); // 调试日志
             const imgElement = document.createElement('img');
             imgElement.src = data.file;
             imgElement.style.maxWidth = '100%';
