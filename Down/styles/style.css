@@ -1,64 +1,87 @@
+/* 定义全局变量 */
+:root {
+  --primary-color: #64B5F6;
+  --secondary-color: #FFA726;
+  --background-color: #242424;
+  --text-color: #e0e0e0;
+  --hover-color: #363636;
+  --border-color: #363636;
+  --transition-duration: 0.2s;
+}
+
+/* 全局样式 */
 body, html {
   margin: 0;
   padding: 0;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-  background-color: #1a1a1a;
-  color: #e0e0e0;
+  background-color: var(--background-color);
+  color: var(--text-color);
   display: flex;
   width: 100%;
   height: 100%;
 }
 
-body .dragtip {
+/* 拖拽提示样式 */
+.dragtip {
   display: none;
   position: fixed;
   top: 0;
   left: 0;
-  background: rgba(0,0,0,0.8);
+  background: rgba(0, 0, 0, 0.8);
   z-index: 999;
   width: 100vw;
   height: 100vh;
   pointer-events: none;
 }
+
 body.dragover .dragtip {
   display: block;
 }
-body.dragover .dragtip h1 {
+
+.dragtip h1 {
   position: absolute;
   top: 50%;
   left: 50%;
   margin: 0;
   transform: translate(-50%, -50%);
   font-size: 32px;
+  color: var(--primary-color);
 }
+
+/* 预格式化文本样式 */
 pre {
   margin: 0;
-  font-family: "Helvetica Neue",Helvetica,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","微软雅黑",Arial,sans-serif;
+  font-family: "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", Arial, sans-serif;
 }
+
+/* 左侧布局 */
 .left {
   flex: 1;
   padding: 0;
   display: flex;
   flex-direction: column;
-  background-color: #242424;
+  background-color: var(--background-color);
   border-radius: 8px 0 0 8px;
   margin: 10px 0 10px 10px;
 }
+
+/* 右侧布局 */
 .right {
   width: 200px;
-  color: #e0e0e0;
-  border-left: 1px solid #363636;
+  color: var(--text-color);
+  border-left: 1px solid var(--border-color);
   padding: 15px;
-  background-color: #242424;
+  background-color: var(--background-color);
   overflow: auto;
   margin: 10px 10px 10px 0;
   border-radius: 0 8px 8px 0;
 }
+
 .right ul {
-  /* list-style: none; */
   padding: 0;
   margin: 0;
 }
+
 .right ul li {
   user-select: none;
   cursor: default;
@@ -67,13 +90,16 @@ pre {
   margin: 4px 0;
   border-radius: 4px;
   background-color: #2a2a2a;
-  transition: background-color 0.2s;
+  transition: background-color var(--transition-duration);
   display: flex;
   align-items: center;
 }
+
 .right ul li:hover {
-  background-color: #363636;
+  background-color: var(--hover-color);
 }
+
+/* 聊天区域样式 */
 .chat-wrapper {
   flex: 1;
   font-size: 18px;
@@ -83,33 +109,39 @@ pre {
   overflow: auto;
   scroll-behavior: smooth;
 }
+
 .chat-item {
   display: block;
   padding: 8px 15px;
   margin: 5px 0;
-  transition: background-color 0.2s;
+  transition: background-color var(--transition-duration);
 }
+
 .chat-item:hover {
   background-color: #2a2a2a;
 }
+
 .chat-item .chat-item_user {
   display: block;
   margin-bottom: 4px;
-  color: #64B5F6;
+  color: var(--primary-color);
   font-weight: 500;
   font-size: 14px;
   user-select: none;
 }
+
 .chat-item .chat-item_user.system {
-  color: #FFA726;
+  color: var(--secondary-color);
 }
+
 .chat-item .chat-item_content {
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
   padding-left: 0;
-  color: #e0e0e0;
+  color: var(--text-color);
 }
+
 .chat-item .chat-item_content pre {
   white-space: pre-wrap;
   word-wrap: break-word;
@@ -117,47 +149,54 @@ pre {
   margin: 0;
   font-size: 15px;
   line-height: 1.5;
-  color: #e0e0e0;
+  color: var(--text-color);
 }
+
 .chat-item .chat-item_content pre a {
-  color: #64B5F6;
+  color: var(--primary-color);
   text-decoration: none;
-  transition: opacity 0.2s;
+  transition: opacity var(--transition-duration);
 }
+
 .chat-item .chat-item_content pre a:hover {
   opacity: 0.8;
 }
-.chat-item a.file, .chat-item a.file:visited {
+
+.chat-item a.file {
   display: inline-block;
   padding: 8px 12px;
   margin-top: 4px;
   background-color: #2a2a2a;
   border-radius: 4px;
-  color: #64B5F6;
+  color: var(--primary-color);
   text-decoration: none;
-  transition: background-color 0.2s;
+  transition: background-color var(--transition-duration);
 }
+
 .chat-item a.file:hover {
-  background-color: #363636;
+  background-color: var(--hover-color);
 }
+
+/* 文本输入框样式 */
 .txt-msg {
   outline: none;
-  color: #e0e0e0;
+  color: var(--text-color);
   height: 20%;
   min-height: 100px;
   background-color: #2a2a2a;
-  border: 1px solid #363636;
+  border: 1px solid var(--border-color);
   border-radius: 0;
   padding: 12px;
   font-size: 14px;
   line-height: 1.5;
   margin: 0 15px 15px 15px;
   resize: none;
-  -webkit-border-radius: 0;
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
 }
+
+/* 模态框样式 */
 .modal {
   display: none;
   position: fixed;
@@ -174,10 +213,8 @@ pre {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  background: #2a2a2a;
+  background: var(--background-color);
   padding: 20px;
-  border-radius: 5px;
-  min-width: 300px;
   border-radius: 8px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
   padding: 25px;
@@ -185,7 +222,7 @@ pre {
 
 .modal h3 {
   margin: 0 0 15px 0;
-  color: #64B5F6;
+  color: var(--primary-color);
   font-size: 18px;
   margin-bottom: 20px;
 }
@@ -199,11 +236,11 @@ pre {
   padding: 8px;
   margin: 5px 0;
   cursor: pointer;
-  color: #ffffffbb;
+  color: rgba(255, 255, 255, 0.7);
   background-color: #363636;
   border-radius: 4px;
   margin: 8px 0;
-  transition: all 0.2s;
+  transition: all var(--transition-duration);
 }
 
 .user-select-item:hover {
@@ -233,19 +270,19 @@ pre {
 
 .modal-footer button {
   padding: 8px 20px;
-  background: #64B5F6;
+  background: var(--primary-color);
   color: #fff;
   border-radius: 4px;
   font-weight: 500;
-  transition: all 0.2s;
-  border: 1px solid #42A5F5;
+  transition: all var(--transition-duration);
+  border: 1px solid var(--primary-color);
   cursor: pointer;
 }
 
 .modal-footer button:first-child {
   background: transparent;
-  color: #64B5F6;
-  border: 1px solid #64B5F6;
+  color: var(--primary-color);
+  border: 1px solid var(--primary-color);
   margin-right: 10px;
 }
 
@@ -265,12 +302,13 @@ pre {
   opacity: 0.7;
 }
 
+/* 进度条样式 */
 .progress-container {
   margin: 15px 0;
 }
 
 .progress-text {
-  color: #ffffffbb;
+  color: rgba(255, 255, 255, 0.7);
   margin-bottom: 5px;
   font-size: 14px;
 }
@@ -286,17 +324,18 @@ pre {
 .progress-bar-inner {
   width: 0%;
   height: 100%;
-  background: #64B5F6;
+  background: var(--primary-color);
   border-radius: 4px;
   transition: width 0.3s ease;
 }
 
+/* 工具栏样式 */
 .toolbar {
   background-color: #2a2a2a;
   margin: 0 15px;
   padding: 10px;
   border-radius: 4px 4px 0 0;
-  border: 1px solid #363636;
+  border: 1px solid var(--border-color);
   border-bottom: none;
   display: flex;
   align-items: center;
@@ -308,36 +347,24 @@ pre {
   align-items: center;
 }
 
-.toolbar-btn,.copy-btn {
+.toolbar-btn, .copy-btn {
   background: none;
   border: none;
   padding: 8px;
   cursor: pointer;
-  color: #e0e0e0;
+  color: var(--text-color);
   border-radius: 4px;
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: all 0.2s;
+  transition: all var(--transition-duration);
 }
 
-.send-btn:hover, .toolbar-btn:hover, .copy-btn:hover {
-  background-color: #363636;
-  /* color: #64B5F6; */
+.toolbar-btn:hover, .copy-btn:hover {
+  background-color: var(--hover-color);
 }
 
-
-/* 拖拽提示样式 */
-.dragtip {
-  background: rgba(26, 26, 26, 0.95);
-}
-
-.dragtip h1 {
-  color: #64B5F6;
-  font-size: 28px;
-  text-align: center;
-}
-
+/* 连接状态样式 */
 .connection-status {
   display: inline-flex;
   align-items: center;
@@ -360,6 +387,7 @@ pre {
   color: #F44336;
 }
 
+/* 昵称输入框样式 */
 .nickname-input-container {
   margin: 20px 0;
 }
@@ -367,9 +395,9 @@ pre {
 .nickname-input-container input {
   width: 100%;
   padding: 8px;
-  border: 1px solid #363636;
+  border: 1px solid var(--border-color);
   background: #2a2a2a;
-  color: #e0e0e0;
+  color: var(--text-color);
   border-radius: 4px;
   font-size: 14px;
 }
@@ -381,10 +409,10 @@ pre {
 
 .nickname-input-container input:focus {
   outline: none;
-  border-color: #64B5F6;
+  border-color: var(--primary-color);
 }
 
-/* 移动端专用元素在PC上隐藏 */
+/* 移动端专用样式 */
 .mobile-only {
   display: none;
 }
@@ -393,12 +421,11 @@ pre {
   display: none;
 }
 
-/* Mobile responsive styles */
 @media screen and (max-width: 768px) {
   .mobile-only {
     display: block;
   }
-  
+
   .right {
     position: fixed;
     top: 0;
@@ -409,7 +436,7 @@ pre {
     margin: 0;
     border-radius: 0;
     z-index: 100;
-    background-color: #242424;
+    background-color: var(--background-color);
   }
 
   .mobile-overlay {
@@ -438,7 +465,7 @@ pre {
   }
 
   body.show-users .toggle-users-btn {
-    color: #64B5F6;
-    background-color: #363636;
+    color: var(--primary-color);
+    background-color: var(--hover-color);
   }
 }
