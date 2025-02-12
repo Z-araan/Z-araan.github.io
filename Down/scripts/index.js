@@ -277,7 +277,7 @@ function sendMessage(msg) {
     }
     u.sendMessage(message);
   });
-  messageInput.value = '';
+  messageInput.value ='';
 }
 
 async function sendFile(file) {
