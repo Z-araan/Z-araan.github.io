@@ -19,37 +19,37 @@
 </url>
 
 <url>
+  <loc>https://zaraan.zh.kg/</loc>
+  <lastmod>2026-09-13T00:00:00+00:00</lastmod>
+  <priority>0.90</priority>
+</url>
+
+<url>
   <loc>https://z-araan.github.io/Down/utils.html</loc>
   <lastmod>2026-09-13T00:00:00+00:00</lastmod>
   <priority>0.80</priority>
 </url>
 
 <url>
-  <loc>https://z-araan.github.io/Down/index.html</loc>
-  <lastmod>2026-09-13T00:00:00+00:00</lastmod>
-  <priority>0.70</priority>
-</url>
-
-<url>
-  <loc>https://z-araan.github.io/Down/tomato.html</loc>
-  <lastmod>2026-09-13T00:00:00+00:00</lastmod>
-  <priority>0.60</priority>
-</url>
-
-<url>
-  <loc>https://z-araan.github.io/Down/numbers.html</loc>
-  <lastmod>2026-09-13T00:00:00+00:00</lastmod>
-  <priority>0.50</priority>
-</url>
-
-<url>
-  <loc>https://z-araan.github.io/Down/ggg.html</loc>
+  <loc>https://z-araan.github.io/Down/wasm.html</loc>
   <lastmod>2026-09-13T00:00:00+00:00</lastmod>
   <priority>0.80</priority>
 </url>
 
 <url>
-  <loc>https://z-araan.github.io/Down/wish.html</loc>
+  <loc>https://z-araan.github.io/Down/chat.html</loc>
+  <lastmod>2026-09-13T00:00:00+00:00</lastmod>
+  <priority>0.70</priority>
+</url>
+
+<url>
+  <loc>https://z-araan.github.io/Down/pomodoro.html</loc>
+  <lastmod>2026-09-13T00:00:00+00:00</lastmod>
+  <priority>0.60</priority>
+</url>
+
+<url>
+  <loc>https://z-araan.github.io/Down/guess.html</loc>
   <lastmod>2026-09-13T00:00:00+00:00</lastmod>
   <priority>0.50</priority>
 </url>

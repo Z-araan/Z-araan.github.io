@@ -13,7 +13,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     yesButton.addEventListener("click", () => {
         // 点击“是”，跳转到游戏链接
-        window.location.href = "https://z-araan.github.io/Down/numbers.html"; // 替换为你的游戏链接
+        window.location.href = "https://z-araan.github.io/Down/guess.html"; // 替换为你的游戏链接
     });
 
     noButton.addEventListener("click", () => {

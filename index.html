@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Z-araan · 个人主页</title>
-<meta name="description" content="Z-araan 的个人主页：技术分享、小工具与作品集。局域网聊天、番茄计时器、猜数字游戏、技术文章与安卓应用下载。">
+<meta name="description" content="Z-araan 的个人主页：技术文章、小工具与作品集。图片去 EXIF、JSON 工具、局域网聊天、番茄钟，以及博客最新文章。">
 <meta name="author" content="Z-araan">
 <meta name="theme-color" content="#070b14">
 <link rel="canonical" href="https://z-araan.github.io/">
@@ -12,23 +12,25 @@
 <link rel="icon" href="/images/favicon.ico">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Z-araan · 个人主页">
-<meta property="og:description" content="技术分享、小工具与作品集">
+<meta property="og:description" content="技术文章、小工具与作品集">
 <meta property="og:url" content="https://z-araan.github.io/">
 <link rel="stylesheet" href="styles/main.css">
+<link rel="stylesheet" href="styles/music.css">
 <script>
-  // 提前应用主题，避免刷新时闪白（本地存储优先，其次跟随系统）
   (function () {
     try {
       var saved = localStorage.getItem('theme');
       var prefersLight = window.matchMedia('(prefers-color-scheme: light)').matches;
       document.documentElement.dataset.theme = saved || (prefersLight ? 'light' : 'dark');
-    } catch (e) { /* 隐私模式下忽略 */ }
+    } catch (e) {}
   })();
 </script>
 <script src="scripts/main.js" defer></script>
+<script src="scripts/music.js" defer></script>
 </head>
 <body>
 <a class="skip-link" href="#main">跳到主要内容</a>
+<canvas id="bg-canvas" aria-hidden="true"></canvas>
 
 <header class="nav" id="nav">
   <div class="nav-inner">
@@ -39,20 +41,21 @@
 
     <nav class="nav-links" id="nav-links" aria-label="主导航">
       <a href="#top">首页</a>
-      <a href="#projects">项目</a>
       <a href="#posts">文章</a>
-      <a href="https://zaraan.zh.kg/" target="_blank" rel="noopener">博客</a>
+      <a href="#projects">项目</a>
       <a href="https://github.com/z-araan" target="_blank" rel="noopener">GitHub</a>
       <a href="mailto:zhang0407peng@vip.qq.com">联系我</a>
     </nav>
 
     <div class="nav-actions">
+      <button class="icon-btn kbd-btn" id="palette-open" type="button" title="快速跳转（Ctrl/⌘ + K）" aria-label="打开快速跳转">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+      </button>
+      <a class="icon-btn" href="https://zaraan.zh.kg/" target="_blank" rel="noopener" title="博客" aria-label="博客">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h16v14H4z"/><path d="M8 9h8M8 13h5"/></svg>
+      </a>
       <a class="icon-btn" href="https://zaraan.zh.kg/rss.xml" target="_blank" rel="noopener" title="RSS 订阅" aria-label="RSS 订阅">
         <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 19a2 2 0 1 0 0-4 2 2 0 0 0 0 4ZM4 4a16 16 0 0 1 16 16M4 11a9 9 0 0 1 9 9"/></svg>
-      </a>
-      <a class="btn btn-primary btn-sm" href="/Down/z-araan.apk" download>
-        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v12m0 0 4-4m-4 4-4-4M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2"/></svg>
-        下载 APK
       </a>
       <button class="icon-btn" id="theme-toggle" type="button" aria-label="切换深色/浅色主题" aria-pressed="false">
         <svg class="icon-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M2 12h2m16 0h2M4.9 4.9l1.4 1.4m11.4 11.4 1.4 1.4M19.1 4.9l-1.4 1.4M6.3 17.7l-1.4 1.4"/></svg>
@@ -82,10 +85,15 @@
           <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M8 3v4m8-4v4M3 11h18"/></svg>
           <span id="today">----</span>
         </div>
+        <button class="chip chip-btn" id="music-hint" type="button" title="打开右下角音乐播放器">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 18V6l10-2v12"/><circle cx="6.5" cy="18" r="2.5"/><circle cx="16.5" cy="16" r="2.5"/></svg>
+          <span>随便听听</span>
+        </button>
       </div>
 
       <div class="hero-cta">
-        <a class="btn btn-primary" href="#projects">看看我的项目</a>
+        <a class="btn btn-primary" href="#posts">看看最新文章</a>
+        <a class="btn" href="#projects">我的小工具</a>
         <a class="btn" href="https://github.com/z-araan" target="_blank" rel="noopener">
           <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 0 0-3.2 19.5c.5.1.7-.2.7-.5v-1.8c-2.8.6-3.4-1.3-3.4-1.3-.4-1.2-1.1-1.5-1.1-1.5-.9-.6.1-.6.1-.6 1 .1 1.5 1 1.5 1 .9 1.5 2.3 1.1 2.9.8.1-.7.4-1.1.6-1.4-2.2-.3-4.6-1.1-4.6-5 0-1.1.4-2 1-2.7-.1-.3-.4-1.3.1-2.7 0 0 .8-.3 2.7 1a9.4 9.4 0 0 1 5 0c1.9-1.3 2.7-1 2.7-1 .5 1.4.2 2.4.1 2.7.6.7 1 1.6 1 2.7 0 3.9-2.4 4.7-4.6 5 .4.3.7 1 .7 2v2.9c0 .3.2.6.7.5A10 10 0 0 0 12 2Z"/></svg>
           GitHub
@@ -95,81 +103,9 @@
       <form class="search" action="https://www.baidu.com/s" method="get" target="_blank" rel="noopener" role="search">
         <label class="sr-only" for="q">搜索</label>
         <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
-        <input id="q" name="wd" type="search" placeholder="搜索点什么…（回车用百度搜索）" autocomplete="off">
+        <input id="q" name="wd" type="search" placeholder="搜索点什么…（回车用百度搜索，Ctrl/⌘+K 快速跳转）" autocomplete="off">
         <button class="btn btn-sm" type="submit">搜索</button>
       </form>
-    </div>
-  </section>
-
-  <section class="container section" id="projects">
-    <div class="section-head">
-      <h2>项目与工具</h2>
-      <p>都是纯前端或轻量实现，点开即用</p>
-    </div>
-
-    <div class="grid cards">
-      <article class="card">
-        <div class="card-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="3"/><path d="M3 15l4.5-4.5 3.5 3.5 3-3L21 16"/><circle cx="9" cy="9" r="1.4"/></svg></div>
-        <h3>图片工具箱</h3>
-        <p>浏览器里给照片去 EXIF/GPS、压缩体积、转 WebP，不上传服务器。</p>
-        <div class="card-foot"><span class="tag">隐私</span><a class="link" href="/Down/image.html">打开 →</a></div>
-      </article>
-
-      <article class="card">
-        <div class="card-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 4H6a2 2 0 0 0-2 2v3a2 2 0 0 1-2 2 2 2 0 0 1 2 2v3a2 2 0 0 0 2 2h2M16 4h2a2 2 0 0 1 2 2v3a2 2 0 0 0 2 2 2 2 0 0 0-2 2v3a2 2 0 0 1-2 2h-2"/></svg></div>
-        <h3>JSON 工具</h3>
-        <p>格式化、压缩、校验 JSON，报错直接给出行列位置。</p>
-        <div class="card-foot"><span class="tag">开发</span><a class="link" href="/Down/json.html">打开 →</a></div>
-      </article>
-
-      <article class="card">
-        <div class="card-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M10.3 4.3a4 4 0 1 1 5.4 5.4l-6 6a4 4 0 1 1-5.4-5.4l6-6Z"/><path d="m8.5 8.5 3 3"/></svg></div>
-        <h3>实用小工具</h3>
-        <p>时间戳转换、Base64、随机密码、UUID、颜色换算合集。</p>
-        <div class="card-foot"><span class="tag">效率</span><a class="link" href="/Down/utils.html">打开 →</a></div>
-      </article>
-
-      <article class="card">
-        <div class="card-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12a8 8 0 0 1-8 8H8l-4 2v-5.5A8 8 0 0 1 11 4h2a8 8 0 0 1 8 8Z"/><path d="M9 11h6M9 15h4"/></svg></div>
-        <h3>局域网聊天</h3>
-        <p>同一局域网内互传消息与文件，无需服务器中转。</p>
-        <div class="card-foot"><span class="tag">WebRTC</span><a class="link" href="/Down/index.html">打开 →</a></div>
-      </article>
-
-      <article class="card">
-        <div class="card-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l3 2M9 3h6"/></svg></div>
-        <h3>番茄计时器</h3>
-        <p>专注 25 分钟、休息 5 分钟，简单好用的节奏工具。</p>
-        <div class="card-foot"><span class="tag">效率</span><a class="link" href="/Down/tomato.html">打开 →</a></div>
-      </article>
-
-      <article class="card">
-        <div class="card-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="4"/><circle cx="8.5" cy="8.5" r="1.2"/><circle cx="15.5" cy="15.5" r="1.2"/><circle cx="12" cy="12" r="1.2"/></svg></div>
-        <h3>猜数字游戏</h3>
-        <p>1 到 100 之间猜一个数字，看看几次能猜中。</p>
-        <div class="card-foot"><span class="tag">小游戏</span><a class="link" href="/Down/numbers.html">打开 →</a></div>
-      </article>
-
-      <article class="card">
-        <div class="card-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20h16M6 20v-5a6 6 0 0 1 12 0v5"/><path d="M12 4v3M10 4h4"/></svg></div>
-        <h3>生日祝福</h3>
-        <p>带背景音乐与留言区的生日祝福页面，适合发链接送祝福。</p>
-        <div class="card-foot"><span class="tag">页面</span><a class="link" href="/Down/wish.html">打开 →</a></div>
-      </article>
-
-      <article class="card">
-        <div class="card-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h9l5 5v13H6z"/><path d="M15 3v5h5M9 13h7M9 17h5"/></svg></div>
-        <h3>技术文章</h3>
-        <p>WebAssembly、前端性能等主题的读书与实践笔记。</p>
-        <div class="card-foot"><span class="tag">博客</span><a class="link" href="/Down/ggg.html">阅读 →</a></div>
-      </article>
-
-      <article class="card">
-        <div class="card-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="6" y="2" width="12" height="20" rx="3"/><path d="M11 18h2"/></svg></div>
-        <h3>安卓应用</h3>
-        <p>自己写的小应用安装包，直接下载安装体验。</p>
-        <div class="card-foot"><span class="tag">APK</span><a class="link" href="/Down/z-araan.apk" download>下载 →</a></div>
-      </article>
     </div>
   </section>
 
@@ -190,7 +126,7 @@
         <div class="post-main">
           <div class="post-meta"><span class="tag">博客</span><time>2026-09-07</time></div>
           <h3>Halo 博客部署与运维完全指南：从 Docker 起步到 HTTPS、备份、安全与 AI 接入</h3>
-          <p>引言：为什么选择 Halo 在搭建个人网站时，选择一套合适的建站系统往往比想象中更影响长期体验。市面上的方案大致分三类：一是以 WordPress 为代表的传统动态博客，功能全、插件多，但架构…</p>
+          <p>引言：为什么选择 Halo 在搭建个人网站时，选择一套合适的建站系统往往比想象中更影响长期体验。市面上的方案大致分三类：一是以 WordPress 为代表的传统动态博客，功能全、插件多…</p>
         </div>
         <span class="post-go" aria-hidden="true">→</span>
       </a>
@@ -198,7 +134,7 @@
         <div class="post-main">
           <div class="post-meta"><span class="tag">博客</span><time>2026-09-05</time></div>
           <h3>MCP（Model Context Protocol）从入门到实战：协议原理、架构与工具调用</h3>
-          <p>引言：为什么需要一座「连接的桥梁」 过去两年，大语言模型的能力提升令人目不暇接：长上下文、复杂推理、多模态理解、代码生成，几乎每一项都在快速逼近甚至超越人类平均水平。然而无论是多么强大的模型，…</p>
+          <p>引言：为什么需要一座「连接的桥梁」 过去两年，大语言模型的能力提升令人目不暇接：长上下文、复杂推理、多模态理解、代码生成，几乎每一项都在快速逼近甚至超越人类平均水平。然而无论是多么强大…</p>
         </div>
         <span class="post-go" aria-hidden="true">→</span>
       </a>
@@ -206,7 +142,7 @@
         <div class="post-main">
           <div class="post-meta"><span class="tag">博客</span><time>2026-08-22</time></div>
           <h3>Lively Wallpaper 完全使用指南</h3>
-          <p>前言： 在 Windows 桌面美化领域，动态壁纸一直是众多用户津津乐道的话题。提到动态壁纸，很多人第一时间会想到 Steam 平台上的 Wallpaper Engine，但它需要付费购买（约…</p>
+          <p>前言： 在 Windows 桌面美化领域，动态壁纸一直是众多用户津津乐道的话题。提到动态壁纸，很多人第一时间会想到 Steam 平台上的 Wallpaper Engine，但它需要付费…</p>
         </div>
         <span class="post-go" aria-hidden="true">→</span>
       </a>
@@ -214,12 +150,70 @@
         <div class="post-main">
           <div class="post-meta"><span class="tag">博客</span><time>2026-08-21</time></div>
           <h3>AI智能体（AI Agent）技术全解析：架构原理、部署实践、安全风控与未来演进</h3>
-          <p>随着大语言模型技术的持续迭代，人工智能正式从被动问答时代迈入主动自主执行时代。AI智能体（AI Agent）作为新一代人工智能核心范式，彻底打破了传统大模型“一问一答、无记忆、无行动、无规划”…</p>
+          <p>随着大语言模型技术的持续迭代，人工智能正式从被动问答时代迈入主动自主执行时代。AI智能体（AI Agent）作为新一代人工智能核心范式，彻底打破了传统大模型“一问一答、无记忆、无行动、…</p>
         </div>
         <span class="post-go" aria-hidden="true">→</span>
       </a>
     </div>
     <p class="hint" id="rss-note">以上为本地快照，页面加载时会尝试从 RSS 实时更新。</p>
+  </section>
+
+  <section class="container section" id="projects">
+    <div class="section-head">
+      <h2>项目与工具</h2>
+      <p>都是纯前端或轻量实现，点开即用；按 Ctrl/⌘ + K 也能直接跳过去</p>
+    </div>
+
+    <div class="grid cards">
+      <article class="card">
+        <div class="card-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="3"/><path d="M3 15l4.5-4.5 3.5 3.5 3-3L21 16"/><circle cx="9" cy="9" r="1.4"/></svg></div>
+        <h3>图片工具箱</h3>
+        <p>浏览器里给照片去 EXIF/GPS、压缩体积、转 WebP，不上传服务器。</p>
+        <div class="card-foot"><span class="tag">隐私</span><a class="link" href="/Down/image.html">打开 →</a></div>
+      </article>
+      <article class="card">
+        <div class="card-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 4H6a2 2 0 0 0-2 2v3a2 2 0 0 1-2 2 2 2 0 0 1 2 2v3a2 2 0 0 0 2 2h2M16 4h2a2 2 0 0 1 2 2v3a2 2 0 0 0 2 2 2 2 0 0 0-2 2v3a2 2 0 0 1-2 2h-2"/></svg></div>
+        <h3>JSON 工具</h3>
+        <p>格式化、压缩、校验 JSON，报错直接给出行列位置。</p>
+        <div class="card-foot"><span class="tag">开发</span><a class="link" href="/Down/json.html">打开 →</a></div>
+      </article>
+      <article class="card">
+        <div class="card-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M10.3 4.3a4 4 0 1 1 5.4 5.4l-6 6a4 4 0 1 1-5.4-5.4l6-6Z"/><path d="m8.5 8.5 3 3"/></svg></div>
+        <h3>实用小工具</h3>
+        <p>时间戳转换、Base64、随机密码、UUID、颜色换算合集。</p>
+        <div class="card-foot"><span class="tag">效率</span><a class="link" href="/Down/utils.html">打开 →</a></div>
+      </article>
+      <article class="card">
+        <div class="card-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12a8 8 0 0 1-8 8H8l-4 2v-5.5A8 8 0 0 1 11 4h2a8 8 0 0 1 8 8Z"/><path d="M9 11h6M9 15h4"/></svg></div>
+        <h3>局域网聊天</h3>
+        <p>同一局域网内互传消息与文件，无需服务器中转。</p>
+        <div class="card-foot"><span class="tag">WebRTC</span><a class="link" href="/Down/chat.html">打开 →</a></div>
+      </article>
+      <article class="card">
+        <div class="card-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l3 2M9 3h6"/></svg></div>
+        <h3>番茄计时器</h3>
+        <p>专注 25 分钟、休息 5 分钟，内置提示音，离线可用。</p>
+        <div class="card-foot"><span class="tag">效率</span><a class="link" href="/Down/pomodoro.html">打开 →</a></div>
+      </article>
+      <article class="card">
+        <div class="card-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="4"/><circle cx="8.5" cy="8.5" r="1.2"/><circle cx="15.5" cy="15.5" r="1.2"/><circle cx="12" cy="12" r="1.2"/></svg></div>
+        <h3>猜数字游戏</h3>
+        <p>1 到 100 之间猜一个数字，看看几次能猜中。</p>
+        <div class="card-foot"><span class="tag">小游戏</span><a class="link" href="/Down/guess.html">打开 →</a></div>
+      </article>
+      <article class="card">
+        <div class="card-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h9l5 5v13H6z"/><path d="M15 3v5h5M9 13h7M9 17h5"/></svg></div>
+        <h3>技术文章</h3>
+        <p>WebAssembly、前端性能等主题的读书与实践笔记。</p>
+        <div class="card-foot"><span class="tag">博客</span><a class="link" href="/Down/wasm.html">阅读 →</a></div>
+      </article>
+      <article class="card">
+        <div class="card-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="6" y="2" width="12" height="20" rx="3"/><path d="M11 18h2"/></svg></div>
+        <h3>安卓应用</h3>
+        <p>自己写的小应用安装包，直接下载安装体验。</p>
+        <div class="card-foot"><span class="tag">APK</span><a class="link" href="/Down/z-araan.apk" download>下载 →</a></div>
+      </article>
+    </div>
   </section>
 
   <section class="container section" id="about">
@@ -236,20 +230,96 @@
   </section>
 </main>
 
+<!-- 音乐播放器（可折叠为悬浮球，可拖动；首次点击才联网取歌单） -->
+<div class="music-widget" id="musicWidget">
+  <button class="music-collapse-btn" id="collapseBtn" type="button" title="折叠" aria-label="折叠播放器">▾</button>
+  <div class="music-top">
+    <div class="music-cover" id="musicCover">
+      <img id="songCover" src="/images/favicon.ico" alt="封面">
+    </div>
+    <div class="music-info">
+      <div class="music-title" id="songName">Z-araan 电台</div>
+      <div class="music-artist" id="songArtist">点击播放，随机来一首</div>
+      <div class="music-lyric" id="songLyric">歌词会显示在这里</div>
+    </div>
+  </div>
+
+  <div class="music-progress-wrap">
+    <div class="music-time"><span id="currentTime">00:00</span><span id="totalTime">00:00</span></div>
+    <div class="progress-bar" id="progressBar" role="slider" aria-label="播放进度" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" tabindex="0">
+      <div class="progress" id="progress"></div>
+    </div>
+  </div>
+
+  <div class="music-controls">
+    <button class="music-btn" id="prevBtn" type="button" title="上一首" aria-label="上一首">
+      <svg viewBox="0 0 24 24"><path d="M6 6v12M20 6l-9 6 9 6z"/></svg>
+    </button>
+    <button class="music-btn play-btn" id="playBtn" type="button" title="播放" aria-label="播放">
+      <svg viewBox="0 0 24 24" id="playIcon"><path d="M8 5v14l11-7z"/></svg>
+    </button>
+    <button class="music-btn" id="nextBtn" type="button" title="下一首" aria-label="下一首">
+      <svg viewBox="0 0 24 24"><path d="M18 6v12M4 6l9 6-9 6z"/></svg>
+    </button>
+    <div class="music-volume-area">
+      <button class="music-volume-btn" id="volumeBtn" type="button" title="音量" aria-label="音量">
+        <svg viewBox="0 0 24 24" id="volumeIcon"><path d="M3 9v6h4l5 5V4L7 9H3z"/><path d="M16 8.5a4.5 4.5 0 0 1 0 7"/></svg>
+      </button>
+      <div class="music-volume-slider-wrap" id="volumeSliderWrap">
+        <input type="range" class="volume-slider" id="volumeSlider" min="0" max="100" value="70" aria-label="音量大小">
+      </div>
+    </div>
+  </div>
+</div>
+
+<button class="music-fab" id="musicFab" type="button" title="展开播放器" aria-label="展开播放器" hidden>
+  <img id="fabCover" src="/images/favicon.ico" alt="">
+  <svg class="fab-play-icon" id="fabPlayIcon" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+</button>
+<audio id="customAudioPlayer" preload="none" crossorigin="anonymous"></audio>
+
+<!-- Ctrl/⌘ + K 快速跳转面板 -->
+<div class="palette" id="palette" hidden>
+  <div class="palette-box" role="dialog" aria-modal="true" aria-label="快速跳转">
+    <div class="palette-search">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+      <input id="palette-input" type="text" placeholder="输入关键词：工具 / 文章 / 主题 / RSS…" autocomplete="off">
+      <kbd>Esc</kbd>
+    </div>
+    <ul class="palette-list" id="palette-list" role="listbox" aria-label="跳转目标"></ul>
+    <p class="palette-foot">↑↓ 选择 · Enter 打开 · Ctrl/⌘+K 关闭</p>
+  </div>
+</div>
+
 <footer class="footer">
-  <div class="container footer-inner">
+  <div class="container footer-grid">
+    <div class="footer-col">
+      <p class="footer-brand"><span class="brand-dot" aria-hidden="true"></span> Z-araan</p>
+      <p class="footer-desc">一个放小工具和技术笔记的地方。<br>所有工具都在浏览器本地运行。</p>
+    </div>
+    <div class="footer-col">
+      <h4>站内</h4>
+      <ul class="footer-links-list">
+        <li><a href="#posts">最新文章</a></li>
+        <li><a href="#projects">项目与工具</a></li>
+        <li><a href="/Down/image.html">图片工具箱</a></li>
+        <li><a href="/Down/json.html">JSON 工具</a></li>
+        <li><a href="/Down/utils.html">实用小工具</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>订阅与联系</h4>
+      <ul class="footer-links-list">
+        <li><a href="https://zaraan.zh.kg/" target="_blank" rel="noopener">博客 zaraan.zh.kg</a></li>
+        <li><a href="https://zaraan.zh.kg/rss.xml" target="_blank" rel="noopener">RSS 订阅</a></li>
+        <li><a href="https://github.com/z-araan" target="_blank" rel="noopener">GitHub</a></li>
+        <li><a href="mailto:zhang0407peng@vip.qq.com">邮箱</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="container footer-bar">
     <p>© <span id="year">2026</span> Z-araan · 保留所有权利</p>
-    <p class="footer-links">
-      <a href="https://github.com/z-araan" target="_blank" rel="noopener">GitHub</a>
-      <span aria-hidden="true">·</span>
-      <a href="mailto:zhang0407peng@vip.qq.com">邮箱</a>
-      <span aria-hidden="true">·</span>
-      <a href="https://zaraan.zh.kg/" target="_blank" rel="noopener">博客</a>
-      <span aria-hidden="true">·</span>
-      <a href="https://zaraan.zh.kg/rss.xml" target="_blank" rel="noopener">RSS</a>
-      <span aria-hidden="true">·</span>
-      <a href="/sitemap.xml">站点地图</a>
-    </p>
+    <p class="footer-note">音乐来自第三方 API，点击播放后才会联网 · <a href="/sitemap.xml">站点地图</a> · <a href="#top">回到顶部</a></p>
   </div>
 </footer>
 

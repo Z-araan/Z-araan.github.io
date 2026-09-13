@@ -206,4 +206,191 @@
       clearTimeout(timer);
     });
   }
+
+  /* ---------- 动态背景：星点 + 缓慢流动的光晕 ---------- */
+  var canvas = document.getElementById('bg-canvas');
+
+  if (canvas && canvas.getContext && !reduceMotion) {
+    var ctx = canvas.getContext('2d');
+    var dots = [];
+    var dpr = Math.min(window.devicePixelRatio || 1, 2);
+    var rafId = null;
+    var t = 0;
+
+    function resize() {
+      canvas.width = Math.floor(window.innerWidth * dpr);
+      canvas.height = Math.floor(window.innerHeight * dpr);
+      var count = Math.round(Math.min(120, (window.innerWidth * window.innerHeight) / 16000));
+      dots = [];
+      for (var i = 0; i < count; i++) {
+        dots.push({
+          x: Math.random() * canvas.width,
+          y: Math.random() * canvas.height,
+          r: (Math.random() * 1.4 + 0.5) * dpr,
+          vx: (Math.random() - 0.5) * 0.12 * dpr,
+          vy: (Math.random() - 0.5) * 0.12 * dpr,
+          a: Math.random() * 0.5 + 0.25
+        });
+      }
+    }
+
+    function isDark() { return root.dataset.theme !== 'light'; }
+
+    function draw() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      var dark = isDark();
+
+      // 缓慢流动的光晕
+      t += 0.0022;
+      var blobs = [
+        { x: canvas.width * (0.28 + 0.05 * Math.sin(t)), y: canvas.height * (0.22 + 0.04 * Math.cos(t * 1.3)), r: canvas.width * 0.34, c: dark ? '78,161,255' : '31,111,235' },
+        { x: canvas.width * (0.74 + 0.05 * Math.cos(t * 0.8)), y: canvas.height * (0.72 + 0.05 * Math.sin(t)), r: canvas.width * 0.30, c: dark ? '124,92,255' : '111,75,255' }
+      ];
+      blobs.forEach(function (b) {
+        var g = ctx.createRadialGradient(b.x, b.y, 0, b.x, b.y, b.r);
+        g.addColorStop(0, 'rgba(' + b.c + ',' + (dark ? 0.16 : 0.12) + ')');
+        g.addColorStop(1, 'rgba(' + b.c + ',0)');
+        ctx.fillStyle = g;
+        ctx.beginPath();
+        ctx.arc(b.x, b.y, b.r, 0, Math.PI * 2);
+        ctx.fill();
+      });
+
+      // 星点
+      dots.forEach(function (d) {
+        d.x += d.vx; d.y += d.vy;
+        if (d.x < 0) d.x = canvas.width;
+        if (d.x > canvas.width) d.x = 0;
+        if (d.y < 0) d.y = canvas.height;
+        if (d.y > canvas.height) d.y = 0;
+        ctx.beginPath();
+        ctx.arc(d.x, d.y, d.r, 0, Math.PI * 2);
+        ctx.fillStyle = dark ? 'rgba(196,214,255,' + d.a + ')' : 'rgba(20,40,80,' + (d.a * 0.5) + ')';
+        ctx.fill();
+      });
+
+      rafId = window.requestAnimationFrame(draw);
+    }
+
+    function startBg() { if (rafId === null) draw(); }
+    function stopBg() { if (rafId !== null) { window.cancelAnimationFrame(rafId); rafId = null; } }
+
+    resize();
+    startBg();
+    window.addEventListener('resize', resize);
+    document.addEventListener('visibilitychange', function () {
+      if (document.hidden) stopBg(); else startBg();
+    });
+  }
+
+  /* ---------- Ctrl/⌘ + K 快速跳转 ---------- */
+  var palette = document.getElementById('palette');
+  var paletteInput = document.getElementById('palette-input');
+  var paletteList = document.getElementById('palette-list');
+
+  if (palette && paletteInput && paletteList) {
+    var DESTINATIONS = [
+      { icon: '🏠', name: '首页', hint: '回到顶部', href: '#top', kind: '页面' },
+      { icon: '📄', name: '最新文章', hint: '博客 RSS 同步', href: '#posts', kind: '页面' },
+      { icon: '🧰', name: '项目与工具', hint: '全部小工具入口', href: '#projects', kind: '页面' },
+      { icon: '🙋', name: '关于我', hint: '联系方式', href: '#about', kind: '页面' },
+      { icon: '🖼️', name: '图片工具箱', hint: '去 EXIF / 压缩 / 转 WebP', href: '/Down/image.html', kind: '工具' },
+      { icon: '🧾', name: 'JSON 工具', hint: '格式化 / 压缩 / 校验', href: '/Down/json.html', kind: '工具' },
+      { icon: '🔧', name: '实用小工具', hint: '时间戳 / Base64 / 密码 / UUID', href: '/Down/utils.html', kind: '工具' },
+      { icon: '💬', name: '局域网聊天', hint: '同网段传输消息与文件', href: '/Down/chat.html', kind: '工具' },
+      { icon: '⏱️', name: '番茄计时器', hint: '专注 25 分钟', href: '/Down/pomodoro.html', kind: '工具' },
+      { icon: '🎲', name: '猜数字游戏', hint: '摸鱼小游戏', href: '/Down/guess.html', kind: '工具' },
+      { icon: '📘', name: 'WebAssembly 文章', hint: '技术笔记', href: '/Down/wasm.html', kind: '文章' },
+      { icon: '📦', name: '下载安卓应用', hint: 'z-araan.apk', href: '/Down/z-araan.apk', kind: '下载' },
+      { icon: '📡', name: 'RSS 订阅', hint: 'zaraan.zh.kg/rss.xml', href: 'https://zaraan.zh.kg/rss.xml', kind: '外部' },
+      { icon: '✍️', name: '博客首页', hint: 'zaraan.zh.kg', href: 'https://zaraan.zh.kg/', kind: '外部' },
+      { icon: '🐙', name: 'GitHub', hint: 'github.com/z-araan', href: 'https://github.com/z-araan', kind: '外部' },
+      { icon: '🌗', name: '切换深色 / 浅色主题', hint: '立即生效', action: 'theme', kind: '操作' },
+      { icon: '🎵', name: '打开音乐播放器', hint: '随机来一首', action: 'music', kind: '操作' },
+      { icon: '📋', name: '复制本页链接', hint: '分享给朋友', action: 'copy', kind: '操作' }
+    ];
+    var filtered = DESTINATIONS.slice();
+    var activeIndex = 0;
+
+    function render() {
+      paletteList.innerHTML = '';
+      if (!filtered.length) {
+        var li = document.createElement('li');
+        li.className = 'empty';
+        li.textContent = '没有匹配的结果';
+        paletteList.appendChild(li);
+        return;
+      }
+      filtered.forEach(function (item, i) {
+        var li = document.createElement('li');
+        li.className = i === activeIndex ? 'active' : '';
+        li.setAttribute('role', 'option');
+        li.setAttribute('aria-selected', String(i === activeIndex));
+        li.innerHTML = '<span aria-hidden="true"></span><span class="p-name"></span>' +
+                       '<span class="p-kind"></span>';
+        li.firstChild.textContent = item.icon;
+        li.querySelector('.p-name').textContent = item.name + ' · ' + item.hint;
+        li.querySelector('.p-kind').textContent = item.kind;
+        li.addEventListener('click', function () { run(item); });
+        li.addEventListener('mousemove', function () { activeIndex = i; render(); });
+        paletteList.appendChild(li);
+      });
+    }
+
+    function run(item) {
+      closePalette();
+      if (item.action === 'theme') {
+        if (themeBtn) themeBtn.click();
+        return;
+      }
+      if (item.action === 'music') {
+        var hint = document.getElementById('music-hint');
+        if (hint) hint.click();
+        return;
+      }
+      if (item.action === 'copy') {
+        if (navigator.clipboard) navigator.clipboard.writeText(location.href);
+        return;
+      }
+      if (item.href.charAt(0) === '#') {
+        var target = document.querySelector(item.href);
+        if (target) target.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'start' });
+      } else {
+        window.open(item.href, item.href.charAt(0) === '/' ? '_self' : '_blank', 'noopener');
+      }
+    }
+
+    function openPalette() {
+      palette.hidden = false;
+      paletteInput.value = '';
+      filtered = DESTINATIONS.slice();
+      activeIndex = 0;
+      render();
+      paletteInput.focus();
+    }
+    function closePalette() { palette.hidden = true; }
+
+    document.addEventListener('keydown', function (e) {
+      var isK = e.key === 'k' || e.key === 'K';
+      if ((e.ctrlKey || e.metaKey) && isK) { e.preventDefault(); palette.hidden ? openPalette() : closePalette(); return; }
+      if (palette.hidden) return;
+      if (e.key === 'Escape') { closePalette(); }
+      else if (e.key === 'ArrowDown') { e.preventDefault(); activeIndex = Math.min(activeIndex + 1, filtered.length - 1); render(); }
+      else if (e.key === 'ArrowUp') { e.preventDefault(); activeIndex = Math.max(activeIndex - 1, 0); render(); }
+      else if (e.key === 'Enter') { e.preventDefault(); if (filtered[activeIndex]) run(filtered[activeIndex]); }
+    });
+
+    paletteInput.addEventListener('input', function () {
+      var q = this.value.trim().toLowerCase();
+      filtered = DESTINATIONS.filter(function (d) {
+        return !q || (d.name + d.hint + d.kind).toLowerCase().indexOf(q) !== -1;
+      });
+      activeIndex = 0;
+      render();
+    });
+    palette.addEventListener('click', function (e) { if (e.target === palette) closePalette(); });
+
+    var openBtn = document.getElementById('palette-open');
+    if (openBtn) openBtn.addEventListener('click', openPalette);
+  }
 })();

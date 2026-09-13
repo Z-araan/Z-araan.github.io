@@ -250,6 +250,15 @@ body.show-users .mobile-overlay { display: block; }
 .progress-bar { height: 8px; border-radius: 999px; background: var(--panel-strong); overflow: hidden; }
 .progress-bar-inner { height: 100%; width: 0; background: linear-gradient(90deg, var(--accent), var(--accent-2)); transition: width .2s; }
 
+/* 仅移动端显示的按钮（聊天页的"在线用户"开关） */
+.mobile-only { display: none; }
+@media (max-width: 900px) {
+  .mobile-only { display: inline-flex; }
+}
+
+/* 评论容器（Giscus iframe） */
+.giscus { margin-top: .6rem; min-height: 140px; }
+
 /* ---------- 工具：图片 / JSON / 小工具 ---------- */
 .drop-zone {
   display: flex; flex-direction: column; align-items: center; justify-content: center; gap: .4rem;
