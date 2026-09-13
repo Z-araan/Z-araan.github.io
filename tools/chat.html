@@ -24,12 +24,13 @@
 
 <header class="nav">
   <div class="nav-inner">
-    <a class="brand" href="/"><span class="brand-dot" aria-hidden="true"></span><span class="brand-name">Z-araan</span></a>
+    <a class="brand" href="/"><img class="brand-logo" src="/images/favicon.ico" alt="" width="22" height="22"><span class="brand-name">Z-araan</span></a>
     <nav class="nav-links" id="nav-links" aria-label="主导航">
       <a href="/">主页</a>
-      <a href="/#projects">工具</a>
-      <a href="pomodoro.html">番茄钟</a>
-      <a href="guess.html">猜数字</a>
+      <a href="/#posts">文章</a>
+      <a href="/#moments">动态</a>
+      <a href="/#projects">项目</a>
+      <a href="/#tools" aria-current="page">工具</a>
       <a href="https://zaraan.zh.kg/" target="_blank" rel="noopener">博客</a>
     </nav>
     <div class="nav-actions">
@@ -117,8 +118,9 @@
 <div class="modal" id="passwordModal">
   <div class="modal-content">
     <h3>请输入房间密码</h3>
+    <p class="hint" style="margin-top:-.4rem">密码由创建者在分享链接里给出；留空可直接进入无密码房间。</p>
     <div class="nickname-input-container">
-      <input type="password" id="roomPasswordInput" placeholder="请输入密码" autocomplete="off" name="password_fake">
+      <input type="password" id="roomPasswordInput" placeholder="房间密码（可留空）" autocomplete="off" name="password_fake">
     </div>
     <div class="modal-footer">
       <button type="button" onclick="submitRoomPassword()">确认</button>
@@ -127,12 +129,5 @@
 </div>
 
 <script src="scripts/chat.js"></script>
-<footer class="footer">
-  <div class="container footer-bar">
-    <p>© <span id="year">2026</span> Z-araan · 保留所有权利</p>
-    <p class="footer-note"><a href="/">主页</a> · <a href="/#projects">全部工具</a> · <a href="/sitemap.xml">站点地图</a> · <a href="https://zaraan.zh.kg/" target="_blank" rel="noopener">博客</a></p>
-  </div>
-</footer>
-
 </body>
 </html>

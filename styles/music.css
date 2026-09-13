@@ -1,115 +1,140 @@
 /* ==========================================================================
-   Z-araan · 音乐播放器（右下角悬浮组件，可折叠为可拖动圆球）
-   配色沿用 main.css 的设计变量，自动适配深色/浅色主题
+   Z-araan · 音乐播放器（重新设计）
+   设计：圆角玻璃卡 + 旋转唱片封面 + 高亮主按钮 + 悬停进度条
    ========================================================================== */
 
 .music-widget {
-  position: fixed; right: 24px; bottom: 24px; z-index: 45;
-  width: 300px; padding: .85rem .9rem 1rem;
-  border: 1px solid var(--stroke-strong); border-radius: 18px;
-  background: color-mix(in srgb, var(--bg-soft) 82%, transparent);
-  backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
-  box-shadow: var(--shadow);
+  position: fixed; right: 22px; bottom: 22px; z-index: 45;
+  width: 312px; padding: 14px 16px 16px;
+  border-radius: 22px;
+  border: 1px solid var(--stroke-strong);
+  background:
+    radial-gradient(120% 120% at 15% 0%, color-mix(in srgb, var(--accent) 16%, transparent), transparent 60%),
+    color-mix(in srgb, var(--bg-soft) 88%, transparent);
+  backdrop-filter: blur(18px) saturate(150%);
+  -webkit-backdrop-filter: blur(18px) saturate(150%);
+  box-shadow: 0 22px 50px -18px rgba(0, 0, 0, .65);
   transition: opacity .25s, transform .25s;
 }
-.music-widget.hidden { opacity: 0; transform: translateY(10px) scale(.96); pointer-events: none; }
+.music-widget.hidden { opacity: 0; transform: translateY(12px) scale(.96); pointer-events: none; }
 
 .music-collapse-btn {
-  position: absolute; top: .5rem; right: .55rem;
-  width: 26px; height: 26px; border-radius: 8px; cursor: pointer;
-  border: 1px solid var(--stroke); background: var(--panel); color: var(--muted);
-  font-size: .8rem; line-height: 1;
+  position: absolute; top: 10px; right: 10px;
+  width: 26px; height: 26px; display: inline-flex; align-items: center; justify-content: center;
+  border-radius: 50%; cursor: pointer;
+  border: 1px solid var(--stroke); background: color-mix(in srgb, var(--bg) 60%, transparent);
+  color: var(--muted); transition: color .2s, transform .2s;
 }
-.music-collapse-btn:hover { color: var(--text); border-color: var(--stroke-strong); }
+.music-collapse-btn svg { width: 14px; height: 14px; }
+.music-collapse-btn:hover { color: var(--text); transform: translateY(-1px); }
 
-.music-top { display: flex; align-items: center; gap: .7rem; margin-bottom: .7rem; }
+/* 封面 + 信息 */
+.music-top { display: flex; align-items: center; gap: 12px; margin-bottom: 14px; }
 .music-cover {
-  width: 58px; height: 58px; flex: none; border-radius: 12px; overflow: hidden;
+  position: relative; width: 62px; height: 62px; flex: none; border-radius: 50%; overflow: hidden;
   border: 1px solid var(--stroke); background: var(--panel);
+  box-shadow: 0 8px 20px -8px rgba(0, 0, 0, .7);
 }
 .music-cover img { width: 100%; height: 100%; object-fit: cover; display: block; }
-.music-cover.playing img { animation: music-spin 12s linear infinite; border-radius: 50%; }
+.music-cover::after {
+  content: ""; position: absolute; inset: 0; margin: auto; width: 10px; height: 10px;
+  border-radius: 50%; background: color-mix(in srgb, var(--bg) 85%, transparent);
+  border: 1px solid var(--stroke-strong); opacity: 0; transition: opacity .3s;
+}
+.music-cover.playing::after { opacity: 1; }
+.music-cover.playing img { animation: music-spin 14s linear infinite; }
 @keyframes music-spin { to { transform: rotate(360deg); } }
 
 .music-info { min-width: 0; flex: 1; }
 .music-title {
-  font-size: .95rem; font-weight: 600; color: var(--text);
+  font-size: 1rem; font-weight: 700; letter-spacing: -.01em; color: var(--text);
   white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
 }
-.music-artist { font-size: .8rem; color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.music-artist { margin-top: 2px; font-size: .82rem; color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .music-lyric {
-  font-size: .78rem; color: var(--accent); margin-top: .2rem; min-height: 1.2em;
-  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  margin-top: 4px; font-size: .8rem; color: var(--accent);
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis; min-height: 1.2em;
 }
 
-.music-progress-wrap { margin-bottom: .7rem; }
-.music-time {
-  display: flex; justify-content: space-between;
-  font-size: .72rem; color: var(--muted); font-variant-numeric: tabular-nums; margin-bottom: .3rem;
-}
+/* 进度 */
+.music-progress-wrap { margin-bottom: 14px; }
 .progress-bar {
-  height: 6px; border-radius: 999px; background: var(--panel-strong);
-  border: 1px solid var(--stroke); cursor: pointer; overflow: hidden;
+  position: relative; height: 6px; border-radius: 999px; cursor: pointer;
+  background: color-mix(in srgb, var(--text) 12%, transparent);
 }
 .progress {
-  height: 100%; width: 0;
+  height: 100%; width: 0; border-radius: 999px;
   background: linear-gradient(90deg, var(--accent), var(--accent-2));
-  transition: width .15s linear;
+  box-shadow: 0 0 12px -2px var(--accent);
+}
+.music-time {
+  display: flex; justify-content: space-between; margin-top: 6px;
+  font-size: .72rem; color: var(--muted); font-variant-numeric: tabular-nums;
 }
 
-.music-controls { display: flex; align-items: center; justify-content: center; gap: .5rem; }
+/* 控制区 */
+.music-controls { display: flex; align-items: center; justify-content: space-between; gap: 6px; }
 .music-btn {
   display: inline-flex; align-items: center; justify-content: center;
-  width: 38px; height: 38px; border-radius: 50%; cursor: pointer;
-  border: 1px solid var(--stroke); background: var(--panel); color: var(--text);
-  transition: background .2s, border-color .2s, transform .15s;
+  width: 40px; height: 40px; border-radius: 50%; cursor: pointer;
+  border: 1px solid var(--stroke); background: color-mix(in srgb, var(--text) 6%, transparent);
+  color: var(--text); transition: background .2s, transform .15s, color .2s;
 }
-.music-btn svg { width: 1.05em; height: 1.05em; }
-.music-btn:hover { background: var(--panel-strong); border-color: var(--stroke-strong); }
-.music-btn:active { transform: scale(.95); }
+.music-btn svg { width: 1.1em; height: 1.1em; }
+.music-btn:hover { background: color-mix(in srgb, var(--text) 12%, transparent); }
+.music-btn:active { transform: scale(.94); }
 .play-btn {
-  width: 46px; height: 46px;
+  width: 52px; height: 52px;
   background: linear-gradient(135deg, var(--accent), var(--accent-2));
   border-color: transparent; color: #fff;
+  box-shadow: 0 12px 26px -10px var(--accent);
 }
-.play-btn svg { fill: currentColor; stroke: none; }
+.play-btn svg { fill: currentColor; stroke: none; width: 1.25em; height: 1.25em; }
+.play-btn:hover { filter: brightness(1.08); }
 
 .music-volume-area { position: relative; }
 .music-volume-btn {
   display: inline-flex; align-items: center; justify-content: center;
-  width: 34px; height: 34px; border-radius: 50%; cursor: pointer;
-  border: 1px solid var(--stroke); background: var(--panel); color: var(--muted);
+  width: 36px; height: 36px; border-radius: 50%; cursor: pointer;
+  border: 1px solid var(--stroke); background: color-mix(in srgb, var(--text) 6%, transparent);
+  color: var(--muted);
 }
-.music-volume-btn:hover { color: var(--text); border-color: var(--stroke-strong); }
+.music-volume-btn:hover { color: var(--text); }
 .music-volume-slider-wrap {
-  position: absolute; bottom: 46px; left: 50%; transform: translateX(-50%) scale(.9);
-  padding: .5rem .6rem; border-radius: 12px; border: 1px solid var(--stroke);
+  position: absolute; bottom: 48px; right: -6px;
+  padding: 10px 12px; border-radius: 14px; border: 1px solid var(--stroke);
   background: var(--bg-soft); box-shadow: var(--shadow);
-  opacity: 0; pointer-events: none; transition: opacity .2s, transform .2s;
+  opacity: 0; pointer-events: none; transform: translateY(6px); transition: opacity .2s, transform .2s;
 }
-.music-volume-slider-wrap.show { opacity: 1; pointer-events: auto; transform: translateX(-50%) scale(1); }
-.volume-slider { width: 110px; accent-color: var(--accent); }
+.music-volume-slider-wrap.show { opacity: 1; pointer-events: auto; transform: translateY(0); }
+.volume-slider { width: 120px; accent-color: var(--accent); }
 
+/* 折叠后的悬浮球 */
 .music-fab {
-  position: fixed; right: 24px; bottom: 24px; z-index: 45;
-  width: 56px; height: 56px; padding: 0; border-radius: 50%; cursor: grab;
-  border: 1px solid var(--stroke-strong); background: var(--bg-soft);
-  box-shadow: var(--shadow); overflow: hidden; touch-action: none;
+  position: fixed; right: 22px; bottom: 22px; z-index: 45;
+  width: 58px; height: 58px; padding: 0; border-radius: 50%; cursor: grab;
+  border: 1px solid var(--stroke-strong);
+  background: color-mix(in srgb, var(--bg-soft) 90%, transparent);
+  backdrop-filter: blur(12px);
+  box-shadow: 0 16px 34px -14px rgba(0, 0, 0, .8);
+  overflow: hidden; touch-action: none;
+  transition: transform .2s;
 }
-.music-fab img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.music-fab:hover { transform: scale(1.05); }
+.music-fab img { width: 100%; height: 100%; object-fit: cover; display: block; opacity: .85; }
 .music-fab .fab-play-icon {
   position: absolute; inset: 0; margin: auto; width: 22px; height: 22px;
-  fill: #fff; stroke: none; filter: drop-shadow(0 1px 3px rgba(0, 0, 0, .6));
+  fill: #fff; stroke: none; filter: drop-shadow(0 1px 4px rgba(0, 0, 0, .8));
 }
-.music-fab.playing img { animation: music-spin 12s linear infinite; border-radius: 50%; }
+.music-fab.playing img { animation: music-spin 14s linear infinite; }
 .music-fab[hidden] { display: none; }
 
 @media (max-width: 640px) {
-  .music-widget { right: 12px; left: 12px; bottom: 12px; width: auto; }
-  .music-fab { right: 16px; bottom: 16px; width: 50px; height: 50px; }
+  .music-widget { right: 12px; left: 12px; bottom: 12px; width: auto; border-radius: 20px; }
+  .music-fab { right: 16px; bottom: 16px; width: 52px; height: 52px; }
 }
 
 @media (prefers-reduced-motion: reduce) {
   .music-cover.playing img, .music-fab.playing img { animation: none; }
-  .progress { transition: none; }
+  .progress, .music-widget, .music-fab { transition: none; }
 }

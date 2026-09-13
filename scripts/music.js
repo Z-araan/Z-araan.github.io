@@ -23,11 +23,6 @@
 
   var API_BASE = 'https://meting.mikus.ink/api?server=netease';
   var PLAYLIST_ID = '14153893169';
-  var LOCAL_FALLBACK = {
-    title: '本地音轨', author: '仓库存档 · 离线可播',
-    url: '/Audio/fallback.mp3', pic: '/images/favicon.ico', lrc: ''
-  };
-
   var ICON_PLAY = 'M8 5v14l11-7z';
   var ICON_PAUSE = 'M6 19h4V5H6v14zm8-14v14h4V5h-4z';
 
@@ -138,11 +133,11 @@
       })
       .catch(function () {
         clearTimeout(timer);
-        loading = false; loaded = true;
-        songList = [LOCAL_FALLBACK];
-        playIndex(0);
-        say('歌单获取失败，已切到本地音轨');
-        if (andPlay) togglePlay();
+        loading = false;
+        loaded = false;                    // 允许再次点击重试
+        songNameEl.textContent = '歌单加载失败';
+        songArtistEl.textContent = '点击播放按钮重试';
+        say('网络或接口暂时不可用');
       });
   }
 

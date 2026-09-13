@@ -59,22 +59,16 @@ body {
 }
 
 /* 背景光晕 + 细网格 */
-body::before,
-body::after {
+/* 左上角静态光晕（其余流动光晕由 #bg-canvas 绘制，避免与渐变叠层抢同一个伪元素） */
+body::before {
   content: "";
   position: fixed;
   z-index: -2;
+  width: 46rem; height: 46rem; top: -18rem; left: -12rem;
   border-radius: 50%;
   filter: blur(90px);
   pointer-events: none;
-}
-body::before {
-  width: 46rem; height: 46rem; top: -18rem; left: -12rem;
   background: radial-gradient(circle, var(--glow-1), transparent 68%);
-}
-body::after {
-  width: 40rem; height: 40rem; bottom: -16rem; right: -10rem;
-  background: radial-gradient(circle, var(--glow-2), transparent 68%);
 }
 
 [data-theme="dark"] body {
@@ -117,12 +111,17 @@ svg {
   stroke-linecap: round; stroke-linejoin: round;
 }
 
-/* ---------- 动态背景 ---------- */
+/* ---------- 动态背景（更明显一些） ---------- */
 #bg-canvas {
   position: fixed; inset: 0; z-index: -1; width: 100%; height: 100%;
-  pointer-events: none; opacity: .55;
+  pointer-events: none; opacity: .95;
 }
-[data-theme="light"] #bg-canvas { opacity: .35; }
+[data-theme="light"] #bg-canvas { opacity: .7; }
+/* 叠一层柔和渐变，让背景更有层次 */
+body::after {
+  content: ""; position: fixed; inset: 0; z-index: -1; pointer-events: none;
+  background: linear-gradient(180deg, transparent 0%, color-mix(in srgb, var(--bg) 55%, transparent) 60%, var(--bg) 100%);
+}
 
 /* ---------- 导航 ---------- */
 .nav {
@@ -172,6 +171,46 @@ svg {
 [data-theme="light"] .icon-moon { display: none; }
 
 .nav-burger { display: none; }
+
+/* 品牌图标 & 主题按钮三态（跟随系统时显示自动图标） */
+.brand-logo { border-radius: 6px; }
+.icon-auto { display: none; }
+[data-theme-pref="auto"] .icon-sun,
+[data-theme-pref="auto"] .icon-moon { display: none; }
+[data-theme-pref="auto"] .icon-auto { display: block; }
+
+/* ---------- 动态（moments） ---------- */
+.moments-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: .9rem; }
+.moment {
+  position: relative; padding: 1rem 1.15rem 1rem 1.5rem;
+  border: 1px solid var(--stroke); border-radius: 16px; background: var(--panel);
+  backdrop-filter: blur(10px);
+  transition: border-color .2s, transform .2s, background .2s;
+}
+.moment:hover { border-color: var(--stroke-strong); background: var(--panel-strong); transform: translateY(-2px); }
+.moment::before {
+  content: ""; position: absolute; left: .6rem; top: 1.15rem; bottom: 1.15rem; width: 2px;
+  border-radius: 2px; background: linear-gradient(var(--accent), var(--accent-2));
+}
+.moment-date { color: var(--muted); font-size: .82rem; font-variant-numeric: tabular-nums; }
+.moment-text { margin: .35rem 0 .5rem; line-height: 1.75; }
+.moment-link { font-size: .88rem; font-weight: 600; }
+
+/* ---------- GitHub 项目卡 ---------- */
+.repo-card { color: var(--text); }
+.repo-card:hover { text-decoration: none; }
+.repo-head { display: flex; align-items: center; gap: .5rem; }
+.repo-head svg { color: var(--accent); width: 1.1em; height: 1.1em; }
+.repo-head h3 {
+  font-size: 1rem; margin: 0; flex: 1; min-width: 0;
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+.repo-stat {
+  font-size: .76rem; color: var(--muted); border: 1px solid var(--stroke);
+  border-radius: 999px; padding: .05rem .45rem; white-space: nowrap;
+}
+.repo-stats { display: inline-flex; gap: .35rem; align-items: center; }
+.dot { display: inline-block; width: .5rem; height: .5rem; border-radius: 50%; margin-right: .35rem; vertical-align: middle; }
 
 /* ⌘K 按钮上的小角标 */
 .kbd-btn { position: relative; }

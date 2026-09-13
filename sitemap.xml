@@ -7,49 +7,37 @@
 </url>
 
 <url>
-  <loc>https://z-araan.github.io/Down/image.html</loc>
+  <loc>https://z-araan.github.io/tools/image.html</loc>
   <lastmod>2026-09-13T00:00:00+00:00</lastmod>
   <priority>0.90</priority>
 </url>
 
 <url>
-  <loc>https://z-araan.github.io/Down/json.html</loc>
+  <loc>https://z-araan.github.io/tools/json.html</loc>
   <lastmod>2026-09-13T00:00:00+00:00</lastmod>
   <priority>0.80</priority>
 </url>
 
 <url>
-  <loc>https://zaraan.zh.kg/</loc>
-  <lastmod>2026-09-13T00:00:00+00:00</lastmod>
-  <priority>0.90</priority>
-</url>
-
-<url>
-  <loc>https://z-araan.github.io/Down/utils.html</loc>
+  <loc>https://z-araan.github.io/tools/utils.html</loc>
   <lastmod>2026-09-13T00:00:00+00:00</lastmod>
   <priority>0.80</priority>
 </url>
 
 <url>
-  <loc>https://z-araan.github.io/Down/wasm.html</loc>
-  <lastmod>2026-09-13T00:00:00+00:00</lastmod>
-  <priority>0.80</priority>
-</url>
-
-<url>
-  <loc>https://z-araan.github.io/Down/chat.html</loc>
+  <loc>https://z-araan.github.io/tools/chat.html</loc>
   <lastmod>2026-09-13T00:00:00+00:00</lastmod>
   <priority>0.70</priority>
 </url>
 
 <url>
-  <loc>https://z-araan.github.io/Down/pomodoro.html</loc>
+  <loc>https://z-araan.github.io/tools/pomodoro.html</loc>
   <lastmod>2026-09-13T00:00:00+00:00</lastmod>
   <priority>0.60</priority>
 </url>
 
 <url>
-  <loc>https://z-araan.github.io/Down/guess.html</loc>
+  <loc>https://z-araan.github.io/tools/guess.html</loc>
   <lastmod>2026-09-13T00:00:00+00:00</lastmod>
   <priority>0.50</priority>
 </url>
