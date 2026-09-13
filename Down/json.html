@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>JSON 工具 · Z-araan</title>
+<meta name="description" content="在浏览器本地格式化、压缩、校验 JSON，出错时给出具体行列位置。">
+<link rel="icon" href="/images/favicon.ico">
+<link rel="stylesheet" href="../styles/main.css">
+<link rel="stylesheet" href="../styles/sub.css">
+<script>
+  (function () {
+    try {
+      var saved = localStorage.getItem('theme');
+      var prefersLight = window.matchMedia('(prefers-color-scheme: light)').matches;
+      document.documentElement.dataset.theme = saved || (prefersLight ? 'light' : 'dark');
+    } catch (e) {}
+  })();
+</script>
+<script src="../scripts/main.js" defer></script>
+</head>
+<body>
+
+<header class="nav">
+  <div class="nav-inner">
+    <a class="brand" href="/"><span class="brand-dot" aria-hidden="true"></span><span class="brand-name">Z-araan</span></a>
+    <nav class="nav-links" id="nav-links" aria-label="主导航">
+      <a href="/">主页</a>
+      <a href="/#projects">工具</a>
+      <a href="image.html">图片</a>
+      <a href="utils.html">小工具</a>
+      <a href="https://zaraan.zh.kg/" target="_blank" rel="noopener">博客</a>
+    </nav>
+    <div class="nav-actions">
+      <button class="icon-btn" id="theme-toggle" type="button" aria-label="切换深色/浅色主题" aria-pressed="false">
+        <svg class="icon-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M2 12h2m16 0h2M4.9 4.9l1.4 1.4m11.4 11.4 1.4 1.4M19.1 4.9l-1.4 1.4M6.3 17.7l-1.4 1.4"/></svg>
+        <svg class="icon-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 13.2A8.6 8.6 0 0 1 10.8 3a8.6 8.6 0 1 0 10.2 10.2Z"/></svg>
+      </button>
+      <button class="icon-btn nav-burger" id="nav-burger" type="button" aria-label="打开菜单" aria-expanded="false" aria-controls="nav-links">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main class="page">
+  <div class="page-narrow">
+    <nav class="crumbs" aria-label="面包屑"><a href="/">主页</a> / <span>JSON 工具</span></nav>
+
+    <header class="sub-head">
+      <h1>JSON 工具</h1>
+      <p>格式化、压缩、校验 JSON。数据只在你的浏览器里处理，不会发送到服务器。</p>
+    </header>
+
+    <section class="panel">
+      <div class="panel-head">
+        <h2>输入</h2>
+        <div class="chips">
+          <button class="chip-btn" id="sample" type="button">载入示例</button>
+          <button class="chip-btn" id="clear" type="button">清空</button>
+        </div>
+      </div>
+      <textarea id="input" class="code-area" spellcheck="false" placeholder='{"hello": "world"}'></textarea>
+
+      <div class="btn-row" style="margin-top:.9rem">
+        <button class="btn btn-primary" id="pretty2" type="button">格式化（2 空格）</button>
+        <button class="btn" id="pretty4" type="button">格式化（4 空格）</button>
+        <button class="btn" id="minify" type="button">压缩成一行</button>
+        <button class="btn" id="validate" type="button">只校验</button>
+        <button class="btn" id="copy" type="button">复制结果</button>
+      </div>
+
+      <div class="result" id="message" role="status" aria-live="polite" hidden></div>
+      <div class="stat-row" id="stats"></div>
+    </section>
+
+    <section class="panel">
+      <div class="panel-head"><h2>输出</h2><span class="tag" id="out-tag">—</span></div>
+      <textarea id="output" class="code-area" spellcheck="false" placeholder="处理结果会出现在这里"></textarea>
+    </section>
+  </div>
+</main>
+
+<button class="to-top" id="to-top" type="button" aria-label="回到顶部">
+  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5m0 0-6 6m6-6 6 6"/></svg>
+</button>
+
+<script>
+  (function () {
+    var input = document.getElementById('input');
+    var output = document.getElementById('output');
+    var message = document.getElementById('message');
+    var stats = document.getElementById('stats');
+    var outTag = document.getElementById('out-tag');
+
+    var SAMPLE = {
+      name: 'z-araan',
+      site: 'https://z-araan.github.io',
+      tools: ['图片工具箱', 'JSON 工具', '番茄计时器', '局域网聊天'],
+      meta: { since: 2023, tags: ['前端', '安卓', '小工具'], active: true },
+      stats: { stars: 12, visits: 3456 }
+    };
+
+    function say(text, cls) {
+      message.hidden = false;
+      message.className = 'result' + (cls ? ' ' + cls : '');
+      message.textContent = text;
+    }
+
+    function bytes(str) {
+      return new Blob([str]).size;
+    }
+
+    function human(n) {
+      return n < 1024 ? n + ' B' : (n / 1024).toFixed(1) + ' KB';
+    }
+
+    function parseOrReport(text) {
+      try {
+        return { value: JSON.parse(text) };
+      } catch (err) {
+        var m = /position\s+(\d+)/.exec(err.message);
+        if (m) {
+          var pos = Math.min(parseInt(m[1], 10), text.length);
+          var before = text.slice(0, pos);
+          var line = before.split('\n').length;
+          var col = pos - before.lastIndexOf('\n');
+          err.message += '  → 第 ' + line + ' 行，第 ' + col + ' 列';
+        }
+        return { error: err.message };
+      }
+    }
+
+    function depthOf(v) {
+      if (v === null || typeof v !== 'object') return 1;
+      var max = 1;
+      Object.keys(v).forEach(function (k) {
+        max = Math.max(max, 1 + depthOf(v[k]));
+      });
+      return max;
+    }
+
+    function countKeys(v) {
+      if (v === null || typeof v !== 'object') return 0;
+      return Object.keys(v).reduce(function (n, k) {
+        return n + 1 + countKeys(v[k]);
+      }, 0);
+    }
+
+    function describe(value, text) {
+      stats.innerHTML =
+        '<span class="stat">类型 <b>' + (Array.isArray(value) ? '数组' : typeof value) + '</b></span>' +
+        '<span class="stat">键总数 <b>' + countKeys(value) + '</b></span>' +
+        '<span class="stat">最大深度 <b>' + depthOf(value) + '</b></span>' +
+        '<span class="stat">字符数 <b>' + text.length + '</b></span>' +
+        '<span class="stat">大小 <b>' + human(bytes(text)) + '</b></span>';
+    }
+
+    function run(mode, indent) {
+      var text = input.value.trim();
+      if (!text) { say('请先粘贴或载入 JSON 内容。', 'err'); return; }
+      var res = parseOrReport(text);
+      if (res.error) {
+        say('❌ 不是合法 JSON：' + res.error, 'err');
+        outTag.textContent = '解析失败';
+        return;
+      }
+      var out = mode === 'minify' ? JSON.stringify(res.value)
+                                  : JSON.stringify(res.value, null, indent);
+      output.value = out;
+      outTag.textContent = mode === 'minify' ? '已压缩' : '已格式化（' + indent + ' 空格）';
+      describe(res.value, out);
+      say('✅ 校验通过' + (mode === 'minify'
+            ? '，压缩后 ' + human(bytes(out)) + '（原 ' + human(bytes(text)) + '）'
+            : '，格式化完成'), 'ok');
+    }
+
+    document.getElementById('pretty2').addEventListener('click', function () { run('pretty', 2); });
+    document.getElementById('pretty4').addEventListener('click', function () { run('pretty', 4); });
+    document.getElementById('minify').addEventListener('click', function () { run('minify'); });
+    document.getElementById('validate').addEventListener('click', function () {
+      var text = input.value.trim();
+      if (!text) { say('请先粘贴或载入 JSON 内容。', 'err'); return; }
+      var res = parseOrReport(text);
+      if (res.error) { say('❌ ' + res.error, 'err'); outTag.textContent = '解析失败'; }
+      else { describe(res.value, text); say('✅ 合法 JSON。', 'ok'); outTag.textContent = '校验通过'; }
+    });
+    document.getElementById('sample').addEventListener('click', function () {
+      input.value = JSON.stringify(SAMPLE, null, 2).replace(/\\"/g, '"');
+      run('pretty', 2);
+    });
+    document.getElementById('clear').addEventListener('click', function () {
+      input.value = ''; output.value = ''; stats.innerHTML = ''; message.hidden = true;
+      outTag.textContent = '—'; input.focus();
+    });
+    document.getElementById('copy').addEventListener('click', function () {
+      if (!output.value) { say('还没有可复制的结果。', 'err'); return; }
+      var done = function () { say('📋 结果已复制到剪贴板。', 'ok'); };
+      if (navigator.clipboard) navigator.clipboard.writeText(output.value).then(done, function () { output.select(); });
+      else { output.select(); document.execCommand('copy'); done(); }
+    });
+  })();
+</script>
+</body>
+</html>

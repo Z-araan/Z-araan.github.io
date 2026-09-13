@@ -1,48 +1,61 @@
-document.addEventListener("DOMContentLoaded", () => {
-    const guessInput = document.getElementById("guess");
-    const submitButton = document.getElementById("submit-guess");
-    const message = document.getElementById("message");
-    const resetButton = document.getElementById("reset-game");
+/* 猜数字游戏 · 重写版（保持原有元素 id，增加提示分类与尝试次数）
+   id 契约：guess / submit-guess / message / reset-game（可选：attempts） */
+document.addEventListener('DOMContentLoaded', function () {
+  var guessInput = document.getElementById('guess');
+  var submitButton = document.getElementById('submit-guess');
+  var message = document.getElementById('message');
+  var resetButton = document.getElementById('reset-game');
+  var attemptsEl = document.getElementById('attempts');
 
-    let targetNumber = Math.floor(Math.random() * 100) + 1; // 生成1到100的随机数
-    let attempts = 0;
+  var target = 0;
+  var attempts = 0;
 
-    // 提交按钮的点击事件
-    submitButton.addEventListener("click", () => {
-        const guess = parseInt(guessInput.value);
-        attempts++;
+  function updateAttempts() {
+    if (attemptsEl) attemptsEl.textContent = attempts ? '已尝试 ' + attempts + ' 次' : '';
+  }
 
-        if (isNaN(guess) || guess < 1 || guess > 100) {
-            message.textContent = "请输入一个1到100之间的数字！";
-        } else if (guess === targetNumber) {
-            message.textContent = `恭喜你！你在${attempts}次尝试后猜对了数字！`;
-            submitButton.disabled = true;
-            resetButton.style.display = "inline-block";
-        } else if (guess < targetNumber) {
-            message.textContent = "太低了！再试一次。";
-        } else {
-            message.textContent = "太高了！再试一次。";
-        }
+  function newGame() {
+    target = Math.floor(Math.random() * 100) + 1;
+    attempts = 0;
+    guessInput.value = '';
+    guessInput.disabled = false;
+    submitButton.disabled = false;
+    message.textContent = '';
+    message.className = '';
+    updateAttempts();
+    guessInput.focus();
+  }
 
-        // 清空输入框
-        guessInput.value = "";
-    });
+  function submit() {
+    var guess = parseInt(guessInput.value, 10);
+    if (isNaN(guess) || guess < 1 || guess > 100) {
+      message.className = '';
+      message.textContent = '请输入 1 到 100 之间的数字！';
+      guessInput.select();
+      return;
+    }
+    attempts += 1;
+    updateAttempts();
 
-    // 监听输入框的键盘事件，实现回车键提交
-    guessInput.addEventListener("keydown", (event) => {
-        if (event.key === "Enter") {
-            submitButton.click(); // 模拟点击提交按钮
-        }
-    });
+    if (guess === target) {
+      message.className = 'win';
+      message.textContent = '🎉 恭喜！你用了 ' + attempts + ' 次猜中了答案 ' + target + '。';
+      submitButton.disabled = true;
+      guessInput.disabled = true;
+      resetButton.focus();
+    } else {
+      message.className = guess < target ? 'low' : 'high';
+      message.textContent = (guess < target ? '太低了 ↑' : '太高了 ↓') + '，再试一次。';
+      guessInput.focus();
+    }
+    guessInput.value = '';
+  }
 
-    // 重置按钮的点击事件
-    resetButton.addEventListener("click", () => {
-        targetNumber = Math.floor(Math.random() * 100) + 1;
-        attempts = 0;
-        message.textContent = "";
-        guessInput.value = "";
-        submitButton.disabled = false;
-        resetButton.style.display = "none";
-    });
+  submitButton.addEventListener('click', submit);
+  resetButton.addEventListener('click', newGame);
+  guessInput.addEventListener('keydown', function (e) {
+    if (e.key === 'Enter') { e.preventDefault(); submit(); }
+  });
+
+  newGame();
 });
-    

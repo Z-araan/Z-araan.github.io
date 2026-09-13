@@ -1,101 +1,117 @@
-document.addEventListener("DOMContentLoaded", () => {
-    const timerDisplay = document.getElementById("timer-display");
-    const startButton = document.getElementById("start-btn");
-    const pauseButton = document.getElementById("pause-btn");
-    const resetButton = document.getElementById("reset-btn");
-    const statusText = document.getElementById("status");
-    const workTimeInput = document.getElementById("work-time");
-    const breakTimeInput = document.getElementById("break-time");
-    const alarmSoundSelect = document.getElementById("alarm-sound");
-    const themeColorSelect = document.getElementById("theme-color");
-    const currentTimeDisplay = document.getElementById("current-time");
-    const alarmAudio = document.getElementById("alarm-audio");
+/* 番茄计时器 · 重写版（保持原有元素 id，行为更稳、样式不再覆盖主题）
+   id 契约：timer-display / status / start-btn / pause-btn / reset-btn
+            work-time / break-time / alarm-sound / theme-color / current-time / alarm-audio */
+document.addEventListener('DOMContentLoaded', function () {
+  var $ = function (id) { return document.getElementById(id); };
+  var display = $('timer-display');
+  var status = $('status');
+  var startBtn = $('start-btn');
+  var pauseBtn = $('pause-btn');
+  var resetBtn = $('reset-btn');
+  var workInput = $('work-time');
+  var breakInput = $('break-time');
+  var alarmSelect = $('alarm-sound');
+  var colorSelect = $('theme-color');
+  var clock = $('current-time');
+  var alarm = $('alarm-audio');
 
-    let workTime = workTimeInput.value * 60; // 工作时间（秒）
-    let breakTime = breakTimeInput.value * 60; // 休息时间（秒）
-    let timeLeft = workTime; // 当前剩余时间
-    let timerInterval = null;
-    let isWorkTime = true; // 是否是工作时间
-    let isPaused = false; // 是否暂停
+  var workSec = clamp(workInput.value, 1, 180) * 60;
+  var breakSec = clamp(breakInput.value, 1, 60) * 60;
+  var left = workSec;
+  var isWork = true;
+  var paused = false;
+  var timer = null;
+  var originalTitle = document.title;
 
-    // 更新时间显示
-    function updateTimerDisplay() {
-        const minutes = Math.floor(timeLeft / 60);
-        const seconds = timeLeft % 60;
-        timerDisplay.textContent = `${String(minutes).padStart(2, "0")}:${String(seconds).padStart(2, "0")}`;
-    }
+  function clamp(v, min, max) {
+    v = parseInt(v, 10);
+    if (isNaN(v)) return min;
+    return Math.min(max, Math.max(min, v));
+  }
 
-    // 更新当前时间
-    function updateCurrentTime() {
-        const now = new Date();
-        const hours = String(now.getHours()).padStart(2, "0");
-        const minutes = String(now.getMinutes()).padStart(2, "0");
-        const seconds = String(now.getSeconds()).padStart(2, "0");
-        currentTimeDisplay.textContent = `当前时间：${hours}:${minutes}:${seconds}`;
-    }
+  function fmt(sec) {
+    return String(Math.floor(sec / 60)).padStart(2, '0') + ':' + String(sec % 60).padStart(2, '0');
+  }
 
-    // 开始计时
-    function startTimer() {
-        if (timerInterval) return; // 如果计时器已运行，则不重复启动
-        timerInterval = setInterval(() => {
-            if (!isPaused && timeLeft > 0) {
-                timeLeft--;
-                updateTimerDisplay();
-            } else if (!isPaused && timeLeft === 0) {
-                clearInterval(timerInterval);
-                timerInterval = null;
-                alarmAudio.src = alarmSoundSelect.value; // 设置音效
-                alarmAudio.play(); // 播放音效
-                if (isWorkTime) {
-                    statusText.textContent = "休息时间";
-                    timeLeft = breakTime;
-                } else {
-                    statusText.textContent = "工作时间";
-                    timeLeft = workTime;
-                }
-                isWorkTime = !isWorkTime; // 切换工作/休息状态
-                startTimer(); // 自动开始下一个阶段
-            }
-        }, 1000);
-    }
+  function render() {
+    display.textContent = fmt(left);
+    document.title = fmt(left) + ' · ' + (isWork ? '专注中' : '休息中') + ' · Z-araan';
+  }
 
-    // 暂停计时
-    function pauseTimer() {
-        isPaused = !isPaused;
-        pauseButton.textContent = isPaused ? "继续" : "暂停";
-    }
+  function tick() {
+    if (paused) return;
+    left -= 1;
+    if (left > 0) { render(); return; }
+    // 阶段结束
+    left = 0;
+    render();
+    beep();
+    isWork = !isWork;
+    left = isWork ? workSec : breakSec;
+    status.textContent = isWork ? '工作时间' : '休息时间';
+    render();
+  }
 
-    // 重置计时器
-    function resetTimer() {
-        clearInterval(timerInterval);
-        timerInterval = null;
-        workTime = workTimeInput.value * 60;
-        breakTime = breakTimeInput.value * 60;
-        timeLeft = workTime;
-        isWorkTime = true;
-        isPaused = false;
-        statusText.textContent = "工作时间";
-        pauseButton.textContent = "暂停";
-        updateTimerDisplay();
-    }
+  function beep() {
+    try {
+      alarm.src = alarmSelect.value;
+      alarm.currentTime = 0;
+      var p = alarm.play();
+      if (p && p.catch) p.catch(function () { /* 未交互时浏览器会拦截，忽略 */ });
+    } catch (e) { /* 忽略 */ }
+  }
 
-    // 更新主题颜色
-    function updateThemeColor() {
-        const themeColor = themeColorSelect.value;
-        document.body.style.backgroundColor = themeColor;
-        startButton.style.backgroundColor = themeColor;
-        pauseButton.style.backgroundColor = themeColor;
-        resetButton.style.backgroundColor = themeColor;
-    }
+  function start() {
+    if (timer) return;
+    paused = false;
+    pauseBtn.textContent = '暂停';
+    timer = setInterval(tick, 1000);
+    startBtn.disabled = true;
+  }
 
-    // 初始化显示
-    updateTimerDisplay();
-    setInterval(updateCurrentTime, 1000); // 每秒更新当前时间
-    updateThemeColor(); // 初始化主题颜色
+  function pause() {
+    paused = !paused;
+    pauseBtn.textContent = paused ? '继续' : '暂停';
+  }
 
-    // 绑定按钮事件
-    startButton.addEventListener("click", startTimer);
-    pauseButton.addEventListener("click", pauseTimer);
-    resetButton.addEventListener("click", resetTimer);
-    themeColorSelect.addEventListener("change", updateThemeColor);
+  function reset() {
+    clearInterval(timer);
+    timer = null;
+    workSec = clamp(workInput.value, 1, 180) * 60;
+    breakSec = clamp(breakInput.value, 1, 60) * 60;
+    left = workSec;
+    isWork = true;
+    paused = false;
+    startBtn.disabled = false;
+    pauseBtn.textContent = '暂停';
+    status.textContent = '工作时间';
+    document.title = originalTitle;
+    render();
+  }
+
+  function applyAccent() {
+    var c = colorSelect.value;
+    document.documentElement.style.setProperty('--accent', c);
+    document.documentElement.style.setProperty('--accent-2', c);
+  }
+
+  function updateClock() {
+    var now = new Date();
+    clock.textContent = '当前时间：' + [now.getHours(), now.getMinutes(), now.getSeconds()]
+      .map(function (n) { return String(n).padStart(2, '0'); }).join(':');
+  }
+
+  // 初始化
+  render();
+  updateClock();
+  setInterval(updateClock, 1000);
+  applyAccent();
+
+  startBtn.addEventListener('click', start);
+  pauseBtn.addEventListener('click', pause);
+  resetBtn.addEventListener('click', reset);
+  colorSelect.addEventListener('change', applyAccent);
+  [workInput, breakInput].forEach(function (el) {
+    el.addEventListener('change', function () { if (!timer) reset(); });
+  });
 });

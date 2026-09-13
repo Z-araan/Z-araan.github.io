@@ -1,113 +1,136 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-CN" data-theme="dark">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>生日祝福</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f0f8ff;
-            color: #333;
-            line-height: 1.6;
-            margin: 0;
-            padding: 0;
-        }
-        .container {
-            width: 80%;
-            margin: 20px auto;
-            padding: 20px;
-            background-color: #fff;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            border-radius: 8px;
-        }
-        h1 {
-            text-align: center;
-            color: #ff6347;
-        }
-        p {
-            font-size: 16px;
-        }
-        .signature {
-            text-align: right;
-            margin-top: 20px;
-        }
-        .hidden-message {
-            display: none;
-            text-align: center;
-            font-size: 20px;
-            color: #ff6347;
-            margin-top: 20px;
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>生日祝福 · Z-araan</title>
+<meta name="description" content="写给萌蝶的一封生日信。">
+<link rel="icon" href="/images/favicon.ico">
+<link rel="stylesheet" href="../styles/main.css">
+<link rel="stylesheet" href="../styles/sub.css">
+<script>
+  (function () {
+    try {
+      var saved = localStorage.getItem('theme');
+      var prefersLight = window.matchMedia('(prefers-color-scheme: light)').matches;
+      document.documentElement.dataset.theme = saved || (prefersLight ? 'light' : 'dark');
+    } catch (e) {}
+  })();
+</script>
+<script src="../scripts/main.js" defer></script>
 </head>
 <body>
-    <div class="container">
-        <h1>生日快乐</h1>
-        <p>你好，萌蝶：</p>
-        <p>从我们2023年12月24日14:36认识开始，到现在已经过去了412天。这段时间里，我们虽然没有频繁的联系，但每一次的交流都让我感到珍贵和愉快。回想起我们相识的那一天，正好是平安夜，一个充满温馨和希望的日子。</p>
-        <p>在过去的一年多时间里，我们的生活可能都发生了很多变化。你可能经历了新的挑战，也可能收获了新的喜悦。虽然我没有亲眼见证这些时刻，但我真心为你感到高兴，并希望在未来的日子里，你能够继续收获更多的快乐和成功。</p>
-        <p>我想说的是，生活就像一场漫长的马拉松，有时候我们会觉得疲惫，有时候又会因为前方的风景而兴奋不已。在这场马拉松中，我们可能会遇到各种各样的困难，比如学习上的挑战，甚至是生活中的不如意。但就像你一直以来努力的样子，我相信你一定能够克服这些困难。每一次的坚持，每一次的努力，都是在为自己的未来铺路。</p>
-        <p>我们都要相信自己，相信自己的能力，相信自己可以做到的事情。就像那些在黑暗中闪烁的星星，虽然光芒微弱，但只要坚持发光，就一定能照亮前行的道路。我们也要相信，无论遇到多大的困难，只要我们不放弃，就一定会有解决的办法。就像那些在风雨中依然挺立的树木，它们经历了无数次的风雨，却依然屹立不倒，因为它们的根扎得很深，它们的心很坚定。</p>
-        <p>在未来的日子里，我希望我们都能成为彼此的力量。当你感到疲惫的时候，我希望我的鼓励能让你重新振作；当我遇到困难的时候，我也希望你的支持能让我更有勇气。我们可以在彼此的生活中分享快乐，也可以在彼此的生活中分担痛苦。我们的友谊就像一座桥梁，连接着我们的心，让我们在人生的道路上不再孤单。</p>
-        <p>在你的生日之际，我想对你说，虽然我们不能面对面地庆祝，但我会在心中为你祝福，希望你在新的一年里，能够实现自己的梦想，过上更加幸福和充实的生活，我们能有更多的交流和互动，让这份友谊更加深厚。</p>
-        <p>再次祝你生日快乐！所以，我的朋友，让我们一起努力，一起加油。无论生活给我们带来什么，我们都要勇敢地面对，坚持下去。我相信，只要我们努力，就一定能看到希望的曙光。我们的友谊也会因为我们的坚持和努力而变得更加深厚，更加珍贵。</p>
-        <p>愿你在新的一年里，健康快乐，心想事成，梦想成真。希望我们的友谊能够像这封信一样，永远保持真诚和温暖。</p>
-        <div class="signature">
-            <p>灰狼</p>
-            <p>2025年2月8号</p>
-        </div>
-<button id="playButton">不行就点五下!</button>
-        <div class="hidden-message">点击屏幕五次，看看我为你准备的惊喜！</div>
+
+<header class="nav">
+  <div class="nav-inner">
+    <a class="brand" href="/"><span class="brand-dot" aria-hidden="true"></span><span class="brand-name">Z-araan</span></a>
+    <nav class="nav-links" id="nav-links" aria-label="主导航">
+      <a href="/">主页</a>
+      <a href="/#projects">工具</a>
+      <a href="ggg.html">文章</a>
+      <a href="https://zaraan.zh.kg/" target="_blank" rel="noopener">博客</a>
+    </nav>
+    <div class="nav-actions">
+      <button class="icon-btn" id="theme-toggle" type="button" aria-label="切换深色/浅色主题" aria-pressed="false">
+        <svg class="icon-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M2 12h2m16 0h2M4.9 4.9l1.4 1.4m11.4 11.4 1.4 1.4M19.1 4.9l-1.4 1.4M6.3 17.7l-1.4 1.4"/></svg>
+        <svg class="icon-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 13.2A8.6 8.6 0 0 1 10.8 3a8.6 8.6 0 1 0 10.2 10.2Z"/></svg>
+      </button>
+      <button class="icon-btn nav-burger" id="nav-burger" type="button" aria-label="打开菜单" aria-expanded="false" aria-controls="nav-links">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+      </button>
     </div>
-    <audio id="birthday-music" autoplay>
-        <source src="https://z-araan.github.io/Audio/pp.mp3" type="audio/mpeg">
-        Your browser does not support the audio element.
+  </div>
+</header>
+
+<main class="page">
+  <div class="page-narrow">
+    <nav class="crumbs" aria-label="面包屑"><a href="/">主页</a> / <span>生日祝福</span></nav>
+
+    <article class="panel letter prose">
+      <h1>生日快乐</h1>
+
+      <p>你好，萌蝶：</p>
+      <p>从我们2023年12月24日14:36认识开始，到现在已经过去了412天。这段时间里，我们虽然没有频繁的联系，但每一次的交流都让我感到珍贵和愉快。回想起我们相识的那一天，正好是平安夜，一个充满温馨和希望的日子。</p>
+      <p>在过去的一年多时间里，我们的生活可能都发生了很多变化。你可能经历了新的挑战，也可能收获了新的喜悦。虽然我没有亲眼见证这些时刻，但我真心为你感到高兴，并希望在未来的日子里，你能够继续收获更多的快乐和成功。</p>
+      <p>我想说的是，生活就像一场漫长的马拉松，有时候我们会觉得疲惫，有时候又会因为前方的风景而兴奋不已。在这场马拉松中，我们可能会遇到各种各样的困难，比如学习上的挑战，甚至是生活中的不如意。但就像你一直以来努力的样子，我相信你一定能够克服这些困难。每一次的坚持，每一次的努力，都是在为自己的未来铺路。</p>
+      <p>我们都要相信自己，相信自己的能力，相信自己可以做到的事情。就像那些在黑暗中闪烁的星星，虽然光芒微弱，但只要坚持发光，就一定能照亮前行的道路。我们也要相信，无论遇到多大的困难，只要我们不放弃，就一定会有解决的办法。就像那些在风雨中依然挺立的树木，它们经历了无数次的风雨，却依然屹立不倒，因为它们的根扎得很深，它们的心很坚定。</p>
+      <p>在未来的日子里，我希望我们都能成为彼此的力量。当你感到疲惫的时候，我希望我的鼓励能让你重新振作；当我遇到困难的时候，我也希望你的支持能让我更有勇气。我们可以在彼此的生活中分享快乐，也可以在彼此的生活中分担痛苦。我们的友谊就像一座桥梁，连接着我们的心，让我们在人生的道路上不再孤单。</p>
+      <p>在你的生日之际，我想对你说，虽然我们不能面对面地庆祝，但我会在心中为你祝福，希望你在新的一年里，能够实现自己的梦想，过上更加幸福和充实的生活，我们能有更多的交流和互动，让这份友谊更加深厚。</p>
+      <p>再次祝你生日快乐！所以，我的朋友，让我们一起努力，一起加油。无论生活给我们带来什么，我们都要勇敢地面对，坚持下去。我相信，只要我们努力，就一定能看到希望的曙光。我们的友谊也会因为我们的坚持和努力而变得更加深厚，更加珍贵。</p>
+      <p>愿你在新的一年里，健康快乐，心想事成，梦想成真。希望我们的友谊能够像这封信一样，永远保持真诚和温暖。</p>
+
+      <div class="signature">
+        <p>灰狼</p>
+        <p>2025年2月8号</p>
+      </div>
+
+      <button class="btn surprise-btn" id="playButton" type="button">🎵 播放/暂停背景音乐</button>
+      <div class="hidden-message" id="hidden-message"></div>
+    </article>
+
+    <section class="panel" style="margin-top:1.2rem">
+      <div class="panel-head">
+        <h2>留言</h2>
+        <span class="tag">Giscus</span>
+      </div>
+      <p class="hint">想说什么都可以写在下面（需要 GitHub 账号登录）。</p>
+      <div class="giscus" style="margin-top:.8rem"></div>
+    </section>
+
+    <audio id="birthday-music" loop preload="none">
+      <source src="https://z-araan.github.io/Audio/pp.mp3" type="audio/mpeg">
+      你的浏览器不支持音频播放。
     </audio>
-    <script>
-        // 获取音频元素
-        const audio = document.getElementById('birthday-music');
-        // 获取按钮元素
-        const playButton = document.getElementById('playButton');
+  </div>
+</main>
 
-        // 页面加载完成后，尝试自动播放
-        document.addEventListener('DOMContentLoaded', () => {
-            audio.play().then(() => {
-                // 如果自动播放成功，取消静音
-                audio.muted = false;
-            }).catch((error) => {
-                // 如果自动播放失败，提示用户点击按钮播放
-                console.log('自动播放失败，请点击按钮播放音频');
-            });
+<button class="to-top" id="to-top" type="button" aria-label="回到顶部">
+  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5m0 0-6 6m6-6 6 6"/></svg>
+</button>
+
+<script>
+  (function () {
+    var audio = document.getElementById('birthday-music');
+    var btn = document.getElementById('playButton');
+    var hidden = document.getElementById('hidden-message');
+    var clicks = 0;
+
+    // 背景音乐：由用户主动播放（浏览器会拦截自动播放）
+    btn.addEventListener('click', function () {
+      if (audio.paused) {
+        audio.play().catch(function () {});
+        btn.textContent = '⏸ 暂停背景音乐';
+      } else {
+        audio.pause();
+        btn.textContent = '🎵 播放/暂停背景音乐';
+      }
+    });
+
+    // 彩蛋：点五下按钮出现惊喜文字
+    btn.addEventListener('click', function () {
+      clicks += 1;
+      if (clicks === 5) {
+        hidden.textContent = '萌蝶，你是我最好的朋友，生日快乐！';
+        hidden.classList.add('show');
+      }
+    });
+
+    // 段落淡入（不劫持滚动）
+    if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches && 'IntersectionObserver' in window) {
+      var io = new IntersectionObserver(function (es) {
+        es.forEach(function (e) {
+          if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
         });
+      }, { threshold: 0.05 });
+      document.querySelectorAll('.letter p').forEach(function (p, i) {
+        p.classList.add('reveal');
+        p.style.transitionDelay = Math.min(i, 8) * 50 + 'ms';
+        io.observe(p);
+      });
+    }
+  })();
+</script>
 
-        // 点击按钮播放音频
-        playButton.addEventListener('click', () => {
-            audio.muted = false; // 取消静音
-            audio.play(); // 播放音频
-        });
-        let clickCount = 0;
-        const hiddenMessage = document.querySelector('.hidden-message');
-
-        // 自动滚动页面
-        window.onload = function() {
-            const scrollInterval = setInterval(() => {
-                window.scrollBy(0, 5); // 每次滚动5像素（速度更慢）
-                if (window.scrollY + window.innerHeight >= document.body.scrollHeight) {
-                    clearInterval(scrollInterval); // 到达底部时停止滚动
-                }
-            }, 200); // 每200毫秒滚动一次（速度更慢）
-        };
-
-        // 点击屏幕五次弹出文字
-        document.addEventListener('click', () => {
-            clickCount++;
-            if (clickCount === 5) {
-                hiddenMessage.style.display = 'block';
-                hiddenMessage.textContent = '萌蝶，你是我最好的朋友，生日快乐！';
-            }
-        });
-    </script>
 <script src="https://giscus.app/client.js"
         data-repo="z-araan/z-araan.github.io"
         data-repo-id="R_kgDOMQEarw"

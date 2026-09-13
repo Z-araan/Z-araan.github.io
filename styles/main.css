@@ -316,6 +316,9 @@ svg {
 .post-go { font-size: 1.5rem; color: var(--accent); transition: transform .2s; }
 .post:hover .post-go { transform: translateX(4px); }
 
+/* ---------- 文章列表（RSS） ---------- */
+.posts-list { display: flex; flex-direction: column; gap: 1rem; }
+
 /* ---------- 关于 ---------- */
 .about {
   padding: 1.3rem 1.4rem; border: 1px solid var(--stroke); border-radius: 18px;

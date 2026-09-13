@@ -1,106 +1,183 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="zh-CN" data-theme="dark">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>技术博客文章 - WebAssembly：重塑前端开发的未来</title>
-    <link rel="icon" href="https://z-araan.github.io/images/favicon.ico" >
-    <link rel="stylesheet" type="text/css" href="https://z-araan.github.io/Down/styles/style.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>WebAssembly：重塑前端开发的未来 · Z-araan</title>
+<meta name="description" content="从原理到实践：WebAssembly 为什么快、能做什么、什么时候该用它，以及和 JavaScript 的分工。">
+<link rel="icon" href="/images/favicon.ico">
+<link rel="stylesheet" href="../styles/main.css">
+<link rel="stylesheet" href="../styles/sub.css">
+<script>
+  (function () {
+    try {
+      var saved = localStorage.getItem('theme');
+      var prefersLight = window.matchMedia('(prefers-color-scheme: light)').matches;
+      document.documentElement.dataset.theme = saved || (prefersLight ? 'light' : 'dark');
+    } catch (e) {}
+  })();
+</script>
+<script src="../scripts/main.js" defer></script>
 </head>
 <body>
-    <header>
-        <div class="container">
-            <div id="branding">
-                <h1>技术博客</h1>
-            </div>
-            <nav>
-                <ul>
-                    <li class="current"><a href="/">首页</a></li>
-                    <li><a href="/index.html#posts">文章</a></li>
-                    <li><a href="#">关于</a></li>
-                </ul>
-            </nav>
-        </div>
-    </header>
-     <div id="popup" class="popup">
-        <div class="popup-content">
-            <h2>要不要玩点游戏？</h2>
-            <button id="no-button">否</button>
-            <button id="yes-button">是</button>
-        </div>
+<div class="reading-progress" id="reading-progress" aria-hidden="true"></div>
+
+<header class="nav">
+  <div class="nav-inner">
+    <a class="brand" href="/"><span class="brand-dot" aria-hidden="true"></span><span class="brand-name">Z-araan</span></a>
+    <nav class="nav-links" id="nav-links" aria-label="主导航">
+      <a href="/">主页</a>
+      <a href="/#posts">文章</a>
+      <a href="tomato.html">番茄钟</a>
+      <a href="https://zaraan.zh.kg/" target="_blank" rel="noopener">博客</a>
+      <a href="https://github.com/z-araan" target="_blank" rel="noopener">GitHub</a>
+    </nav>
+    <div class="nav-actions">
+      <button class="icon-btn" id="theme-toggle" type="button" aria-label="切换深色/浅色主题" aria-pressed="false">
+        <svg class="icon-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M2 12h2m16 0h2M4.9 4.9l1.4 1.4m11.4 11.4 1.4 1.4M19.1 4.9l-1.4 1.4M6.3 17.7l-1.4 1.4"/></svg>
+        <svg class="icon-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 13.2A8.6 8.6 0 0 1 10.8 3a8.6 8.6 0 1 0 10.2 10.2Z"/></svg>
+      </button>
+      <button class="icon-btn nav-burger" id="nav-burger" type="button" aria-label="打开菜单" aria-expanded="false" aria-controls="nav-links">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+      </button>
     </div>
+  </div>
+</header>
+
+<main class="page">
+  <div class="page-narrow">
+    <nav class="crumbs" aria-label="面包屑"><a href="/">主页</a> / <a href="/#posts">文章</a> / <span>WebAssembly</span></nav>
+
+    <article class="prose">
+      <header class="sub-head">
+        <h1>WebAssembly：重塑前端开发的未来</h1>
+        <p class="post-date">发布日期：2025年01月21日</p>
+        <div class="btn-row" style="margin-top:.8rem">
+          <button class="btn btn-sm" id="speak-btn" type="button">🔊 朗读文章</button>
+          <button class="btn btn-sm" id="stop-btn" type="button">停止</button>
+        </div>
+      </header>
+
+      <nav class="toc" id="toc" aria-label="文章目录"></nav>
+      <audio id="fallback-audio" src="https://z-araan.github.io/Audio/ttsmaker.mp3" preload="none"></audio>
+
+      <p>在过去的几十年里，Web开发经历了翻天覆地的变化。从静态HTML页面到复杂的单页应用（SPA），前端技术的发展速度令人惊叹。然而，随着用户对性能和功能需求的不断提高，传统的JavaScript引擎逐渐显得力不从心。这时，WebAssembly（Wasm）应运而生，成为前端开发领域的一股新势力。</p>
+
+      <h2>一、WebAssembly是什么？</h2>
+      <p>WebAssembly（简称Wasm）是一种低级、二进制的指令格式，旨在为Web应用提供高性能的运行环境。它最初由Mozilla、Google、Microsoft和Apple等浏览器厂商联合开发，目标是让Web应用能够运行接近原生代码的速度，同时保持跨平台的兼容性。</p>
+      <p>与JavaScript不同，WebAssembly并不是一种编程语言，而是一种中间表示（Intermediate Representation）。开发者可以通过C、C++、Rust等语言编写代码，并将其编译为Wasm格式，然后在浏览器中运行。这种设计使得Wasm能够充分利用现代CPU的性能，同时保持Web开发的灵活性。</p>
+
+      <h2>二、WebAssembly的优势</h2>
+      <h3>1. 高性能</h3>
+      <p>WebAssembly的二进制格式和低级设计使其能够被浏览器快速加载和执行。与JavaScript相比，Wasm代码的解析和编译速度更快，执行效率更高。这意味着开发者可以将一些计算密集型的任务（如图像处理、加密算法、复杂的数据分析等）从JavaScript迁移到Wasm，显著提升应用性能。</p>
+      <h3>2. 多语言支持</h3>
+      <p>WebAssembly的另一个重要特点是支持多种编程语言。开发者可以使用自己熟悉的语言编写代码，然后将其编译为Wasm格式，而无需担心浏览器的兼容性问题。这种多语言支持不仅降低了开发门槛，还为前端开发带来了更多的可能性。</p>
+      <h3>3. 安全性和兼容性</h3>
+      <p>WebAssembly运行在浏览器的沙盒环境中，与JavaScript共享相同的隔离机制。这意味着Wasm代码无法直接访问用户的文件系统或硬件资源，从而保证了用户的安全。同时，Wasm的设计也充分考虑了浏览器的兼容性，目前主流浏览器（如Chrome、Firefox、Safari和Edge）都已支持WebAssembly。</p>
+
+      <h2>三、WebAssembly的典型应用场景</h2>
+      <h3>1. 游戏开发</h3>
+      <p>游戏是WebAssembly最早的应用领域之一。由于其高性能和多语言支持，Wasm能够为Web游戏提供接近原生游戏的体验。例如，许多经典的PC游戏（如《毁灭战士》）已经通过WebAssembly移植到Web平台上，用户可以在浏览器中直接体验这些经典作品。</p>
+      <h3>2. 复杂计算任务</h3>
+      <p>在数据密集型或计算密集型的应用中，WebAssembly也展现出了巨大的优势。例如，一些科学计算应用（如分子模拟、气象分析）可以通过Wasm在浏览器中运行，无需用户安装额外的软件。这种模式不仅提高了用户体验，还降低了开发和部署成本。</p>
+      <h3>3. 前端框架集成</h3>
+      <p>随着WebAssembly技术的成熟，越来越多的前端框架开始支持Wasm。例如，React、Vue和Angular等框架都提供了与Wasm集成的解决方案。开发者可以将Wasm模块嵌入到前端应用中，利用其高性能特性来处理复杂的逻辑，同时保持框架的开发便利性。</p>
+
+      <h2>四、WebAssembly的未来展望</h2>
+      <p>尽管WebAssembly已经取得了显著的进展，但它仍然处于发展的早期阶段。未来，WebAssembly有望在以下几个方面取得更大的突破：</p>
+      <ul>
+        <li><strong>性能优化：</strong>随着浏览器厂商对WebAssembly的持续优化，其性能有望进一步提升。</li>
+        <li><strong>生态系统扩展：</strong>随着更多语言编译器的支持和开发工具的完善，Wasm的应用场景将更加广泛。</li>
+        <li><strong>跨平台应用：</strong>WebAssembly的跨平台特性使其成为构建跨平台应用的理想选择。</li>
+      </ul>
+
+      <h2>五、总结</h2>
+      <p>WebAssembly作为一种新兴的Web技术，正在逐步改变前端开发的格局。它不仅为Web应用提供了高性能的运行环境，还通过多语言支持和良好的兼容性，为开发者带来了更多的可能性。随着技术的不断成熟和生态系统的不断完善，WebAssembly有望成为未来Web开发的核心技术之一。</p>
+      <p>对于开发者来说，现在正是学习和探索WebAssembly的最佳时机。无论你是希望提升应用性能，还是尝试新的开发模式，WebAssembly都值得你关注和尝试。让我们一起期待WebAssembly在未来的精彩表现吧！</p>
+    </article>
+
+    <section class="panel" style="margin-top:1.4rem">
+      <div class="panel-head">
+        <h2>评论</h2>
+        <span class="tag">Giscus</span>
+      </div>
+      <div class="giscus"></div>
+    </section>
+  </div>
+</main>
+
+<div class="popup" id="popup">
+  <div class="popup-content">
+    <h2>要不要玩点游戏？</h2>
+    <button type="button" id="no-button">否</button>
+    <button type="button" id="yes-button">是</button>
+  </div>
+</div>
+
+<button class="to-top" id="to-top" type="button" aria-label="回到顶部">
+  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5m0 0-6 6m6-6 6 6"/></svg>
+</button>
+
+<script>
+  (function () {
+    // 朗读文章（SpeechSynthesis），不可用时回退到音频文件
+    var speakBtn = document.getElementById('speak-btn');
+    var stopBtn = document.getElementById('stop-btn');
+    var fallback = document.getElementById('fallback-audio');
+    var synth = window.speechSynthesis;
+
+    speakBtn.addEventListener('click', function () {
+      if (!synth || !synth.speak) {
+        fallback.play().catch(function () {});
+        return;
+      }
+      synth.cancel();
+      var text = document.querySelector('.prose').innerText;
+      var utter = new SpeechSynthesisUtterance(text);
+      utter.lang = 'zh-CN';
+      utter.rate = 1;
+      synth.speak(utter);
+    });
+
+    stopBtn.addEventListener('click', function () {
+      if (synth) synth.cancel();
+      fallback.pause();
+    });
+
+    // 自动生成目录
+    var toc = document.getElementById('toc');
+    var heads = document.querySelectorAll('.prose h2');
+    if (heads.length) {
+      var ol = document.createElement('ol');
+      heads.forEach(function (h, i) {
+        h.id = 'sec-' + (i + 1);
+        var li = document.createElement('li');
+        var a = document.createElement('a');
+        a.href = '#' + h.id;
+        a.textContent = h.textContent;
+        li.appendChild(a);
+        ol.appendChild(li);
+      });
+      toc.innerHTML = '<strong>目录</strong>';
+      toc.appendChild(ol);
+    } else {
+      toc.remove();
+    }
+
+    // 阅读进度
+    var bar = document.getElementById('reading-progress');
+    var update = function () {
+      var doc = document.documentElement;
+      var total = doc.scrollHeight - doc.clientHeight;
+      bar.style.width = (total > 0 ? (doc.scrollTop / total) * 100 : 0) + '%';
+    };
+    window.addEventListener('scroll', update, { passive: true });
+    window.addEventListener('resize', update);
+    update();
+  })();
+</script>
+
 <script src="/Down/scripts/game.js"></script>
-    <div class="container">
-        <div class="main">
-            <h1>WebAssembly：重塑前端开发的未来</h1>
-            <p class="post-date">发布日期：2025年01月21日</p>
-            <button onclick="speakArticle()">朗读文章</button>
-           
-    <script>
-        <audio id="fallback-audio" src="https://z-araan.github.io/Audio/ttsmaker.mp3" preload="auto"></audio> <!-- 替换为你的音频文件路径 -->
-
-            <script>
-                function speakArticle() {
-                    const synth = window.speechSynthesis;
-                    const articleText = document.querySelector(".main").innerText;
-                    const utterThis = new SpeechSynthesisUtterance(articleText);
-                    utterThis.lang = "zh-CN";
-                    utterThis.rate = 1;
-                    utterThis.pitch = 1;
-
-                    if (synth.speak) {
-                        synth.speak(utterThis);
-                    } else {
-                        console.warn("朗读功能不可用，自动播放音频");
-                        document.getElementById("fallback-audio").play();
-                    }
-                }
-
-                // 页面加载时检查是否支持朗读功能
-                window.onload = () => {
-                    if (!window.speechSynthesis || !window.speechSynthesis.speak) {
-                        console.warn("朗读功能不可用，自动播放音频");
-                        document.getElementById("fallback-audio").play();
-                    }
-                };
-    </script>
-
-
-            <p>在过去的几十年里，Web开发经历了翻天覆地的变化。从静态HTML页面到复杂的单页应用（SPA），前端技术的发展速度令人惊叹。然而，随着用户对性能和功能需求的不断提高，传统的JavaScript引擎逐渐显得力不从心。这时，WebAssembly（Wasm）应运而生，成为前端开发领域的一股新势力。</p>
-
-            <h2>一、WebAssembly是什么？</h2>
-            <p>WebAssembly（简称Wasm）是一种低级、二进制的指令格式，旨在为Web应用提供高性能的运行环境。它最初由Mozilla、Google、Microsoft和Apple等浏览器厂商联合开发，目标是让Web应用能够运行接近原生代码的速度，同时保持跨平台的兼容性。</p>
-            <p>与JavaScript不同，WebAssembly并不是一种编程语言，而是一种中间表示（Intermediate Representation）。开发者可以通过C、C++、Rust等语言编写代码，并将其编译为Wasm格式，然后在浏览器中运行。这种设计使得Wasm能够充分利用现代CPU的性能，同时保持Web开发的灵活性。</p>
-
-            <h2>二、WebAssembly的优势</h2>
-            <h3>1. 高性能</h3>
-            <p>WebAssembly的二进制格式和低级设计使其能够被浏览器快速加载和执行。与JavaScript相比，Wasm代码的解析和编译速度更快，执行效率更高。这意味着开发者可以将一些计算密集型的任务（如图像处理、加密算法、复杂的数据分析等）从JavaScript迁移到Wasm，显著提升应用性能。</p>
-            <h3>2. 多语言支持</h3>
-            <p>WebAssembly的另一个重要特点是支持多种编程语言。开发者可以使用自己熟悉的语言编写代码，然后将其编译为Wasm格式，而无需担心浏览器的兼容性问题。这种多语言支持不仅降低了开发门槛，还为前端开发带来了更多的可能性。</p>
-            <h3>3. 安全性和兼容性</h3>
-            <p>WebAssembly运行在浏览器的沙盒环境中，与JavaScript共享相同的隔离机制。这意味着Wasm代码无法直接访问用户的文件系统或硬件资源，从而保证了用户的安全。同时，Wasm的设计也充分考虑了浏览器的兼容性，目前主流浏览器（如Chrome、Firefox、Safari和Edge）都已支持WebAssembly。</p>
-
-            <h2>三、WebAssembly的典型应用场景</h2>
-            <h3>1. 游戏开发</h3>
-            <p>游戏是WebAssembly最早的应用领域之一。由于其高性能和多语言支持，Wasm能够为Web游戏提供接近原生游戏的体验。例如，许多经典的PC游戏（如《毁灭战士》）已经通过WebAssembly移植到Web平台上，用户可以在浏览器中直接体验这些经典作品。</p>
-            <h3>2. 复杂计算任务</h3>
-            <p>在数据密集型或计算密集型的应用中，WebAssembly也展现出了巨大的优势。例如，一些科学计算应用（如分子模拟、气象分析）可以通过Wasm在浏览器中运行，无需用户安装额外的软件。这种模式不仅提高了用户体验，还降低了开发和部署成本。</p>
-            <h3>3. 前端框架集成</h3>
-            <p>随着WebAssembly技术的成熟，越来越多的前端框架开始支持Wasm。例如，React、Vue和Angular等框架都提供了与Wasm集成的解决方案。开发者可以将Wasm模块嵌入到前端应用中，利用其高性能特性来处理复杂的逻辑，同时保持框架的开发便利性。</p>
-
-            <h2>四、WebAssembly的未来展望</h2>
-            <p>尽管WebAssembly已经取得了显著的进展，但它仍然处于发展的早期阶段。未来，WebAssembly有望在以下几个方面取得更大的突破：</p>
-            <ul>
-                <li><strong>性能优化：</strong>随着浏览器厂商对WebAssembly的持续优化，其性能有望进一步提升。</li>
-                <li><strong>生态系统扩展：</strong>随着更多语言编译器的支持和开发工具的完善，Wasm的应用场景将更加广泛。</li>
-                <li><strong>跨平台应用：</strong>WebAssembly的跨平台特性使其成为构建跨平台应用的理想选择。</li>
-            </ul>
-
-            <h2>五、总结</h2>
-            <p>WebAssembly作为一种新兴的Web技术，正在逐步改变前端开发的格局。它不仅为Web应用提供了高性能的运行环境，还通过多语言支持和良好的兼容性，为开发者带来了更多的可能性。随着技术的不断成熟和生态系统的不断完善，WebAssembly有望成为未来Web开发的核心技术之一。</p>
-            <p>对于开发者来说，现在正是学习和探索WebAssembly的最佳时机。无论你是希望提升应用性能，还是尝试新的开发模式，WebAssembly都值得你关注和尝试。让我们一起期待WebAssembly在未来的精彩表现吧！</p>
-        </div>
-    </div>
 <script src="https://giscus.app/client.js"
         data-repo="z-araan/z-araan.github.io"
         data-repo-id="R_kgDOMQEarw"
@@ -117,9 +194,5 @@
         crossorigin="anonymous"
         async>
 </script>
-
-    <footer>
-        <p>版权所有 &z-araan; 2025 技术博客</p>
-    </footer>
 </body>
 </html>

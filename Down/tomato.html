@@ -1,41 +1,111 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-CN" data-theme="dark">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>番茄计时器</title>
-    <link rel="stylesheet" href="styles/tomatoc.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>番茄计时器 · Z-araan</title>
+<meta name="description" content="专注 25 分钟、休息 5 分钟，内置提示音的番茄工作法计时器。">
+<link rel="icon" href="/images/favicon.ico">
+<link rel="stylesheet" href="../styles/main.css">
+<link rel="stylesheet" href="../styles/sub.css">
+<script>
+  (function () {
+    try {
+      var saved = localStorage.getItem('theme');
+      var prefersLight = window.matchMedia('(prefers-color-scheme: light)').matches;
+      document.documentElement.dataset.theme = saved || (prefersLight ? 'light' : 'dark');
+    } catch (e) {}
+  })();
+</script>
+<script src="../scripts/main.js" defer></script>
 </head>
 <body>
-    <div class="timer-container">
-        <h1>番茄计时器</h1>
-        <div id="timer-display">25:00</div>
-        <p id="status">工作时间</p>
-        <button id="start-btn">开始</button>
-        <button id="pause-btn">暂停</button>
-        <button id="reset-btn">重置</button>
-        <div class="settings">
-            <label for="work-time">工作时间（分钟）：</label>
-            <input type="number" id="work-time" value="25" min="1">
-            <label for="break-time">休息时间（分钟）：</label>
-            <input type="number" id="break-time" value="5" min="1">
-            <label for="alarm-sound">选择音效：</label>
-            <select id="alarm-sound">
-                <option value="https://example.com/alarm1.mp3">音效1</option>
-                <option value="https://example.com/alarm2.mp3">音效2</option>
-                <option value="https://example.com/alarm3.mp3">音效3</option>
-            </select>
-            <label for="theme-color">选择主题颜色：</label>
-            <select id="theme-color">
-                <option value="#4aeb35">绿色</option>
-                <option value="#ff9500">橙色</option>
-                <option value="#3498db">蓝色</option>
-                <option value="#e74c3c">红色</option>
-            </select>
-        </div>
-        <div id="current-time"></div>
+
+<header class="nav">
+  <div class="nav-inner">
+    <a class="brand" href="/"><span class="brand-dot" aria-hidden="true"></span><span class="brand-name">Z-araan</span></a>
+    <nav class="nav-links" id="nav-links" aria-label="主导航">
+      <a href="/">主页</a>
+      <a href="/#projects">工具</a>
+      <a href="tomato.html" aria-current="page">番茄钟</a>
+      <a href="numbers.html">猜数字</a>
+      <a href="https://zaraan.zh.kg/" target="_blank" rel="noopener">博客</a>
+    </nav>
+    <div class="nav-actions">
+      <button class="icon-btn" id="theme-toggle" type="button" aria-label="切换深色/浅色主题" aria-pressed="false">
+        <svg class="icon-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M2 12h2m16 0h2M4.9 4.9l1.4 1.4m11.4 11.4 1.4 1.4M19.1 4.9l-1.4 1.4M6.3 17.7l-1.4 1.4"/></svg>
+        <svg class="icon-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 13.2A8.6 8.6 0 0 1 10.8 3a8.6 8.6 0 1 0 10.2 10.2Z"/></svg>
+      </button>
+      <button class="icon-btn nav-burger" id="nav-burger" type="button" aria-label="打开菜单" aria-expanded="false" aria-controls="nav-links">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+      </button>
     </div>
-    <audio id="alarm-audio"></audio> <!-- 动态加载音效 -->
-    <script src="scripts/tomatoj.js"></script>
+  </div>
+</header>
+
+<main class="page">
+  <div class="page-narrow">
+    <nav class="crumbs" aria-label="面包屑"><a href="/">主页</a> / <span>番茄计时器</span></nav>
+
+    <header class="sub-head">
+      <h1>番茄计时器</h1>
+      <p>专注一段时间，休息一小会；结束时会响内置提示音（无需联网）。</p>
+    </header>
+
+    <section class="panel timer-card">
+      <div id="timer-display" role="timer" aria-live="off">25:00</div>
+      <p id="status">工作时间</p>
+
+      <div class="timer-btns">
+        <button class="btn btn-primary" id="start-btn" type="button">开始</button>
+        <button class="btn" id="pause-btn" type="button">暂停</button>
+        <button class="btn" id="reset-btn" type="button">重置</button>
+      </div>
+
+      <div class="settings">
+        <div>
+          <label for="work-time">专注时长（分钟）</label>
+          <input type="number" id="work-time" value="25" min="1" max="180">
+        </div>
+        <div>
+          <label for="break-time">休息时长（分钟）</label>
+          <input type="number" id="break-time" value="5" min="1" max="60">
+        </div>
+        <div>
+          <label for="alarm-sound">提示音</label>
+          <select id="alarm-sound">
+            <option value="data:audio/wav;base64,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">清脆短音</option>
+            <option value="data:audio/wav;base64,UklGRsQPAABXQVZFZm10IBAAAAABAAEAQB8AAIA+AAACABAAZGF0YaAPAAAAADQAjgCGANf/2v5c/gL/owBBAp4CKgGX/ov8k/z9/nICsAQCBIYATPwg+rD7SwAfBfMGTAST/lv5KfgS/NkCMwh8CDIDfPtK9i336f1gBhwLzwigAKP3r/OZ9ysBaQpCDZYHvPyR8yHyqvmcBVwOGg6rBN735u8c8mn9xAqVETcNJACS8kjt9fOhAgkQchNeClX6g+1N7Mz35wi0FG4TkgXC82npZe1//ZkPEBgyERP/Ie305s3wqgT2FXgZoQxg9zvnuOZ99rYMMRtxGOQFL+/d4hPpK/7WFIQeuhRr/Vjnv+Al7kUHKRxLH1kO4vPD4GrhwfUEEcghGR2gBSrqTdws5W7/dRrmJMgXL/tA4bHaA+xuCpci4SSCD97vJNpu3Jn1yxVxKF4hxQS65MPVuOFHAW4gLCtVGmD44NrV1GzqCw62KGoptA/66wbVetmB9pYZWizUIhgDY+E005jhXwMBI08sWhk79lbZGtU77PcPhSmYKMYNLOp+1I/agvg8G5csgiEOAe7fQtMf42cFPiT3K6UXQPRY2LzVFe7bET4qsCfSC2roDdS424f60xy9LB8gBP+K3mfTtuRsB2clhyvjFUvycNd01vjvtRPhKrMm1wm15rTT9NyP/FsezCyqHvr8N92k01zmbQl8JgArFhRd8J3WQtfk8YUVbSuiJdcHDOVy00LemP7TH8IsJR3y+vjb+NMP6GkLfidiKj4SeO7g1SbY1/NJF+ErfSTSBXLjR9Oj36IAOiGhLJEb7fjL2mTUzulfDWoorSlcEJzsOtUg2dH1ARk/LEQjywPn4TXTFOGsApAiaCzuGev2stno1JrrTg9AKeMocQ7K6qrULdrR96wahSz5IcIBbeA605bitATTIxgsPRju9K3YgtVw7TURASoCKH8MBOkx1E/b1PlIHLMsmyC4/wPfV9Mo5LoGAyWwK4AW9/K+1zLWUO8TE6sqDSeGCkrn0NOF3Nv71h3KLC0frv2q3YzTyeW9CB8mMSu2FAfx49b51jrx5hQ/KwMmiAid5YbTzd3k/VMfyCytHaX7ZNzZ03fnuwonJ5sq4hIe7x/W1dcr864WvCvkJIUG/uNT0yff7v/AIK8sHhyf+TDbPdQz6bMMGyjuKQMRP+1x1cfYIvVrGCEssiN+BG7iOdOT4PgBHCJ/LIAanPcR2rjU+uqkDvkoKykbD2rr2dTO2SD3GhpvLG0idgLt4DbTEOIBBGUjNizUGJ31BdlK1c3sjhDBKVIoLA2f6VjU6doi+bwbpiwWIWwAfd9L05zjCAacJNYrGxek8w7Y89Wq7m8ScypkJzUL4efv0xjcKPtOHcQsrR9i/h/ed9M35QwIvyVfK1UVsfEs17LWkPBGFA8rYSY4CS/mndNa3TD90h7LLDMeWfzS3LzT4eYMCs4m0SqEE8bvYNaH137yEhaTK0klNweL5GLTrt46/0QguyypHFH6mNsX1JjoBgzJJywqqRHj7arVcth09NMXASweJDIF9uI/0xTgRAGmIZIsERtN+HLai9Rc6voNrihxKcQPCuwL1XHZcPaHGVcs3yIpA3DhNNOK4U0D9iJSLGkZTPZf2RXVK+zmD34pnyjXDTzqgtSF2nD4LRuWLI4hIAH630HTEuNVBTMk+iu0F1H0Ydi21QTuyhE4Krgn4wt66BDUrdt1+sUcvSwrIBb/lt5l06jkWgddJYsr8xVc8njXbdbn76UT3Cq8JugJw+a20+jcffxOHswstx4M/UPdodNN5lwJcyYFKyYUbvCk1jvX0/F1FWgrrCXoBxvldNM23ob+xh/DLDMdBPsC3PXT/+dYC3UnZypOEonu5tUe2MbzOhfeK4ck5AWA40jTlt+QAC4hoyyfG/741dpg1L/pTg1iKLQpbRCs7D/VF9nA9fIYPCxPI90D9eE10wfhmgKEImss/Rn89rvZ49SK6z0POSnqKIIO2uqu1CTav/edGoMsBCLUAXngOtOJ4qIEyCMbLEwY//S22HzVYO0kEfspCiiQDBTpNdRF28L5OhyyLKggyv8P31bTGuSpBvkktCuPFgjzxtcs1kDvAhOmKhYnmApZ59PTetzJ+8gdySw5H8D9tt2K07rlqwgWJjUrxhQY8erW8tYp8dYUOisMJpoIrOWI08Hd0v1GH8ksux23+2/c1tNo56kKHiegKvISL+8l1s3XGfOfFrgr7iSXBgzkVdMb39z/tCCxLCwcsfk72znUI+miDBMo9CkUEU/tdtW/2BH1XBgeLL0jkAR74jnThuDmARAigSyPGq33Gtqz1Orqkw7xKDIpLA96697UxdkO9wsabSx5IogC+uA10wLi7wNaIzks4xiu9Q7ZRNW97H0QuilaKD0Nr+lc1N/aEPmtG6QsIiF+AIrfStOO4/YFkiTaKyoXtfMW2OzVme5fEm0qbCdGC/Dn8tMN3Bb7QR3ELLofdP4r3nXTKeX6B7YlZCtlFcLxNNer1n/wNhQKK2omSgk+5p/TTt0e/cQezCxBHmv83dy509Lm+gnFJtYqlRPX72fWf9dt8gMWjytTJUkHmuRk06LeKP84ILwstxxj+qPbFNSJ6PQLwScyKroR9O2w1WnYYvTEF/0rKCRDBQTjQNMH4DIBmiGULB8bXvh72obUTOrpDacoeCnVDxvsENVo2V72eBlULOsiOwN94TTTfeE7A+siVCx4GV72aNkQ1Rvs1Q94Kaco6Q1M6obUe9pe+B8blCyaITIBB+BA0wTjQwUoJP0rxBdi9GnYsNX07boRMirBJ/QLiegU1KPbY/q3HLwsOCAo/6LeZNOa5EkHUyWPKwMWbfJ/12fW1++VE9YqxSb6CdLmudPd3Gv8QR7MLMQeHv1O3Z/TPuZKCWomCis2FH/wq9Y018LxZRVkK7Yl+gcp5XXTK950/rofxCxBHRb7Ddzy0/DnRgtsJ20qXxKZ7uzVFti18yoX2iuSJPYFjuNK04rffgAiIaQsrRsQ+d/aXNSv6T0NWii6KX0QvexE1Q7ZrvXjGDksWiPvAwLiNdP64IgCeSJtLAsaDvfF2d7UeussDzIp8SiTDurqs9Qa2q33jxqBLBAi5gGG4DnTe+KQBL0jHixcGBH1v9h21U/tFBH0KRMoogwj6TnUO9ux+SwcsSy0INz/G99V0wzklwbuJLgrnxYZ883XJdYv7/ISoCoeJ6kKaOfW02/ct/u7HcksRh/S/cHdiNOs5ZoIDCY6K9YUKfHy1urWGPHGFDUrFiarCLrlitO23cD9OR/JLMgdyft63NPTWeeYChYnpioCE0DvLNbG1wjzjxa0K/kkqQYa5FbTD9/K/6ggsiw6HML5Rds11BTpkAwKKPspJBFg7XzVttj/9EwYGyzII6IEieI603ng1AEEIoMsnRq/9yTartTa6oIO6ig5KT0Piuvj1LvZ/Pb9GWsshCKaAgfhNdP14d0DTyM8LPIYwPUX2T/VrOxtELQpYihODb/pYNTV2v74nxujLC4hkACW30jTgOPkBYck3is6F8bzHtjm1YnuThJnKnUnWAv/5/XTAtwE+zMdwyzGH4b+Nt500xvl6AesJWgrdRXT8TvXpNZu8CYUBStzJlwJTeah00PdDP23HswsTh59/OjcttPD5ugJvCbcKqUT5+9t1njXXPLzFYsrXSVaB6jkZdOW3hb/KyC9LMUcdfqt2xDUeujjC7gnOCrKEQTuttVh2FH0tBf6KzMkVQUS40HT+t8gAY4hliwtG3D4hdqC1Dzq1w2fKH4p5g8r7BXVX9lM9mkZUiz2Ik0DiuE003DhKQPfIlcshxlw9nHZC9UK7MQPcSmuKPoNXOqL1HLaTfgRG5IspiFEARTgP9P24jIFHiQBLNMXdPRy2KrV4+2pESwqyScGDJjoF9SY21H6qRy7LEQgOv+u3mLTi+Q3B0klkysSFn7yh9dg1sbvhBPRKs4mDArh5rzT0txZ/DMeyyzSHjD9Wt2d0y/mOAlhJg8rRhSQ8LLWLNex8VUVXyu/JQwIN+V30x/eYv6tH8QsTh0o+xjc79Ph5zULZCdzKm8Squ7z1Q7YpPMbF9YrnCQIBpzjS9N932wAFiGmLLwbIvnp2ljUn+ksDVIowSmOEM3sStUF2Z311Bg2LGUjAQQQ4jbT7eB2Am0ibywaGiD3ztnZ1GrrGw8rKfkopA766rjUEdqc94AafywcIvgBk+A5027ifgSyIyEsaxgi9cfYcdU/7QMR7ikbKLMMM+k91DDbn/keHK8swCDu/yffU9P+44UG5CS8K64WK/PV1x/WHu/iEpsqJye7Cnfn2dNk3KX7rR3ILFMf5P3N3YbTneWICAMmPyvmFDrx+dbj1gfxthQxKx8mvQjJ5YzTqt2u/S0fyizWHdv7hdzQ00rnhgoNJ6sqExNQ7zLWvtf38oAWsCsDJboGKORX0wPfuP+bILMsSBzU+U/bMdQE6X8MAigBKjURcO2C1a3Y7vQ9GBgs0yO0BJbiOtNt4MIB+SGFLKwa0fct2qrUyupxDuMoQClOD5rr6NSy2ev27hloLJAirAIU4TXT5+HLA0QjPywBGdH1INk61ZzsXBCtKWooXw3O6WTUy9rt+JEboSw6IaIAo99H03Lj0gV9JOErSRfX8ybY4NV47j4SYip+J2kLD+j40/jb8volHcIs0x+Y/kLectMM5dcHoiVtK4UV5PFC153WXfAWFAArfCZtCVzmpNM33fr8qh7MLFsej/z03LTTtebXCbMm4Sq1E/jvdNZw10vy4xWHK2clbAe25GfTit4E/x8gvSzTHIf6uNsN1Gro0guwJz4q2xEV7rzVWNhA9KUX9ys+JGcFH+NC0+7fDgGCIZcsPBuC+I/aftQs6sYNmCiFKfcPO+wa1VbZO/ZaGU8sASNfA5jhNNNj4RgD1CJaLJYZgfZ62QbV+uu0D2optigLDmzq1dTg2mD4VRosK24gRwG44cPVuuTFBF4hcSjLFZn1btwk2t7vgg/hJJcibgoD7LHaQOEv+8gX5iR1Gm7/LOVN3CrqoAUZHcghBBHB9Wrhw+Di81kOSx8pHEUHJe6/4Fjna/26FIQe1hQr/hPp3eIv7+QFcRgxG7YMffa45jvnYPehDHgZ9hWqBM3w9OYh7RP/MhEQGJkPf/1l7WnpwvOSBW4TtBTnCMz3TeyD7VX6XgpyEwkQoQL180jtkvIkADcNlRHECmn9HPLm7973qwQaDlwOnAWq+SHykfO8/JYHQg1pCisBmfev86P3oADPCBwLYAbp/S33SvZ8+zIDfAgzCNkCEvwp+Fv5k/5MBPMGHwVLALD7IPpM/IYAAgSwBHIC/f6T/Iv8l/4qAZ4CQQKjAAL/XP7a/tf/hgCOADQA">三连提示</option>
+          </select>
+        </div>
+        <div>
+          <label for="theme-color">强调色</label>
+          <select id="theme-color">
+            <option value="#4ea1ff">蓝色</option>
+            <option value="#7c5cff">紫色</option>
+            <option value="#37d399">绿色</option>
+            <option value="#ff9500">橙色</option>
+            <option value="#ff6b6b">红色</option>
+          </select>
+        </div>
+      </div>
+
+      <div id="current-time"></div>
+    </section>
+    <audio id="alarm-audio" preload="auto"></audio>
+    <p class="hint">提示：页面标题会同步显示剩余时间；切换标签页也能看到倒计时。</p>
+
+    <footer class="footer" style="margin-top:2.5rem">
+      <div class="footer-inner" style="padding:1rem 0">
+        <p>© <span id="year">2026</span> Z-araan</p>
+        <p class="footer-links"><a href="/">返回主页</a></p>
+      </div>
+    </footer>
+  </div>
+</main>
+
+<button class="to-top" id="to-top" type="button" aria-label="回到顶部">
+  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5m0 0-6 6m6-6 6 6"/></svg>
+</button>
 </body>
 </html>

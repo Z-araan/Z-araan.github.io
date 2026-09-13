@@ -139,4 +139,71 @@
       input.value = input.value.trim();
     });
   }
+
+  /* ---------- RSS 实时刷新（失败则保留页面里的静态快照） ---------- */
+  var rssList = document.getElementById('rss-list');
+
+  if (rssList && window.fetch && window.DOMParser) {
+    var MONTHS = { Jan: '01', Feb: '02', Mar: '03', Apr: '04', May: '05', Jun: '06',
+                   Jul: '07', Aug: '08', Sep: '09', Oct: '10', Nov: '11', Dec: '12' };
+
+    function rssDate(raw) {
+      var m = /(\d{1,2}) (\w{3}) (\d{4})/.exec(raw || '');
+      if (!m) return (raw || '').slice(0, 16);
+      return m[3] + '-' + (MONTHS[m[2]] || '01') + '-' + String(m[1]).padStart(2, '0');
+    }
+
+    var controller = ('AbortController' in window) ? new AbortController() : null;
+    var timer = setTimeout(function () { if (controller) controller.abort(); }, 6000);
+
+    fetch('https://zaraan.zh.kg/rss.xml', {
+      cache: 'no-store',
+      signal: controller ? controller.signal : undefined
+    }).then(function (res) {
+      if (!res.ok) throw new Error('HTTP ' + res.status);
+      return res.text();
+    }).then(function (xml) {
+      var doc = new DOMParser().parseFromString(xml, 'application/xml');
+      var items = Array.prototype.slice.call(doc.querySelectorAll('item')).slice(0, 6);
+      if (!items.length) throw new Error('empty feed');
+
+      var frag = document.createDocumentFragment();
+      items.forEach(function (item) {
+        var get = function (tag) {
+          var el = item.querySelector(tag);
+          return el ? el.textContent.trim() : '';
+        };
+        var title = get('title');
+        var link = get('link');
+        if (!title || !link) return;
+
+        var desc = get('description').replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim();
+        if (desc.length > 96) desc = desc.slice(0, 96).trim() + '…';
+
+        var a = document.createElement('a');
+        a.className = 'post';
+        a.href = link;
+        a.target = '_blank';
+        a.rel = 'noopener';
+        a.innerHTML = '<div class="post-main"><div class="post-meta">' +
+          '<span class="tag">博客</span><time></time></div><h3></h3><p></p></div>' +
+          '<span class="post-go" aria-hidden="true">→</span>';
+        a.querySelector('time').textContent = rssDate(get('pubDate'));
+        a.querySelector('h3').textContent = title;
+        a.querySelector('p').textContent = desc;
+        frag.appendChild(a);
+      });
+
+      if (frag.childNodes.length) {
+        rssList.innerHTML = '';
+        rssList.appendChild(frag);
+        var note = document.getElementById('rss-note');
+        if (note) note.textContent = '已从 zaraan.zh.kg 实时更新，共 ' + frag.childNodes.length + ' 篇。';
+      }
+    }).catch(function () {
+      /* CORS 或网络不可用：保留静态快照，不打扰用户 */
+    }).then(function () {
+      clearTimeout(timer);
+    });
+  }
 })();
