@@ -3,7 +3,9 @@
 我的个人主页与一堆小工具，纯静态、零依赖，由 GitHub Pages 托管。
 
 - 主页：<https://z-araan.github.io/>
-- 博客：<https://zaraan.zh.kg/> ｜ 文章 RSS：<https://zaraan.zh.kg/rss.xml> ｜ 动态 RSS：<https://zaraan.zh.kg/feed/moments/rss.xml>
+- 博客：<https://zaraan.zh.kg/> 
+- 文章 RSS：<https://zaraan.zh.kg/rss.xml> 
+- 动态 RSS：<https://zaraan.zh.kg/feed/moments/rss.xml>
 - 技术栈：原生 HTML / CSS / JavaScript（无框架、无构建、无第三方统计；只有 Giscus 已移除）
 
 ## 页面结构
